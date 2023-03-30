@@ -33,4 +33,19 @@ public class BloodType {
     public String toString() {
         return bloodGroup + rhFactor; // Ex: A+
     }
+
+    public static boolean isCompatible(BloodType donor, BloodType recipient) {
+        // This checks for rH compatibility
+        if (donor.getRhFactor() == '-' && recipient.getRhFactor() == '+') {
+            return false;
+        }
+
+        // This checks for blood group compatibility
+        switch (donor.getBloodGroup()) {
+            case "O":
+                // O group can donate to any group
+                return true;
+        }
+    return false;
+    }
 }
