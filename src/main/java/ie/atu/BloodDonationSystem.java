@@ -8,9 +8,6 @@ public class BloodDonationSystem {
 
         BloodType bloodType = new BloodType("B", '-');
 
-        System.out.println("Welcome to the Blood Donation System!");
-        System.out.println(bloodType.toString());
-
         // Main loop
         boolean exit = false;
         while (!exit) {
