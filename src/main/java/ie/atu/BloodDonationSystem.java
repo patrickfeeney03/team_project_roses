@@ -4,6 +4,10 @@ import java.util.Scanner;
 
 public class BloodDonationSystem {
     public static void main(String[] args) {
+        Scanner myScanner = new Scanner(System.in);
+
+        BloodType donorBloodType = new BloodType("B", '-');
+
         System.out.println("Welcome to the Blood Donation System!");
 
         // Main loop
@@ -14,10 +18,12 @@ public class BloodDonationSystem {
             System.out.println("2. Login");
             System.out.println("3. Exit");
 
-            Scanner myScanner = new Scanner(System.in);
+
             System.out.println("Enter your choice: ");
             int userChoice = myScanner.nextInt();
             System.out.println("Choice: " + userChoice);
+
+            System.out.println("1: Add new donor\n2: Request Blood\n3: Record Donation\n4: View Stock");
 
             switch (userChoice) {
                 case 1:
@@ -31,9 +37,6 @@ public class BloodDonationSystem {
                     break;
                 case 4:
                     // We need to also be able to view how much blood we have.
-                    break;
-                case 5:
-                    // Exit?
                     break;
                 default:
                     System.out.println("Input not valid.\n");
