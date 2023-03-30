@@ -34,6 +34,7 @@ public class BloodType {
         return bloodGroup + rhFactor; // Ex: A+
     }
 
+    // This method checks the compatibility between a DONOR TO RECIPIENT.
     public static boolean isCompatible(BloodType donor, BloodType recipient) {
         // This checks for rH compatibility
         if (donor.getRhFactor() == '-' && recipient.getRhFactor() == '+') {
@@ -45,6 +46,14 @@ public class BloodType {
             case "O":
                 // O group can donate to any group
                 return true;
+            case "A":
+                // A donates to: A and AB
+            case "B":
+                // B donates to: B and AB
+            case "AB":
+                // AB donates to: AB
+            default:
+                System.out.println("Something went wrong...");
         }
     return false;
     }
