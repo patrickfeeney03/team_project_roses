@@ -1,7 +1,7 @@
 package ie.atu;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBloodType {
     @Test
@@ -14,11 +14,16 @@ public class TestBloodType {
         assertEquals("AB+", bloodTypeABPlus.toString());
     }
 
+    @Test
+    void testIsCompatible() {
+        BloodType bloodTypeAPlus = new BloodType("A", '+');
+        BloodType bloodTypeBMinus = new BloodType("B", '-');
+        BloodType bloodTypeOPlus = new BloodType("O", '+');
+
+        //                                  Donor - Recipient
+        assertFalse(BloodType.isCompatible(bloodTypeAPlus, bloodTypeBMinus));
+        // B- can't receive from A+ so assertFalse is successful.
 
 
-
-    BloodType bloodTypeA = new BloodType("A", '+');
-    BloodType bloodTypeB = new BloodType("B", '+');
-    BloodType bloodTypeO = new BloodType("O", '-');
-
+    }
 }
