@@ -27,5 +27,10 @@ public class BloodType {
         this.rhFactor = rhFactor;
     }
 
+    // Return type of blood as text
 
+    @Override
+    public String toString() {
+        return bloodGroup + rhFactor; // Ex: A+
+    }
 }
