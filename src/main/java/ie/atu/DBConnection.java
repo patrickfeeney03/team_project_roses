@@ -18,4 +18,19 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
