@@ -37,11 +37,18 @@ public class BloodType {
     // This method checks the compatibility between a DONOR TO RECIPIENT.
     public static boolean isCompatible(BloodType donor, BloodType recipient) {
         // This checks for rH compatibility
-        if (donor.getRhFactor() == '-' && recipient.getRhFactor() == '+') {
-            return false;
+        boolean rhCompatibility;
+        // - rh can give to + and -
+        // + rh can only give to + so,
+        if (donor.getRhFactor() == '-') {
+            rhCompatibility = true;
         }
-        boolean logicalOperatorAnswer = false;
+        else { // Compare the recipient and donor rh factor. If both are + they are compatible.
+            rhCompatibility = recipient.getRhFactor() == '+';
+        }
+
         // This checks for blood group compatibility
+        boolean logicalOperatorAnswer = false;
         switch (donor.getBloodGroup()) {
             case "O":
                 // O group can donate to any group
@@ -66,7 +73,6 @@ public class BloodType {
             default:
                 return false;
                 // Returning false means that the DONOR to RECIPIENT is not compatible.
-
         }
     }
 }

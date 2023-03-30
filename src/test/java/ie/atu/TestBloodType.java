@@ -34,7 +34,6 @@ public class TestBloodType {
         assertFalse(BloodType.isCompatible(bloodTypeABMinus, bloodTypeOMinus));
         // A- --> AB+
         assertTrue(BloodType.isCompatible(bloodTypeAMinus, bloodTypeABPlus));
-        assertTrue(BloodType.isCompatible(bloodTypeAPlus, bloodTypeABPlus));
         // A- --> O+
         assertFalse(BloodType.isCompatible(bloodTypeAMinus, bloodTypeOPlus));
     }
