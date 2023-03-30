@@ -6,9 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestBloodType {
     @Test
     void testToString() {
-        BloodType bloodType = new BloodType("A", '+');
-        assertEquals("A+", bloodType.toString());
+        BloodType bloodTypeAMinus = new BloodType("A", '-');
+        assertEquals("A-", bloodTypeAMinus.toString());
+        BloodType bloodTypeOPlus = new BloodType("O", '+');
+        assertEquals("O+", bloodTypeOPlus.toString());
+        BloodType bloodTypeABPlus = new BloodType("AB", '+');
+        assertEquals("AB+", bloodTypeABPlus.toString());
     }
+
 
 
 
