@@ -6,9 +6,10 @@ public class BloodDonationSystem {
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
 
-        BloodType donorBloodType = new BloodType("B", '-');
+        BloodType bloodType = new BloodType("B", '-');
 
         System.out.println("Welcome to the Blood Donation System!");
+        System.out.println(bloodType.toString());
 
         // Main loop
         boolean exit = false;
@@ -18,12 +19,13 @@ public class BloodDonationSystem {
             System.out.println("2. Login");
             System.out.println("3. Exit");
 
-
+            int userChoice;
             System.out.println("Enter your choice: ");
-            int userChoice = myScanner.nextInt();
-            System.out.println("Choice: " + userChoice);
+            userChoice = myScanner.nextInt();
+
 
             System.out.println("1: Add new donor\n2: Request Blood\n3: Record Donation\n4: View Stock");
+            userChoice = myScanner.nextInt();
 
             switch (userChoice) {
                 case 1:
@@ -41,6 +43,8 @@ public class BloodDonationSystem {
                 default:
                     System.out.println("Input not valid.\n");
             }
+
+
         }
     }
 }
