@@ -16,17 +16,18 @@ public class TestBloodType {
 
     @Test
     void testIsCompatible() {
-        BloodType bloodTypeAPlus = new BloodType("A", '+');
-        BloodType bloodTypeAMinus = new BloodType("A", '-');
-        BloodType bloodTypeBPlus = new BloodType("B", '+');
-        BloodType bloodTypeBMinus = new BloodType("B", '-');
-        BloodType bloodTypeABPlus = new BloodType("AB", '+');
-        BloodType bloodTypeABMinus = new BloodType("AB", '-');
-        BloodType bloodTypeOPlus = new BloodType("O", '+');
-        BloodType bloodTypeOMinus = new BloodType("O", '-');
+        BloodType APlus = new BloodType("A", '+');
+        BloodType AMinus = new BloodType("A", '-');
+        BloodType BPlus = new BloodType("B", '+');
+        BloodType BMinus = new BloodType("B", '-');
+        BloodType ABPlus = new BloodType("AB", '+');
+        BloodType ABMinus = new BloodType("AB", '-');
+        BloodType OPlus = new BloodType("O", '+');
+        BloodType OMinus = new BloodType("O", '-');
         // Donor - Recipient
 
         // Donor is A
+        assertTrue(BloodType.isCompatible(AMinus, AMinus));
 
 
         // Donor is B
