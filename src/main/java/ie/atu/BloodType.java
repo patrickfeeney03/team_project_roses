@@ -48,31 +48,33 @@ public class BloodType {
         }
 
         // This checks for blood group compatibility
-        boolean logicalOperatorAnswer = false;
+        boolean bloodGroupCompatibility = false;
         switch (donor.getBloodGroup()) {
             case "O":
                 // O group can donate to any group
-                return true;
+                bloodGroupCompatibility = true;
+                break;
             case "A":
                 // A donates to: A and AB
                 // Returns true if either is true.
-                logicalOperatorAnswer = recipient.getBloodGroup().equals("A") ||
+                bloodGroupCompatibility = recipient.getBloodGroup().equals("A") ||
                       recipient.getBloodGroup().equals("AB");
-                return logicalOperatorAnswer;
+                break;
             case "B":
                 // B donates to: B and AB
                 // Returns true if either is true.
-                logicalOperatorAnswer = recipient.getBloodGroup().equals("B") ||
+                bloodGroupCompatibility = recipient.getBloodGroup().equals("B") ||
                         recipient.getBloodGroup().equals("AB");
-                return logicalOperatorAnswer;
+                break;
             case "AB":
                 // AB donates to: AB
                 // Returns true only if the RECIPIENT has the AB blood type.
-                logicalOperatorAnswer = recipient.getBloodGroup().equals("AB");
-                return logicalOperatorAnswer;
+                bloodGroupCompatibility = recipient.getBloodGroup().equals("AB");
+                break;
             default:
-                return false;
+                bloodGroupCompatibility = false;
                 // Returning false means that the DONOR to RECIPIENT is not compatible.
         }
+        return (rhCompatibility && bloodGroupCompatibility);
     }
 }
