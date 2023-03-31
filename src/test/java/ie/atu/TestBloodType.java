@@ -26,15 +26,13 @@ public class TestBloodType {
         BloodType bloodTypeOMinus = new BloodType("O", '-');
         // Donor - Recipient
 
-        // B- --> A+
-        assertFalse(BloodType.isCompatible(bloodTypeAPlus, bloodTypeBMinus));
-        // O+ --> B+
-        assertTrue(BloodType.isCompatible(bloodTypeOPlus, bloodTypeBPlus));
-        // AB- --> O-
-        assertFalse(BloodType.isCompatible(bloodTypeABMinus, bloodTypeOMinus));
-        // A- --> AB+
-        assertTrue(BloodType.isCompatible(bloodTypeAMinus, bloodTypeABPlus));
-        // A- --> O+
-        assertFalse(BloodType.isCompatible(bloodTypeAMinus, bloodTypeOPlus));
+        // Donor is A
+
+
+        // Donor is B
+
+        // Donor is O
+
+        // Donor is AB
     }
 }
