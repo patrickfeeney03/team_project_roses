@@ -16,25 +16,40 @@ public class TestBloodType {
 
     @Test
     void testIsCompatible() {
-        BloodType bloodTypeAPlus = new BloodType("A", '+');
-        BloodType bloodTypeAMinus = new BloodType("A", '-');
-        BloodType bloodTypeBPlus = new BloodType("B", '+');
-        BloodType bloodTypeBMinus = new BloodType("B", '-');
-        BloodType bloodTypeABPlus = new BloodType("AB", '+');
-        BloodType bloodTypeABMinus = new BloodType("AB", '-');
-        BloodType bloodTypeOPlus = new BloodType("O", '+');
-        BloodType bloodTypeOMinus = new BloodType("O", '-');
+        BloodType APlus = new BloodType("A", '+');
+        BloodType AMinus = new BloodType("A", '-');
+        BloodType BPlus = new BloodType("B", '+');
+        BloodType BMinus = new BloodType("B", '-');
+        BloodType ABPlus = new BloodType("AB", '+');
+        BloodType ABMinus = new BloodType("AB", '-');
+        BloodType OPlus = new BloodType("O", '+');
+        BloodType OMinus = new BloodType("O", '-');
         // Donor - Recipient
 
-        // B- --> A+
-        assertFalse(BloodType.isCompatible(bloodTypeAPlus, bloodTypeBMinus));
-        // O+ --> B+
-        assertTrue(BloodType.isCompatible(bloodTypeOPlus, bloodTypeBPlus));
-        // AB- --> O-
-        assertFalse(BloodType.isCompatible(bloodTypeABMinus, bloodTypeOMinus));
-        // A- --> AB+
-        assertTrue(BloodType.isCompatible(bloodTypeAMinus, bloodTypeABPlus));
-        // A- --> O+
-        assertFalse(BloodType.isCompatible(bloodTypeAMinus, bloodTypeOPlus));
+        // Donor is O+
+        assertTrue(BloodType.isCompatible(OPlus, OPlus));
+        assertFalse(BloodType.isCompatible(OPlus, OMinus));
+        assertTrue(BloodType.isCompatible(OPlus, APlus));
+        assertFalse(BloodType.isCompatible(OPlus, AMinus));
+        assertTrue(BloodType.isCompatible(OPlus, BPlus));
+        assertFalse(BloodType.isCompatible(OPlus, BMinus));
+        assertTrue(BloodType.isCompatible(OPlus, ABPlus));
+        assertFalse(BloodType.isCompatible(OPlus, ABMinus));
+        // Donor is O-
+        assertTrue(BloodType.isCompatible(OMinus, OPlus));
+        assertTrue(BloodType.isCompatible(OMinus, OMinus));
+        assertTrue(BloodType.isCompatible(OMinus, APlus));
+        assertTrue(BloodType.isCompatible(OMinus, AMinus));
+        assertTrue(BloodType.isCompatible(OMinus, BPlus));
+        assertTrue(BloodType.isCompatible(OMinus, BMinus));
+        assertTrue(BloodType.isCompatible(OMinus, ABPlus));
+        assertTrue(BloodType.isCompatible(OMinus, ABMinus));
+
+        // Donor is A
+
+        // Donor is B
+
+
+        // Donor is AB
     }
 }
