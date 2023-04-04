@@ -19,6 +19,12 @@ public class Recipient extends User {
         Recipient_Disease = recipient_Disease;
     }
 
-    
+    public String getTransfusion_History() {
+        return Transfusion_History;
+    }
+
+    public void setTransfusion_History(String transfusion_History) {
+        Transfusion_History = transfusion_History;
+    }
 }
 
