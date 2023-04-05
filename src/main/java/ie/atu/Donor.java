@@ -14,4 +14,28 @@ public class Donor extends User {
         this.bloodType = bloodType;
     }
 
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(String bloodType) {
+        this.bloodType = bloodType;
+    }
+    public String getLast_Med() {
+        return Last_Med;
+    }
+
+    public void setLast_Med(String Last_Med) {
+        this.Last_Med = Last_Med;
+    }
+    public String getFirst_Med() {
+        return First_Med;
+    }
+
+    public void setFirst_Med(String First_Med) {
+        this.First_Med = First_Med;
+    }
+
+
+
 }
