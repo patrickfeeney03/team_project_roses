@@ -6,6 +6,14 @@ public class Donation {
     private BloodType bloodType;
     private int unitsDonated;
 
+    public Donation(int donationID, Donor donor,
+                    BloodType bloodtype, int unitsDonated) {
+        this.donationID = donationID;
+        this.donor = donor;
+        this.bloodType = bloodtype;
+        this.unitsDonated = unitsDonated;
+    }
+
     //getters and setters
     public int getDonationID() {
         return donationID;
