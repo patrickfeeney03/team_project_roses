@@ -77,7 +77,7 @@ public class BloodDonationSystem {
 
             switch (userChoice) {
                 case 1 -> requestBlood(lmyScanner);
-                case 2 -> recordDonation();
+                case 2 -> recordDonation(lmyScanner);
                 case 3 -> viewStock();
                 case 4 -> exitUserMenu = true;
                 default -> System.out.println("Input not valid.\n");
@@ -141,6 +141,14 @@ public class BloodDonationSystem {
         int donatedAmount = lmyScanner.nextInt();
 
         BloodType donatedBloodType = new BloodType(bloodGroup, rhFactor);
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().getBloodGroup().equals(donatedBloodType.getBloodGroup()) &&
+            stock.getBloodGroup().getRhFactor() == donatedBloodType.getRhFactor()) {
+                stock.setAmount(stock.getAmount() + donatedAmount);
+                System.out.println("Donation recorded. " + donatedAmount + " units of " + donatedBloodType +
+                        " blood added to the stock.");
+            }
+        }
 
     }
 
