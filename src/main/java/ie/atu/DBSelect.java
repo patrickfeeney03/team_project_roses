@@ -16,9 +16,9 @@ public class DBSelect {
              ResultSet resultSet = statement.executeQuery(selectSQL)) {
 
             while (resultSet.next()) {
-                String patientFirstName = resultSet.getString("patientName");
-                String patientLastName = resultSet.getString("patientSurname");
-                String patientDisease = resultSet.getString("patient_Disease");
+                String patientFirstName = resultSet.getString("patientFirstName");
+                String patientLastName = resultSet.getString("patientLastName");
+                String patientDisease = resultSet.getString("patientDisease");
 
                 System.out.println("Username: " + patientFirstName + ", Password: " + patientLastName + ", Email: " + patientDisease);
             }
