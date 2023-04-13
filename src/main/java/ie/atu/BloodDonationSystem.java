@@ -77,8 +77,17 @@ public class BloodDonationSystem {
     }
     /////////////////////////////////////////////////////////
 
-    public static void requestBlood() {
+    public static void requestBlood(Scanner lmyScanner) {
         System.out.println("requestBlood static method");
+
+        System.out.println("Enter the blood group (A, B, AB, O):");
+        String bloodGroup = lmyScanner.next().toUpperCase();
+
+        System.out.println("Enter the Rh factor (+ or -):");
+        char rhFactor = lmyScanner.next().charAt(0);
+
+        System.out.println("Enter the amount of units needed:");
+        int requestedAmount = lmyScanner.nextInt();
     }
 
     public static void recordDonation() {
