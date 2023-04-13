@@ -133,6 +133,8 @@ public class BloodDonationSystem {
 
     public static void recordDonation(Scanner lmyScanner) {
         System.out.println("recordDonation static method");
+
+        // Verify user input
         String bloodGroup;
         do {
             System.out.println("Enter the blood group (A, B, AB, O):");
@@ -148,15 +150,23 @@ public class BloodDonationSystem {
         int donatedAmount = lmyScanner.nextInt();
 
         BloodType donatedBloodType = new BloodType(bloodGroup, rhFactor);
+        boolean bloodTypeAlreadyExists = false;
         for (BloodStock stock : bloodStockList) {
             if (stock.getBloodGroup().getBloodGroup().equals(donatedBloodType.getBloodGroup()) &&
             stock.getBloodGroup().getRhFactor() == donatedBloodType.getRhFactor()) {
                 stock.setAmount(stock.getAmount() + donatedAmount);
                 System.out.println("Donation recorded. " + donatedAmount + " units of " + donatedBloodType +
                         " blood added to the stock.");
+                bloodTypeAlreadyExists = true;
+                break;
             }
         }
 
+        if (!bloodTypeAlreadyExists) {
+            bloodStockList.add(new BloodStock(donatedBloodType, donatedAmount));
+            System.out.println("Donation recorded. " + donatedAmount + " units of "  + donatedBloodType +
+                    " blood added as a new stock.");
+        }
     }
 
     public static void viewStock() {
