@@ -20,7 +20,7 @@ public class DBSelect {
                 String patientLastName = resultSet.getString("patientLastName");
                 String patientDisease = resultSet.getString("patientDisease");
 
-                System.out.println("Username: " + patientFirstName + ", Password: " + patientLastName + ", Email: " + patientDisease);
+                System.out.println("Patient Name: " + patientFirstName + ", Patient Surname: " + patientLastName + ", Patient's Disease: " + patientDisease);
             }
         } catch (SQLException e) {
             e.printStackTrace();
