@@ -131,8 +131,17 @@ public class BloodDonationSystem {
         }
     }
 
-    public static void recordDonation() {
+    public static void recordDonation(Scanner lmyScanner) {
         System.out.println("recordDonation static method");
+        System.out.println("Enter the blood group (A, B, AB, O):");
+        String bloodGroup = lmyScanner.next().toUpperCase();
+        System.out.println("Enter the Rh factor (+ or -):");
+        char rhFactor = lmyScanner.next().charAt(0);
+        System.out.println("Enter the amount of units donated:");
+        int donatedAmount = lmyScanner.nextInt();
+
+        BloodType donatedBloodType = new BloodType(bloodGroup, rhFactor);
+
     }
 
     public static void viewStock() {
