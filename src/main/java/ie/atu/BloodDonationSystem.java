@@ -77,7 +77,7 @@ public class BloodDonationSystem {
 
             switch (userChoice) {
                 case 1 -> requestBlood(lmyScanner);
-                case 2 -> recordDonation();
+                case 2 -> recordDonation(lmyScanner);
                 case 3 -> viewStock();
                 case 4 -> exitUserMenu = true;
                 default -> System.out.println("Input not valid.\n");
@@ -131,8 +131,42 @@ public class BloodDonationSystem {
         }
     }
 
-    public static void recordDonation() {
+    public static void recordDonation(Scanner lmyScanner) {
         System.out.println("recordDonation static method");
+
+        // Verify user input
+        String bloodGroup;
+        do {
+            System.out.println("Enter the blood group (A, B, AB, O):");
+            bloodGroup = lmyScanner.next().toUpperCase();
+        } while (!bloodGroup.matches("A|B|AB|O"));
+        char rhFactor;
+        do {
+            System.out.println("Enter the Rh factor (+ or -):");
+            rhFactor = lmyScanner.next().charAt(0);
+        } while (rhFactor != '+' && rhFactor != '-');
+
+        System.out.println("Enter the amount of units donated:");
+        int donatedAmount = lmyScanner.nextInt();
+
+        BloodType donatedBloodType = new BloodType(bloodGroup, rhFactor);
+        boolean bloodTypeAlreadyExists = false;
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().getBloodGroup().equals(donatedBloodType.getBloodGroup()) &&
+            stock.getBloodGroup().getRhFactor() == donatedBloodType.getRhFactor()) {
+                stock.setAmount(stock.getAmount() + donatedAmount);
+                System.out.println("Donation recorded. " + donatedAmount + " units of " + donatedBloodType +
+                        " blood added to the stock.");
+                bloodTypeAlreadyExists = true;
+                break;
+            }
+        }
+
+        if (!bloodTypeAlreadyExists) {
+            bloodStockList.add(new BloodStock(donatedBloodType, donatedAmount));
+            System.out.println("Donation recorded. " + donatedAmount + " units of "  + donatedBloodType +
+                    " blood added as a new stock.");
+        }
     }
 
     public static void viewStock() {
