@@ -90,6 +90,11 @@ public class BloodDonationSystem {
         System.out.println("Current Blood Stock:");
         System.out.println("BloodType\tAmount");
 
+        // Enhanced for loop
+        // for each BloodStock object stock in bloodStockList...
+        for (BloodStock stock : bloodStockList) {
+            System.out.println(stock.getBloodGroup() + "\t\t\t" + stock.getAmount());
+        }
 
     }
 }
