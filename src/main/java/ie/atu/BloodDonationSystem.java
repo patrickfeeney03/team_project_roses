@@ -39,28 +39,6 @@ public class BloodDonationSystem {
                     break;
                 case 2:
                     login(myScanner);
-                    String inputName;
-                    String inputPassword;
-                    System.out.println("Enter username: ");
-                    inputName = myScanner.next();
-                    System.out.println("Enter password: ");
-                    inputPassword = myScanner.next();
-
-                    if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
-                        System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock");
-                        userChoice = myScanner.nextInt();
-
-                        switch (userChoice) {
-                            case 1 -> requestBlood(myScanner);
-                            case 2 -> recordDonation();
-                            case 3 -> viewStock();
-                            default -> System.out.println("Input not valid.\n");
-                        }
-                    }
-                    else {
-                        System.out.println("Wrong password.");
-                    }
-                    break;
                 case 3:
                     exit = true;
                     break;
@@ -84,15 +62,28 @@ public class BloodDonationSystem {
         String inputPassword = lmyScanner.next();
 
         if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
-            // Run the menu.
+            userMenu(lmyScanner);
         }
         else {
             System.out.println("Wrong password.");
         }
     }
 
+    public static void userMenu(Scanner lmyScanner) {
+        boolean exitUserMenu = false;
+        while (!exitUserMenu) {
+            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
+            int userChoice = lmyScanner.nextInt();
 
-    /////////////////////////////////////////////////////////
+            switch (userChoice) {
+                case 1 -> requestBlood(lmyScanner);
+                case 2 -> recordDonation();
+                case 3 -> viewStock();
+                case 4 -> exitUserMenu = true;
+                default -> System.out.println("Input not valid.\n");
+            }
+        }
+    }
 
     public static void requestBlood(Scanner lmyScanner) {
         System.out.println("requestBlood static method");
