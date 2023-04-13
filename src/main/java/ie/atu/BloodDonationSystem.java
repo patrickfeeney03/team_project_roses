@@ -20,7 +20,6 @@ public class BloodDonationSystem {
             System.out.println("Enter your choice: ");
             userChoice = myScanner.nextInt();
 
-
             System.out.println("1: Add new donor\n2: Request Blood\n3: Record Donation\n4: View Stock");
             userChoice = myScanner.nextInt();
 
@@ -40,8 +39,14 @@ public class BloodDonationSystem {
                 default:
                     System.out.println("Input not valid.\n");
             }
-
-
         }
+    }
+
+    public static void register() {
+        System.out.println("register method");
+    }
+
+    public static void login() {
+        System.out.println("login method");
     }
 }
