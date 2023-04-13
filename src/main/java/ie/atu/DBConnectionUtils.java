@@ -4,7 +4,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class DBConnection {
+public class DBConnectionUtils {
 
     // Insert the link of the database.
     // Replaces the placeholders!
