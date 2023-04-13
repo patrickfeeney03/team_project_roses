@@ -1,5 +1,6 @@
 package ie.atu;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class BloodDonationSystem {
@@ -29,22 +30,27 @@ public class BloodDonationSystem {
                     System.out.println("'executing registering process' (not working yet)");
                     break;
                 case 2:
-                    System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock");
-                    userChoice = myScanner.nextInt();
+                    String inputName;
+                    String inputPassword;
+                    System.out.println("Enter username: ");
+                    inputName = myScanner.next();
+                    System.out.println("Enter password: ");
+                    inputPassword = myScanner.next();
+                    if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
+                        System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock");
+                        userChoice = myScanner.nextInt();
 
-                    switch (userChoice) {
-                        case 1:
-                            requestBlood();
-                            break;
-                        case 2:
-                            recordDonation();
-                            break;
-                        case 3:
-                            viewStock();
-                            break;
-                        default:
-                            System.out.println("Input not valid.\n");
+                        switch (userChoice) {
+                            case 1 -> requestBlood();
+                            case 2 -> recordDonation();
+                            case 3 -> viewStock();
+                            default -> System.out.println("Input not valid.\n");
+                        }
                     }
+                    else {
+                        System.out.println("Wrong password.");
+                    }
+
                     break;
                 case 3:
                     exit = true;
