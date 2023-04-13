@@ -1,10 +1,18 @@
 package ie.atu;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.List;
 
 public class BloodDonationSystem {
+    // This list is like an array but it's more dynamic. It's like an interface, in some way.
+    private static List<BloodStock> bloodStockList = new ArrayList<>();
     public static void main(String[] args) {
+        // Manually populating the bloodStockList to check the functionality.
+        bloodStockList.add(new BloodStock(new BloodType("A", '+'), 5));
+        bloodStockList.add(new BloodStock(new BloodType("O", '-'), 20));
+
         Scanner myScanner = new Scanner(System.in);
 
         BloodType bloodType = new BloodType("B", '-');
@@ -79,5 +87,9 @@ public class BloodDonationSystem {
 
     public static void viewStock() {
         System.out.println("viewStock static method");
+        System.out.println("Current Blood Stock:");
+        System.out.println("BloodType\tAmount");
+
+
     }
 }
