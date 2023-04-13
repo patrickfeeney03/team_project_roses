@@ -13,5 +13,35 @@ public class BloodRequest {
         this.unitsRequested = unitsRequested;
     }
 
+    public int getRequestID() {
+        return requestID;
+    }
 
+    public void setRequestID(int requestID) {
+        this.requestID = requestID;
+    }
+
+    public Recipient getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
+    }
+
+    public BloodType getBloodType() {
+        return bloodType;
+    }
+
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
+    }
+
+    public int getUnitsRequested() {
+        return unitsRequested;
+    }
+
+    public void setUnitsRequested(int unitsRequested) {
+        this.unitsRequested = unitsRequested;
+    }
 }
