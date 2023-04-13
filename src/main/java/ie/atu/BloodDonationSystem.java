@@ -94,8 +94,9 @@ public class BloodDonationSystem {
 
         if (requestedAmount <= availableAmount) {
             System.out.println("Request sucessfull. " + requestedAmount + " units of " +
-                    requestedBloodType + " blood will be provided.\nNew stock: " +
-                    (getAvailableBloodStock(requestedBloodType) - requestedAmount));
+                    requestedBloodType + " blood will be provided.");
+            updateBloodStock(requestedBloodType, requestedAmount);
+            System.out.println("New stock: " + getAvailableBloodStock(requestedBloodType));
         }
         else {
             System.out.println("Request unsuccessful. Insufficient stock for " + requestedBloodType +
@@ -112,6 +113,15 @@ public class BloodDonationSystem {
             }
         }
         return 0;
+    }
+
+    public static void updateBloodStock(BloodType requestedBloodType, int amount) {
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().getBloodGroup().equals(requestedBloodType.getBloodGroup()) &&
+                    stock.getBloodGroup().getRhFactor() == requestedBloodType.getRhFactor()) {
+                stock.setAmount(stock.getAmount() - amount);
+            }
+        }
     }
 
     public static void recordDonation() {
