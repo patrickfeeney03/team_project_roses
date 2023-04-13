@@ -1,36 +1,28 @@
 package ie.atu;
+import com.mysql.cj.jdbc.MysqlDataSource;
+
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class DBConnection {
-    private Connection connection;
 
-    public DBConnection() {
-        // Use try catch because trying to connect may throw errors. Credentials may be wrong, etc.
-        try {
-            // Insert the link of the database.
-            // Replaces this placeholders!
-            String url = "asd";
-            String userName = "admin123";
-            String password = "passwordExample";
-            connection = DriverManager.getConnection(url, userName, password);
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // Insert the link of the database.
+    // Replaces the placeholders!
+    private static final String URL = "jdbc:mysql://localhost:3306/project";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "someSadPassword...883";
+    private static final DataSource dataSource;
+
+
+    static {
+        MysqlDataSource mysqlDataSource = new MysqlDataSource();
+        mysqlDataSource.setURL(URL);
+        mysqlDataSource.setUser(USERNAME);
+        mysqlDataSource.setPassword(PASSWORD);
+        dataSource = mysqlDataSource;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 }
