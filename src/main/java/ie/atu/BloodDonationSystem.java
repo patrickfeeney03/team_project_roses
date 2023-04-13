@@ -94,7 +94,8 @@ public class BloodDonationSystem {
 
         if (requestedAmount <= availableAmount) {
             System.out.println("Request sucessfull. " + requestedAmount + " units of " +
-                    requestedBloodType + " blood will be provided.");
+                    requestedBloodType + " blood will be provided.\nNew stock: " +
+                    (getAvailableBloodStock(requestedBloodType) - requestedAmount));
         }
         else {
             System.out.println("Request unsuccessful. Insufficient stock for " + requestedBloodType +
@@ -104,21 +105,9 @@ public class BloodDonationSystem {
 
     // This method is used inside requestBlood to know if there is enough blood
     public static int getAvailableBloodStock(BloodType requestedBloodType) {
-        //System.out.println("Requested blood type inside getAvailableBloodStock: " + requestedBloodType);
-        //System.out.println(bloodStockList);
-        //System.out.println(requestedBloodType); // This returns 0-
-        //System.out.println(bloodStockList.get(1).getBloodGroup()); // This returns O-
-        //System.out.println(bloodStockList.get(1).getAmount());
         for (BloodStock stock : bloodStockList) {
-            //System.out.println(stock.getAmount()); // This returns the stocks as nums.
-            //System.out.println(stock.getBloodGroup()); // Returns type O-
-            //System.out.println((requestedBloodType == stock.getBloodGroup()));
-            System.out.println(requestedBloodType.toString());
-            System.out.println(stock.toString());
-            System.out.println(stock.getBloodGroup().toString());
             if (stock.getBloodGroup().getBloodGroup().equals(requestedBloodType.getBloodGroup()) &&
             stock.getBloodGroup().getRhFactor() == requestedBloodType.getRhFactor()) {
-                System.out.println("Inside if");
                 return stock.getAmount();
             }
         }
