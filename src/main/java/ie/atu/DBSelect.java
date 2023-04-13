@@ -16,7 +16,11 @@ public class DBSelect {
              ResultSet resultSet = statement.executeQuery(selectSQL)) {
 
             while (resultSet.next()) {
+                String patientFirstName = resultSet.getString("patientName");
+                String patientLastName = resultSet.getString("patientSurname");
+                String patientDisease = resultSet.getString("patient_Disease");
 
+                System.out.println("Username: " + patientFirstName + ", Password: " + patientLastName + ", Email: " + patientDisease);
             }
         } catch (SQLException e) {
             e.printStackTrace();
