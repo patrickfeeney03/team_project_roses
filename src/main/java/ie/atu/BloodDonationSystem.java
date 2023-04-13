@@ -88,6 +88,19 @@ public class BloodDonationSystem {
 
         System.out.println("Enter the amount of units needed:");
         int requestedAmount = lmyScanner.nextInt();
+
+        BloodType requestedBloodType = new BloodType(bloodGroup, rhFactor);
+        int availableAmount = getAvailableBloodStock(requestedBloodType);
+    }
+
+    // This method is used inside requestBlood to know if there is enough blood
+    public static int getAvailableBloodStock(BloodType requestedBloodType) {
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().equals(requestedBloodType)) {
+                return stock.getAmount();
+            }
+        }
+        return 0;
     }
 
     public static void recordDonation() {
