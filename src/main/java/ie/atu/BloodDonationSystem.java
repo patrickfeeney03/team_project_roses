@@ -36,6 +36,7 @@ public class BloodDonationSystem {
                     inputName = myScanner.next();
                     System.out.println("Enter password: ");
                     inputPassword = myScanner.next();
+
                     if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
                         System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock");
                         userChoice = myScanner.nextInt();
@@ -50,7 +51,6 @@ public class BloodDonationSystem {
                     else {
                         System.out.println("Wrong password.");
                     }
-
                     break;
                 case 3:
                     exit = true;
