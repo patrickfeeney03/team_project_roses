@@ -50,7 +50,7 @@ public class BloodDonationSystem {
                         userChoice = myScanner.nextInt();
 
                         switch (userChoice) {
-                            case 1 -> requestBlood();
+                            case 1 -> requestBlood(myScanner);
                             case 2 -> recordDonation();
                             case 3 -> viewStock();
                             default -> System.out.println("Input not valid.\n");
@@ -77,8 +77,51 @@ public class BloodDonationSystem {
     }
     /////////////////////////////////////////////////////////
 
-    public static void requestBlood() {
+    public static void requestBlood(Scanner lmyScanner) {
         System.out.println("requestBlood static method");
+
+        System.out.println("Enter the blood group (A, B, AB, O):");
+        String bloodGroup = lmyScanner.next().toUpperCase();
+
+        System.out.println("Enter the Rh factor (+ or -):");
+        char rhFactor = lmyScanner.next().charAt(0);
+
+        System.out.println("Enter the amount of units needed:");
+        int requestedAmount = lmyScanner.nextInt();
+
+        BloodType requestedBloodType = new BloodType(bloodGroup, rhFactor);
+        int availableAmount = getAvailableBloodStock(requestedBloodType);
+
+        if (requestedAmount <= availableAmount) {
+            System.out.println("Request sucessfull. " + requestedAmount + " units of " +
+                    requestedBloodType + " blood will be provided.");
+            updateBloodStock(requestedBloodType, requestedAmount);
+            System.out.println("New stock: " + getAvailableBloodStock(requestedBloodType));
+        }
+        else {
+            System.out.println("Request unsuccessful. Insufficient stock for " + requestedBloodType +
+                    ". Only " + availableAmount + " units available.");
+        }
+    }
+
+    // This method is used inside requestBlood to know if there is enough blood
+    public static int getAvailableBloodStock(BloodType requestedBloodType) {
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().getBloodGroup().equals(requestedBloodType.getBloodGroup()) &&
+            stock.getBloodGroup().getRhFactor() == requestedBloodType.getRhFactor()) {
+                return stock.getAmount();
+            }
+        }
+        return 0;
+    }
+
+    public static void updateBloodStock(BloodType requestedBloodType, int amount) {
+        for (BloodStock stock : bloodStockList) {
+            if (stock.getBloodGroup().getBloodGroup().equals(requestedBloodType.getBloodGroup()) &&
+                    stock.getBloodGroup().getRhFactor() == requestedBloodType.getRhFactor()) {
+                stock.setAmount(stock.getAmount() - amount);
+            }
+        }
     }
 
     public static void recordDonation() {
