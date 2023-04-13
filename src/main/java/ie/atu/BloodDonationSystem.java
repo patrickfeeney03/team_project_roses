@@ -20,7 +20,7 @@ public class BloodDonationSystem {
             System.out.println("Enter your choice: ");
             userChoice = myScanner.nextInt();
 
-            System.out.println("1: Add new donor\n2: Request Blood\n3: Record Donation\n4: View Stock");
+            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock");
             userChoice = myScanner.nextInt();
 
             switch (userChoice) {
@@ -43,10 +43,23 @@ public class BloodDonationSystem {
     }
 
     public static void register() {
-        System.out.println("register method");
+        System.out.println("register static method");
     }
 
     public static void login() {
-        System.out.println("login method");
+        System.out.println("login static method");
+    }
+    /////////////////////////////////////////////////////////
+
+    public static void requestBlood() {
+        System.out.println("requestBlood static method");
+    }
+
+    public static void recordDonation() {
+        System.out.println("recordDonation static method");
+    }
+
+    public static void viewStock() {
+        System.out.println("viewStock static method");
     }
 }
