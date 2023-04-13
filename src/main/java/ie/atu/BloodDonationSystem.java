@@ -38,6 +38,7 @@ public class BloodDonationSystem {
                     System.out.println("'executing registering process' (not working yet)");
                     break;
                 case 2:
+                    login(myScanner);
                     String inputName;
                     String inputPassword;
                     System.out.println("Enter username: ");
@@ -72,9 +73,25 @@ public class BloodDonationSystem {
         System.out.println("register static method");
     }
 
-    public static void login() {
+    public static void login(Scanner lmyScanner) {
         System.out.println("login static method");
+        String userName = "admin";
+        String userPassword = "admin";
+
+        System.out.println("Enter user name: ");
+        String inputName = lmyScanner.next();
+        System.out.println("Enter password: ");
+        String inputPassword = lmyScanner.next();
+
+        if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
+            // Run the menu.
+        }
+        else {
+            System.out.println("Wrong password.");
+        }
     }
+
+
     /////////////////////////////////////////////////////////
 
     public static void requestBlood(Scanner lmyScanner) {
@@ -104,7 +121,6 @@ public class BloodDonationSystem {
         }
     }
 
-    // This method is used inside requestBlood to know if there is enough blood
     public static int getAvailableBloodStock(BloodType requestedBloodType) {
         for (BloodStock stock : bloodStockList) {
             if (stock.getBloodGroup().getBloodGroup().equals(requestedBloodType.getBloodGroup()) &&
