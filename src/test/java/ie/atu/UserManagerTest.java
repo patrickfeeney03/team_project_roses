@@ -1,5 +1,7 @@
 package ie.atu;
 
+import java.util.Scanner;
+
 public class UserManagerTest {
     public static void main(String[] args) {
         UserManager userManager  = new UserManager();
@@ -24,5 +26,8 @@ public class UserManagerTest {
         // Test for getUserByEmail()
         User userResult = userManager.getUserByEmail("paulA@gmail.com");
         System.out.println("getUserByEmail result (id): " + userResult.getUser_Id());
+
+        // Test for login(), user input is required on this case, for now...
+        userManager.login(new Scanner(System.in));
     }
 }

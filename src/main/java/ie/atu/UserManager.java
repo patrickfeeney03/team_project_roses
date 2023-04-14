@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class UserManager {
@@ -14,10 +15,19 @@ public class UserManager {
     }
 
     public void login(Scanner scanner) {
-        System.out.println("Enter user name: ");
-        String inputName = scanner.next();
+        System.out.println("Enter email: ");
+        String inputEmail = scanner.next();
         System.out.println("Enter password: ");
         String inputPassword = scanner.next();
+
+        User user = getUserByEmail(inputEmail);
+
+        if (user != null && Objects.equals(inputPassword, user.getUser_password())) {
+            System.out.println("Login successful.");
+        }
+        else {
+            System.out.println("Wrong username or/and password.");
+        }
     }
 
     public boolean addUser(User user) {
