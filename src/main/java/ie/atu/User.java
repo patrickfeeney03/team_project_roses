@@ -1,5 +1,10 @@
 package ie.atu;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class User {
 
    private String user_Name;
@@ -16,6 +21,31 @@ public class User {
         this.user_Age = user_Age;
         this.user_Id = user_Id;
     }
+
+    public Connection getConnection() throws SQLException {
+        return DBConnectionUtils.getConnection();
+    }
+
+    public void testingDatabaseOperation() {
+        String selectSQL =
+                "SELECT * FROM user";
+        try (Connection connection = DBConnectionUtils.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSQL)) {
+            while (resultSet.next()) {
+                String email = resultSet.getString("email");
+                System.out.println(email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        User testUser1 = new User("John Doe", "123 Main St", "555-1234", "25", "1");
+        testUser1.testingDatabaseOperation();
+    }
+
 
     public String getUser_Name() {
         return user_Name;
@@ -57,3 +87,4 @@ public class User {
         this.user_Phone = user_Phone;
     }
 }
+
