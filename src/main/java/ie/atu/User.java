@@ -111,36 +111,6 @@ public class User {
         this.user_Age = user_Age;
     }
 
-    public static void testingDatabaseOperation() {
-        String selectSQL =
-                "SELECT * FROM user";
-        try (Connection connection = DBConnectionUtils.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(selectSQL)) {
-            while (resultSet.next()) {
-                String email = resultSet.getString("email");
-                System.out.println(email);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean addUser(int id, String email, String password, String name, String role, String address, String phone, int age) {
-        String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
-                "VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d')";
-        String formattedSQL = String.format(insertSQL, id, email, password, name, role, address, phone, age);
-
-        try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(formattedSQL)) {
-            preparedStatement.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public void removeUser(int id) {
         String deleteSQL = "DELETE FROM user WHERE userID = ?";
 
