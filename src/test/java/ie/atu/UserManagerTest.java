@@ -8,5 +8,11 @@ public class UserManagerTest {
                 "999333222", 19);
         boolean addUserResult = userManager.addUser(userTest);
         System.out.println("addUser result: " + addUserResult);
+
+
+        userTest.setUser_Age(20);
+        userTest.setUser_email("notGmail@gmail.com");
+        boolean updateUserResult = userManager.updateUser(userTest);
+        System.out.println("updateUser result: " + updateUserResult);
     }
 }
