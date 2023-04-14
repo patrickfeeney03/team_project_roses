@@ -1,19 +1,24 @@
 package ie.atu;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class User {
 
-   private String user_Name;
-   private String user_Address;
-   private String user_Phone;
-   private String user_Age;
-   private String user_Id;
+    private String user_Id;
+    private String user_email;
+    private String user_password;
+    private String user_Name;
+    private String user_role;
+    private String user_Address;
+    private String user_Phone;
+    private String user_Age;
 
 
+
+
+
+
+//(int id, String email, String password, String role, String address, String phone, int age)
     public User(String user_Name, String user_Address, String user_Phone, String user_Age, String user_Id) {
         this.user_Name = user_Name;
         this.user_Address = user_Address;
@@ -29,7 +34,7 @@ public class User {
 
 
     public static void main(String[] args) {
-        User testUser1 = new User("John Doe", "123 Main St", "555-1234", "25", "1");
+        //User user1 = new User()
         testingDatabaseOperation();
     }
 
@@ -86,6 +91,21 @@ public class User {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean addUser(int id, String email, String password, String role, String address, String phone, int age) {
+        String insertSQL = "INSERT INTO user (userID, email, password, role, address, phone, age) " +
+                "VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d')";
+        String formattedSQL = String.format(insertSQL, id, email, password, role, address, phone, age);
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(formattedSQL)) {
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
