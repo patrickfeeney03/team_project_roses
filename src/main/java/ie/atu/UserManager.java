@@ -59,4 +59,22 @@ public class UserManager {
         }
         return false;
     }
+
+    public boolean removeUser(User user) {
+        String deleteSQL = "DELETE FROM  user WHERE userID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, user.getUser_Id());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
