@@ -61,7 +61,7 @@ public class UserManager {
     }
 
     public boolean removeUser(User user) {
-        String deleteSQL = "DELETE FROM  user WHERE userID = ?";
+        String deleteSQL = "DELETE FROM user WHERE userID = ?";
 
         try (Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
