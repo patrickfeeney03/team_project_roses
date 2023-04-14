@@ -33,4 +33,30 @@ public class UserManager {
         }
         return false;
     }
+
+    public boolean updateUser(User user) {
+        String updateSQL = "UPDATE user SET email = ?, password = ?, name = ?, role = ?, address = ?, phone = ?," +
+                "age = ? WHERE userID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, user.getUser_email());
+            preparedStatement.setString(2, user.getUser_password());
+            preparedStatement.setString(3, user.getUser_Name());
+            preparedStatement.setString(4, user.getUser_role());
+            preparedStatement.setString(5, user.getUser_Address());
+            preparedStatement.setString(6, user.getUser_Phone());
+            preparedStatement.setInt(7, user.getUser_Age());
+            preparedStatement.setInt(8, user.getUser_Id());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
