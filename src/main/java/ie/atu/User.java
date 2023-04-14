@@ -27,6 +27,9 @@ public class User {
         this.user_Age = user_Age;
     }
 
+    public User() {
+    }
+
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -34,9 +37,12 @@ public class User {
     public static void main(String[] args) {
         User user1 = new User(5, "theWeekend@gmail.com", "goodPassword1", "saturday",
                 "donor", "Miami Beach", "999-222", 30);
+        User dummyUser = new User();
+        dummyUser.removeUser(5);
         //testingDatabaseOperation();
-        user1.addUser(user1.getUser_Id(), user1.getUser_email(), user1.getUser_password(), user1.getUser_Name(),
-                user1.getUser_role(), user1.getUser_Address(), user1.getUser_Phone(), user1.getUser_Age());
+        /*user1.addUser(user1.getUser_Id(), user1.getUser_email(), user1.getUser_password(), user1.getUser_Name(),
+                user1.getUser_role(), user1.getUser_Address(), user1.getUser_Phone(), user1.getUser_Age());*/
+
     }
 
     public int getUser_Id() {
@@ -130,6 +136,27 @@ public class User {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void removeUser(int id) {
+        String deleteSQL = "DELETE FROM user WHERE userID = ?";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, id);
+            // executeUpdate() returns amount of affected rows.
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("User with ID " + id + " has been removed.");
+            }
+            else {
+                System.out.println("No user found with ID " + id + ".");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
