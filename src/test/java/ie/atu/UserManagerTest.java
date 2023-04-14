@@ -12,7 +12,7 @@ public class UserManagerTest {
         System.out.println("addUser result: " + addUserResult);
 
         // Test for updateUser()
-        userTest.setUser_Age(20);
+        userTest.setUser_age(20);
         userTest.setUser_email("notGmail@gmail.com");
         boolean updateUserResult = userManager.updateUser(userTest);
         System.out.println("updateUser result: " + updateUserResult);

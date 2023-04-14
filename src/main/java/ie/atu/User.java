@@ -5,24 +5,24 @@ public class User {
     private int user_Id;
     private String user_email;
     private String user_password;
-    private String user_Name;
+    private String user_name;
     private String user_role;
-    private String user_Address;
-    private String user_Phone;
-    private int user_Age;
+    private String user_address;
+    private String user_phone;
+    private int user_age;
 
 //(int id, String email, String password, String role, String address, String phone, int age)
 
-    public User(int user_Id, String user_email, String user_password, String user_Name, String user_role,
-                String user_Address, String user_Phone, int user_Age) {
+    public User(int user_Id, String user_email, String user_password, String user_name, String user_role,
+                String user_address, String user_phone, int user_age) {
         this.user_Id = user_Id;
         this.user_email = user_email;
         this.user_password = user_password;
-        this.user_Name = user_Name;
+        this.user_name = user_name;
         this.user_role = user_role;
-        this.user_Address = user_Address;
-        this.user_Phone = user_Phone;
-        this.user_Age = user_Age;
+        this.user_address = user_address;
+        this.user_phone = user_phone;
+        this.user_age = user_age;
     }
 
     public User() {
@@ -52,12 +52,12 @@ public class User {
         this.user_password = user_password;
     }
 
-    public String getUser_Name() {
-        return user_Name;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setUser_Name(String user_Name) {
-        this.user_Name = user_Name;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String getUser_role() {
@@ -68,28 +68,28 @@ public class User {
         this.user_role = user_role;
     }
 
-    public String getUser_Address() {
-        return user_Address;
+    public String getUser_address() {
+        return user_address;
     }
 
-    public void setUser_Address(String user_Address) {
-        this.user_Address = user_Address;
+    public void setUser_address(String user_address) {
+        this.user_address = user_address;
     }
 
-    public String getUser_Phone() {
-        return user_Phone;
+    public String getUser_phone() {
+        return user_phone;
     }
 
-    public void setUser_Phone(String user_Phone) {
-        this.user_Phone = user_Phone;
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
     }
 
-    public int getUser_Age() {
-        return user_Age;
+    public int getUser_age() {
+        return user_age;
     }
 
-    public void setUser_Age(int user_Age) {
-        this.user_Age = user_Age;
+    public void setUser_age(int user_age) {
+        this.user_age = user_age;
     }
 }
 

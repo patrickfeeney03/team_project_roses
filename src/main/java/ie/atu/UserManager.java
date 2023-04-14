@@ -1,10 +1,23 @@
 package ie.atu;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
 
 public class UserManager {
+
+
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
+    }
+
+    public void login(Scanner scanner) {
+        System.out.println("Enter user name: ");
+        String inputName = scanner.next();
+        System.out.println("Enter password: ");
+        String inputPassword = scanner.next();
     }
 
     public boolean addUser(User user) {
@@ -16,11 +29,11 @@ public class UserManager {
             preparedStatement.setInt(1, user.getUser_Id());
             preparedStatement.setString(2, user.getUser_email());
             preparedStatement.setString(3, user.getUser_password());
-            preparedStatement.setString(4, user.getUser_Name());
+            preparedStatement.setString(4, user.getUser_name());
             preparedStatement.setString(5, user.getUser_role());
-            preparedStatement.setString(6, user.getUser_Address());
-            preparedStatement.setString(7, user.getUser_Phone());
-            preparedStatement.setInt(8, user.getUser_Age());
+            preparedStatement.setString(6, user.getUser_address());
+            preparedStatement.setString(7, user.getUser_phone());
+            preparedStatement.setInt(8, user.getUser_age());
 
             // .executeUpdate() returns the number of rows affected.
             int rowsAffected = preparedStatement.executeUpdate();
@@ -42,11 +55,11 @@ public class UserManager {
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setString(1, user.getUser_email());
             preparedStatement.setString(2, user.getUser_password());
-            preparedStatement.setString(3, user.getUser_Name());
+            preparedStatement.setString(3, user.getUser_name());
             preparedStatement.setString(4, user.getUser_role());
-            preparedStatement.setString(5, user.getUser_Address());
-            preparedStatement.setString(6, user.getUser_Phone());
-            preparedStatement.setInt(7, user.getUser_Age());
+            preparedStatement.setString(5, user.getUser_address());
+            preparedStatement.setString(6, user.getUser_phone());
+            preparedStatement.setInt(7, user.getUser_age());
             preparedStatement.setInt(8, user.getUser_Id());
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -76,5 +89,32 @@ public class UserManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public User getUserByEmail(String email) {
+        User user = null;
+        String selectSQL = "SELECT * FROM user WHERE email = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setUser_Id(resultSet.getInt("userID"));
+                user.setUser_email(resultSet.getString("email"));
+                user.setUser_password(resultSet.getString("password"));
+                user.setUser_name(resultSet.getString("name"));
+                user.setUser_role(resultSet.getString("role"));
+                user.setUser_address(resultSet.getString("address"));
+                user.setUser_phone(resultSet.getString("phone"));
+                user.setUser_age(resultSet.getInt("age"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
