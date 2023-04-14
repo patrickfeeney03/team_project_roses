@@ -35,14 +35,16 @@ public class User {
     }
 
     public static void main(String[] args) {
-        User user1 = new User(5, "theWeekend@gmail.com", "goodPassword1", "saturday",
-                "donor", "Miami Beach", "999-222", 30);
+        User user1 = new User(5, "theWeekend@gmail.com", "TEST", "saturday",
+                "admin", "Miami Beach", "999-222", 30);
         User dummyUser = new User();
-        dummyUser.removeUser(5);
+        //dummyUser.removeUser(5);
+
+
         //testingDatabaseOperation();
         /*user1.addUser(user1.getUser_Id(), user1.getUser_email(), user1.getUser_password(), user1.getUser_Name(),
                 user1.getUser_role(), user1.getUser_Address(), user1.getUser_Phone(), user1.getUser_Age());*/
-
+        user1.updateUser();
     }
 
     public int getUser_Id() {
@@ -158,6 +160,32 @@ public class User {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean updateUser() {
+        String updateSQL = "UPDATE user SET email = ?, password = ?, name = ?, role = ?, address = ?, phone = ?," +
+                "age = ? WHERE userID = ?";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, user_email);
+            preparedStatement.setString(2, user_password);
+            preparedStatement.setString(3, user_Name);
+            preparedStatement.setString(4, user_role);
+            preparedStatement.setString(5, user_Address);
+            preparedStatement.setString(6, user_Phone);
+            preparedStatement.setInt(7, user_Age);
+            preparedStatement.setInt(8, user_Id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 
