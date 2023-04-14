@@ -10,7 +10,7 @@ public class DBConnectionUtils {
     // Replaces the placeholders!
     private static final String URL = "jdbc:mysql://localhost:3306/project";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "someSadPassword...883";
+    private static final String PASSWORD = "root";
     private static final DataSource dataSource;
 
 
@@ -25,4 +25,6 @@ public class DBConnectionUtils {
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
+
+    // add some function to close the connection?
 }
