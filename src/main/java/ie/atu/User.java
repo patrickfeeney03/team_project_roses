@@ -34,31 +34,9 @@ public class User {
     public static void main(String[] args) {
         User user1 = new User(5, "theWeekend@gmail.com", "goodPassword1", "saturday",
                 "donor", "Miami Beach", "999-222", 30);
-        testingDatabaseOperation();
-    }
-
-    public String getUser_Name() {
-        return user_Name;
-    }
-
-    public void setUser_Name(String user_Name) {
-        this.user_Name = user_Name;
-    }
-
-    public String getUser_Address() {
-        return user_Address;
-    }
-
-    public void setUser_Address(String user_Address) {
-        this.user_Address = user_Address;
-    }
-
-    public int getUser_Age() {
-        return user_Age;
-    }
-
-    public void setUser_Age(int user_Age) {
-        this.user_Age = user_Age;
+        //testingDatabaseOperation();
+        user1.addUser(user1.getUser_Id(), user1.getUser_email(), user1.getUser_password(), user1.getUser_Name(),
+                user1.getUser_role(), user1.getUser_Address(), user1.getUser_Phone(), user1.getUser_Age());
     }
 
     public int getUser_Id() {
@@ -69,12 +47,60 @@ public class User {
         this.user_Id = user_Id;
     }
 
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
+    public String getUser_password() {
+        return user_password;
+    }
+
+    public void setUser_password(String user_password) {
+        this.user_password = user_password;
+    }
+
+    public String getUser_Name() {
+        return user_Name;
+    }
+
+    public void setUser_Name(String user_Name) {
+        this.user_Name = user_Name;
+    }
+
+    public String getUser_role() {
+        return user_role;
+    }
+
+    public void setUser_role(String user_role) {
+        this.user_role = user_role;
+    }
+
+    public String getUser_Address() {
+        return user_Address;
+    }
+
+    public void setUser_Address(String user_Address) {
+        this.user_Address = user_Address;
+    }
+
     public String getUser_Phone() {
         return user_Phone;
     }
 
     public void setUser_Phone(String user_Phone) {
         this.user_Phone = user_Phone;
+    }
+
+    public int getUser_Age() {
+        return user_Age;
+    }
+
+    public void setUser_Age(int user_Age) {
+        this.user_Age = user_Age;
     }
 
     public static void testingDatabaseOperation() {
@@ -92,10 +118,10 @@ public class User {
         }
     }
 
-    public boolean addUser(int id, String email, String password, String role, String address, String phone, int age) {
-        String insertSQL = "INSERT INTO user (userID, email, password, role, address, phone, age) " +
-                "VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%d')";
-        String formattedSQL = String.format(insertSQL, id, email, password, role, address, phone, age);
+    public boolean addUser(int id, String email, String password, String name, String role, String address, String phone, int age) {
+        String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
+                "VALUES ('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d')";
+        String formattedSQL = String.format(insertSQL, id, email, password, name, role, address, phone, age);
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(formattedSQL)) {
