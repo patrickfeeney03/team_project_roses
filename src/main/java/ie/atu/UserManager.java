@@ -21,6 +21,13 @@ public class UserManager {
             preparedStatement.setString(6, user.getUser_Address());
             preparedStatement.setString(7, user.getUser_Phone());
             preparedStatement.setInt(8, user.getUser_Age());
+
+            // .executeUpdate() returns the number of rows affected.
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
