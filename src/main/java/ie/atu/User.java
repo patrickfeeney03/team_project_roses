@@ -26,24 +26,11 @@ public class User {
         return DBConnectionUtils.getConnection();
     }
 
-    public void testingDatabaseOperation() {
-        String selectSQL =
-                "SELECT * FROM user";
-        try (Connection connection = DBConnectionUtils.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(selectSQL)) {
-            while (resultSet.next()) {
-                String email = resultSet.getString("email");
-                System.out.println(email);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public static void main(String[] args) {
         User testUser1 = new User("John Doe", "123 Main St", "555-1234", "25", "1");
-        testUser1.testingDatabaseOperation();
+        testingDatabaseOperation();
     }
 
 
@@ -86,5 +73,22 @@ public class User {
     public void setUser_Phone(String user_Phone) {
         this.user_Phone = user_Phone;
     }
+
+    public static void testingDatabaseOperation() {
+        String selectSQL =
+                "SELECT * FROM user";
+        try (Connection connection = DBConnectionUtils.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSQL)) {
+            while (resultSet.next()) {
+                String email = resultSet.getString("email");
+                System.out.println(email);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
+
 
