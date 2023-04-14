@@ -15,7 +15,6 @@ public class User {
 
 //(int id, String email, String password, String role, String address, String phone, int age)
 
-
     public User(int user_Id, String user_email, String user_password, String user_Name, String user_role,
                 String user_Address, String user_Phone, int user_Age) {
         this.user_Id = user_Id;
