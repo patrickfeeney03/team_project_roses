@@ -32,7 +32,8 @@ public class User {
     }
 
     public static void main(String[] args) {
-        //User user1 = new User()
+        User user1 = new User(5, "theWeekend@gmail.com", "goodPassword1", "saturday",
+                "donor", "Miami Beach", "999-222", 30);
         testingDatabaseOperation();
     }
 
