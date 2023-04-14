@@ -20,5 +20,9 @@ public class UserManagerTest {
         // Test for removeUser()
         boolean removeUserResult = userManager.removeUser(userTest);
         System.out.println("removeUser result: " + removeUserResult);
+
+        // Test for getUserByEmail()
+        User userResult = userManager.getUserByEmail("paulA@gmail.com");
+        System.out.println("getUserByEmail result (id): " + userResult.getUser_Id());
     }
 }
