@@ -24,7 +24,7 @@ public class BloodDonationSystem {
         boolean exit = false;
         while (!exit) {
             System.out.println("\nMain Menu:");
-            System.out.println("1. Register (not working yet)");
+            System.out.println("1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
 
@@ -35,7 +35,7 @@ public class BloodDonationSystem {
             switch (userChoice) {
 
                 case 1:
-                    System.out.println("'executing registering process' (not working yet)");
+                    register();
                     break;
                 case 2:
                     login(myScanner);
