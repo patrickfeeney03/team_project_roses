@@ -14,12 +14,16 @@ public class BloodStockManager {
         int availableAmount = getAvailableBloodstock(requestedBloodType);
 
         if (amount <= availableAmount) {
-            updateBloodStock(requestedBloodType, amount);
+            updateBloodStock(requestedBloodType, -amount);
             return true;
         }
         else {
             return false;
         }
+    }
+
+    public boolean recordDonation(BloodType donatedBloodType, int amount) {
+        return false;
     }
 
     public int getAvailableBloodstock(BloodType bloodTypeAvailability) {
@@ -50,7 +54,7 @@ public class BloodStockManager {
         String updateSQL =
                 "UPDATE blood_stock bs " +
                 "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
-                "SET bs.amount = bs.amount - ? " +
+                "SET bs.amount = bs.amount + ? " +
                 "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
         try (Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
