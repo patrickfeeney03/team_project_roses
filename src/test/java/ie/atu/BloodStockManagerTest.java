@@ -1,12 +1,11 @@
 package ie.atu;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class BloodStockManagerTest {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        BloodStockManager myBloodManager = new BloodStockManager();
+        BloodManager myBloodManager = new BloodManager();
         BloodType exampleType = new BloodType("A", '+');
 
         /*
@@ -46,10 +45,12 @@ public class BloodStockManagerTest {
          */
 
         // Test for getStock()
+        /*
         List<BloodStock> bloodStockList = myBloodManager.getStock();
         for (BloodStock stock : bloodStockList) {
             System.out.println("Blood Type: " + stock.getBloodGroup() + ", Amount: " + stock.getAmount());
         }
+         */
 
 
     }

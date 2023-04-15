@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodStockManager {
+public class BloodManager {
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
