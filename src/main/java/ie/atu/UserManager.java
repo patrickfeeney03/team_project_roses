@@ -14,7 +14,7 @@ public class UserManager {
         return DBConnectionUtils.getConnection();
     }
 
-    public void login(Scanner scanner) {
+    public boolean login(Scanner scanner) {
         System.out.println("Enter email: ");
         String inputEmail = scanner.next();
         System.out.println("Enter password: ");
@@ -24,9 +24,11 @@ public class UserManager {
 
         if (user != null && Objects.equals(inputPassword, user.getUser_password())) {
             System.out.println("Login successful.");
+            return true;
         }
         else {
             System.out.println("Wrong username or/and password.");
+            return false;
         }
     }
 
