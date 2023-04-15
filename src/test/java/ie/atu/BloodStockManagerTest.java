@@ -29,5 +29,12 @@ public class BloodStockManagerTest {
         System.out.println(myBloodManager.getAvailableBloodstock(exampleType));
          */
 
+        // Test for requestBlood()
+        /*
+        BloodType abMinusType = new BloodType("AB", '-');
+        boolean requestSuccessful = myBloodManager.requestBlood(abMinusType, 5);
+        System.out.println("Request successful: " + requestSuccessful);
+        */
+
     }
 }
