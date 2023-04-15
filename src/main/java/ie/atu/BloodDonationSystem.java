@@ -35,7 +35,7 @@ public class BloodDonationSystem {
             switch (userChoice) {
 
                 case 1:
-
+                    userManager.register(myScanner);
                     break;
                 case 2:
                     boolean loginAttempt = userManager.login(myScanner);
