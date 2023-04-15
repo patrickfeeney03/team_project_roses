@@ -23,7 +23,10 @@ public class BloodStockManager {
     }
 
     public boolean recordDonation(BloodType donatedBloodType, int amount) {
-        return false;
+        if (amount <= 0) {
+            return false;
+        }
+        return updateBloodStock(donatedBloodType, amount);
     }
 
     public int getAvailableBloodstock(BloodType bloodTypeAvailability) {

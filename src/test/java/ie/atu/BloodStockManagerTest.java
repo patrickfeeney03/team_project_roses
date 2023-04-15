@@ -36,5 +36,11 @@ public class BloodStockManagerTest {
         System.out.println("Request successful: " + requestSuccessful);
         */
 
+        // Test for recordDonation()
+        BloodType aPlusType = new BloodType("A", '+');
+        boolean donationSuccessful = myBloodManager.recordDonation(aPlusType, 20);
+        System.out.println("Donation successful: " + donationSuccessful);
+
+
     }
 }
