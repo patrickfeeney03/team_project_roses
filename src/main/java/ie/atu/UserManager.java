@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class UserManager {
-
+    BloodManager bloodManager = new BloodManager();
 
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
@@ -67,9 +68,36 @@ public class UserManager {
             int userChoice = scanner.nextInt();
 
             switch (userChoice) {
-                case 1 -> System.out.println("request blood");
-                case 2 -> System.out.println("record donation");
-                case 3 -> System.out.println("view stock");
+                case 1 -> {
+                    // Request Blood
+                    System.out.println("Requested Blood Group: ");
+                    String inputBloodGroup = scanner.next();
+                    System.out.println("Requested Rh Factor: ");
+                    char inputRhFactor = scanner.next().charAt(0);
+                    System.out.println("Amount of units: ");
+                    int inputAmount = scanner.nextInt();
+                    BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+                    System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
+                }
+                case 2 -> {
+                    // Record Donation
+                    System.out.println("Donated Blood Group: ");
+                    String inputBloodGroup = scanner.next();
+                    System.out.println("Donated Rh Factor: ");
+                    char inputRhFactor = scanner.next().charAt(0);
+                    System.out.println("Donated units: ");
+                    int inputAmount = scanner.nextInt();
+                    BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+                    System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
+                }
+                case 3 -> {
+                    // View Stock
+                    List<BloodStock> bloodStockList = bloodManager.getStock();
+                    for (BloodStock bloodStock : bloodStockList) {
+                        System.out.println("Blood Type: " + bloodStock.getBloodGroup() +
+                                ", Amount: " + bloodStock.getAmount());
+                    }
+                }
                 case 4 -> exitUserMenu = true;
                 default -> System.out.println("Input not valid.\n");
             }
