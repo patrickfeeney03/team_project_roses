@@ -36,10 +36,24 @@ public class BloodStockManager {
     public boolean updateBloodStock(BloodType bloodTypeToUpdate, int amount) {
         boolean updateSuccessful = false;
         String updateSQL =
-                "" +
-                "" +
-                "";
-        return false;
+                "UPDATE blood_stock bs " +
+                "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
+                "SET bs.amount = bs.amount - ? " +
+                "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setInt(1, amount);
+            preparedStatement.setString(2, bloodTypeToUpdate.getBloodGroup());
+            preparedStatement.setString(3, Character.toString(bloodTypeToUpdate.getRhFactor()));
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                updateSuccessful = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return updateSuccessful;
     }
 
 }

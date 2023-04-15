@@ -8,6 +8,8 @@ public class BloodStockManagerTest {
         BloodStockManager myBloodManager = new BloodStockManager();
         BloodType exampleType = new BloodType("A", '+');
 
+        /*
+        // Test for getAvailableBloodStock()
         int amount = myBloodManager.getAvailableBloodstock(exampleType);
         System.out.println("The amount of blood is: " + amount);
 
@@ -18,6 +20,14 @@ public class BloodStockManagerTest {
         BloodType exampleType2 = new BloodType(bloodGroup, rhFactor);
         int amount2 = myBloodManager.getAvailableBloodstock(exampleType2);
         System.out.println("The amount second amount of blood is: " + amount2);
+        */
+
+        // Test for updateBloodStock()
+        /*
+        boolean updateSuccessful = myBloodManager.updateBloodStock(exampleType, 20);
+        System.out.println("Update successful: " + updateSuccessful);
+        System.out.println(myBloodManager.getAvailableBloodstock(exampleType));
+         */
 
     }
 }
