@@ -35,7 +35,7 @@ public class BloodDonationSystem {
             switch (userChoice) {
 
                 case 1:
-                    register();
+
                     break;
                 case 2:
                     boolean loginAttempt = userManager.login(myScanner);
@@ -48,10 +48,6 @@ public class BloodDonationSystem {
 
             }
         }
-    }
-
-    public static void register() {
-        System.out.println("register static method");
     }
 
     public static void requestBlood(Scanner lmyScanner) {
