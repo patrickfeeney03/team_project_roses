@@ -33,4 +33,13 @@ public class BloodStockManager {
         return availableAmount;
     }
 
+    public boolean updateBloodStock(BloodType bloodTypeToUpdate, int amount) {
+        boolean updateSuccessful = false;
+        String updateSQL =
+                "" +
+                "" +
+                "";
+        return false;
+    }
+
 }
