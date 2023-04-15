@@ -30,6 +30,26 @@ public class UserManager {
         }
     }
 
+    public void register(Scanner scanner) {
+        System.out.println("Enter user email: ");
+        String userEmail = scanner.next();
+        System.out.println("Enter user password: ");
+        String userPassword = scanner.next();
+        System.out.println("Enter user name: ");
+        String userName = scanner.next();
+        System.out.println("Enter user role: ");
+        String userRole = scanner.next();
+        System.out.println("Enter user address: ");
+        String userAddress = scanner.next();
+        System.out.println("Enter user phone: ");
+        String userPhone = scanner.next();
+        System.out.println("Enter user age: ");
+        int userAge = scanner.nextInt();
+
+        // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
+        User newUser = new User(0, userEmail, userPassword, userName, userRole, userAddress, userPhone, userAge);
+    }
+
     public boolean addUser(User user) {
         String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
