@@ -1,5 +1,6 @@
 package ie.atu;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BloodStockManagerTest {
@@ -31,15 +32,24 @@ public class BloodStockManagerTest {
 
         // Test for requestBlood()
         /*
-        BloodType abMinusType = new BloodType("AB", '-');
+        BloodType abMinusType = new BloodType("A", '+');
         boolean requestSuccessful = myBloodManager.requestBlood(abMinusType, 5);
         System.out.println("Request successful: " + requestSuccessful);
-        */
+         */
+
 
         // Test for recordDonation()
+        /*
         BloodType aPlusType = new BloodType("A", '+');
         boolean donationSuccessful = myBloodManager.recordDonation(aPlusType, 20);
         System.out.println("Donation successful: " + donationSuccessful);
+         */
+
+        // Test for getStock()
+        List<BloodStock> bloodStockList = myBloodManager.getStock();
+        for (BloodStock stock : bloodStockList) {
+            System.out.println("Blood Type: " + stock.getBloodGroup() + ", Amount: " + stock.getAmount());
+        }
 
 
     }

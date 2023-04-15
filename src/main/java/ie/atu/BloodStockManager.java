@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BloodStockManager {
     public Connection getConnection() throws SQLException {
@@ -27,6 +29,33 @@ public class BloodStockManager {
             return false;
         }
         return updateBloodStock(donatedBloodType, amount);
+    }
+
+    public List<BloodStock> getStock() {
+        List<BloodStock> bloodStockList = new ArrayList<>();
+
+        String selectSQL =
+                "SELECT bs.amount, bt.blood_group, bt.rh_factor " +
+                "FROM blood_stock bs " +
+                "JOIN blood_types bt ON bs.blood_type_id = bt.id";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int amount = resultSet.getInt("amount");
+                String bloodGroup = resultSet.getString("blood_group");
+                char rhFactor = resultSet.getString("rh_factor").charAt(0);
+                BloodType bloodType = new BloodType(bloodGroup, rhFactor);
+                BloodStock bloodStock = new BloodStock(bloodType, amount);
+                bloodStockList.add(bloodStock);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bloodStockList;
     }
 
     public int getAvailableBloodstock(BloodType bloodTypeAvailability) {
