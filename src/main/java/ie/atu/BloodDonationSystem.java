@@ -39,7 +39,9 @@ public class BloodDonationSystem {
                     break;
                 case 2:
                     boolean loginAttempt = userManager.login(myScanner);
-
+                    if (loginAttempt) {
+                        userManager.userMenu(myScanner);
+                    }
                 case 3:
                     exit = true;
                     break;
