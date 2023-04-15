@@ -16,9 +16,9 @@ public class UserManager {
     }
 
     public boolean login(Scanner scanner) {
-        System.out.println("Enter email: ");
+        System.out.print("Enter email: ");
         String inputEmail = scanner.next();
-        System.out.println("Enter password: ");
+        System.out.print("Enter password: ");
         String inputPassword = scanner.next();
 
         User user = getUserByEmail(inputEmail);
@@ -34,19 +34,19 @@ public class UserManager {
     }
 
     public void register(Scanner scanner) {
-        System.out.println("Enter user email: ");
+        System.out.print("Enter user email: ");
         String userEmail = scanner.next();
-        System.out.println("Enter user password: ");
+        System.out.print("Enter user password: ");
         String userPassword = scanner.next();
-        System.out.println("Enter user name: ");
+        System.out.print("Enter user name: ");
         String userName = scanner.next();
-        System.out.println("Enter user role: ");
+        System.out.print("Enter user role: ");
         String userRole = scanner.next();
-        System.out.println("Enter user address: ");
+        System.out.print("Enter user address: ");
         String userAddress = scanner.next();
-        System.out.println("Enter user phone: ");
+        System.out.print("Enter user phone: ");
         String userPhone = scanner.next();
-        System.out.println("Enter user age: ");
+        System.out.print("Enter user age: ");
         int userAge = scanner.nextInt();
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
@@ -64,34 +64,36 @@ public class UserManager {
     public void userMenu(Scanner scanner) {
         boolean exitUserMenu = false;
         while (!exitUserMenu) {
-            System.out.println("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
+            System.out.print("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout" +
+                    "\nEnter your choice: ");
             int userChoice = scanner.nextInt();
 
             switch (userChoice) {
                 case 1 -> {
                     // Request Blood
-                    System.out.println("Requested Blood Group: ");
+                    System.out.print("Requested Blood Group: ");
                     String inputBloodGroup = scanner.next();
-                    System.out.println("Requested Rh Factor: ");
+                    System.out.print("Requested Rh Factor: ");
                     char inputRhFactor = scanner.next().charAt(0);
-                    System.out.println("Amount of units: ");
+                    System.out.print("Amount of units: ");
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
                     System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {
                     // Record Donation
-                    System.out.println("Donated Blood Group: ");
+                    System.out.print("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
-                    System.out.println("Donated Rh Factor: ");
+                    System.out.print("Donated Rh Factor: ");
                     char inputRhFactor = scanner.next().charAt(0);
-                    System.out.println("Donated units: ");
+                    System.out.print("Donated units: ");
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
                     System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
                 }
                 case 3 -> {
                     // View Stock
+                    System.out.println("Blood Stock Information:");
                     List<BloodStock> bloodStockList = bloodManager.getStock();
                     for (BloodStock bloodStock : bloodStockList) {
                         System.out.println("Blood Type: " + bloodStock.getBloodGroup() +

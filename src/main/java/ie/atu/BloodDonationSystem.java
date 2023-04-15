@@ -15,7 +15,7 @@ public class BloodDonationSystem {
             System.out.println("3. Exit");
 
             int userChoice;
-            System.out.println("Enter your choice: ");
+            System.out.print("Enter your choice: ");
             userChoice = myScanner.nextInt();
 
             switch (userChoice) {
