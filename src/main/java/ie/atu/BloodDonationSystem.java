@@ -39,7 +39,7 @@ public class BloodDonationSystem {
                     break;
                 case 2:
                     boolean loginAttempt = userManager.login(myScanner);
-                    System.out.println("Logged in: " + loginAttempt);
+
                 case 3:
                     exit = true;
                     break;

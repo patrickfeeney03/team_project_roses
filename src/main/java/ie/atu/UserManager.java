@@ -63,7 +63,7 @@ public class UserManager {
     public void userMenu(Scanner scanner) {
         boolean exitUserMenu = false;
         while (!exitUserMenu) {
-            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
+            System.out.println("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
             int userChoice = scanner.nextInt();
 
             switch (userChoice) {
