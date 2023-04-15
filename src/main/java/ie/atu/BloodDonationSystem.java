@@ -1,9 +1,8 @@
 package ie.atu;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 public class BloodDonationSystem {
     private static UserManager userManager = new UserManager();
@@ -39,7 +38,8 @@ public class BloodDonationSystem {
                     register();
                     break;
                 case 2:
-                    userManager.login(myScanner);
+                    boolean loginAttempt = userManager.login(myScanner);
+                    System.out.println("Logged in: " + loginAttempt);
                 case 3:
                     exit = true;
                     break;
@@ -50,24 +50,6 @@ public class BloodDonationSystem {
 
     public static void register() {
         System.out.println("register static method");
-    }
-
-    public static void login(Scanner lmyScanner) {
-        System.out.println("login static method");
-        String userName = "admin";
-        String userPassword = "admin";
-
-        System.out.println("Enter user name: ");
-        String inputName = lmyScanner.next();
-        System.out.println("Enter password: ");
-        String inputPassword = lmyScanner.next();
-
-        if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
-            userMenu(lmyScanner);
-        }
-        else {
-            System.out.println("Wrong password.");
-        }
     }
 
     public static void userMenu(Scanner lmyScanner) {
