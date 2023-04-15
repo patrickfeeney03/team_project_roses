@@ -57,7 +57,7 @@ public class UserManager {
             System.out.println("User registration successful.");
         }
         else {
-            System.out.println("Use registration failed.");
+            System.out.println("User registration failed.");
         }
     }
 
