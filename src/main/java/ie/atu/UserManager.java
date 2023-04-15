@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -88,7 +89,11 @@ public class UserManager {
                     System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
                 }
                 case 3 -> {
-                    System.out.println("view stock");
+                    List<BloodStock> bloodStockList = bloodManager.getStock();
+                    for (BloodStock bloodStock : bloodStockList) {
+                        System.out.println("Blood Type: " + bloodStock.getBloodGroup() +
+                                ", Amount: " + bloodStock.getAmount());
+                    }
                 }
                 case 4 -> exitUserMenu = true;
                 default -> System.out.println("Input not valid.\n");
