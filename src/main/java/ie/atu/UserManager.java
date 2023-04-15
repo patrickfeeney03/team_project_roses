@@ -78,7 +78,14 @@ public class UserManager {
                     System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {
-                    System.out.println("record donation");
+                    System.out.println("Donated Blood Group: ");
+                    String inputBloodGroup = scanner.next();
+                    System.out.println("Donated Rh Factor: ");
+                    char inputRhFactor = scanner.next().charAt(0);
+                    System.out.println("Donated units: ");
+                    int inputAmount = scanner.nextInt();
+                    BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+                    System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
                 }
                 case 3 -> {
                     System.out.println("view stock");
