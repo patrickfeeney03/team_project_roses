@@ -52,22 +52,6 @@ public class BloodDonationSystem {
         System.out.println("register static method");
     }
 
-    public static void userMenu(Scanner lmyScanner) {
-        boolean exitUserMenu = false;
-        while (!exitUserMenu) {
-            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
-            int userChoice = lmyScanner.nextInt();
-
-            switch (userChoice) {
-                case 1 -> requestBlood(lmyScanner);
-                case 2 -> recordDonation(lmyScanner);
-                case 3 -> viewStock();
-                case 4 -> exitUserMenu = true;
-                default -> System.out.println("Input not valid.\n");
-            }
-        }
-    }
-
     public static void requestBlood(Scanner lmyScanner) {
         System.out.println("requestBlood static method");
 

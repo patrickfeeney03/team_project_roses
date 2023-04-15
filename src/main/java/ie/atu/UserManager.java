@@ -60,6 +60,22 @@ public class UserManager {
         }
     }
 
+    public void userMenu(Scanner scanner) {
+        boolean exitUserMenu = false;
+        while (!exitUserMenu) {
+            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
+            int userChoice = scanner.nextInt();
+
+            switch (userChoice) {
+                case 1 -> System.out.println("request blood");
+                case 2 -> System.out.println("record donation");
+                case 3 -> System.out.println("view stock");
+                case 4 -> exitUserMenu = true;
+                default -> System.out.println("Input not valid.\n");
+            }
+        }
+    }
+
     public boolean addUser(User user) {
         String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
