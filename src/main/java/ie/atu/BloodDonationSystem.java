@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.List;
 
 public class BloodDonationSystem {
+    private static UserManager userManager = new UserManager();
     // This list is like an array but it's more dynamic. It's like an interface, in some way.
     private static List<BloodStock> bloodStockList = new ArrayList<>();
     public static void main(String[] args) {
@@ -38,7 +39,7 @@ public class BloodDonationSystem {
                     register();
                     break;
                 case 2:
-                    login(myScanner);
+                    userManager.login(myScanner);
                 case 3:
                     exit = true;
                     break;
