@@ -69,6 +69,7 @@ public class UserManager {
 
             switch (userChoice) {
                 case 1 -> {
+                    // Request Blood
                     System.out.println("Requested Blood Group: ");
                     String inputBloodGroup = scanner.next();
                     System.out.println("Requested Rh Factor: ");
@@ -79,6 +80,7 @@ public class UserManager {
                     System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {
+                    // Record Donation
                     System.out.println("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
                     System.out.println("Donated Rh Factor: ");
@@ -89,6 +91,7 @@ public class UserManager {
                     System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
                 }
                 case 3 -> {
+                    // View Stock
                     List<BloodStock> bloodStockList = bloodManager.getStock();
                     for (BloodStock bloodStock : bloodStockList) {
                         System.out.println("Blood Type: " + bloodStock.getBloodGroup() +
