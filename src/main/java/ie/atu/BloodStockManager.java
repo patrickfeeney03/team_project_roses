@@ -10,7 +10,19 @@ public class BloodStockManager {
         return DBConnectionUtils.getConnection();
     }
 
-    public int getAvailableBloodstock(BloodType requestedBloodType) {
+    public boolean requestBlood(BloodType requestedBloodType, int amount) {
+        int availableAmount = getAvailableBloodstock(requestedBloodType);
+
+        if (amount <= availableAmount) {
+            updateBloodStock(requestedBloodType, amount);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public int getAvailableBloodstock(BloodType bloodTypeAvailability) {
         int availableAmount = 0;
         String selectSQL =
                 "SELECT bs.amount FROM blood_stock bs " +
@@ -18,8 +30,8 @@ public class BloodStockManager {
                 "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-            preparedStatement.setString(1, requestedBloodType.getBloodGroup());
-            preparedStatement.setString(2, Character.toString(requestedBloodType.getRhFactor()));
+            preparedStatement.setString(1, bloodTypeAvailability.getBloodGroup());
+            preparedStatement.setString(2, Character.toString(bloodTypeAvailability.getRhFactor()));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -55,5 +67,7 @@ public class BloodStockManager {
         }
         return updateSuccessful;
     }
+
+
 
 }
