@@ -14,7 +14,7 @@ public class UserManager {
         return DBConnectionUtils.getConnection();
     }
 
-    public void login(Scanner scanner) {
+    public boolean login(Scanner scanner) {
         System.out.println("Enter email: ");
         String inputEmail = scanner.next();
         System.out.println("Enter password: ");
@@ -24,9 +24,11 @@ public class UserManager {
 
         if (user != null && Objects.equals(inputPassword, user.getUser_password())) {
             System.out.println("Login successful.");
+            return true;
         }
         else {
             System.out.println("Wrong username or/and password.");
+            return false;
         }
     }
 
@@ -55,6 +57,22 @@ public class UserManager {
         }
         else {
             System.out.println("Use registration failed.");
+        }
+    }
+
+    public void userMenu(Scanner scanner) {
+        boolean exitUserMenu = false;
+        while (!exitUserMenu) {
+            System.out.println("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
+            int userChoice = scanner.nextInt();
+
+            switch (userChoice) {
+                case 1 -> System.out.println("request blood");
+                case 2 -> System.out.println("record donation");
+                case 3 -> System.out.println("view stock");
+                case 4 -> exitUserMenu = true;
+                default -> System.out.println("Input not valid.\n");
+            }
         }
     }
 

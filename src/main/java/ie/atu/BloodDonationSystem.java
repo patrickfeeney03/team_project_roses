@@ -1,11 +1,11 @@
 package ie.atu;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 public class BloodDonationSystem {
+    private static UserManager userManager = new UserManager();
     // This list is like an array but it's more dynamic. It's like an interface, in some way.
     private static List<BloodStock> bloodStockList = new ArrayList<>();
     public static void main(String[] args) {
@@ -35,52 +35,17 @@ public class BloodDonationSystem {
             switch (userChoice) {
 
                 case 1:
-                    register();
+                    userManager.register(myScanner);
                     break;
                 case 2:
-                    login(myScanner);
+                    boolean loginAttempt = userManager.login(myScanner);
+                    if (loginAttempt) {
+                        userManager.userMenu(myScanner);
+                    }
                 case 3:
                     exit = true;
                     break;
 
-            }
-        }
-    }
-
-    public static void register() {
-        System.out.println("register static method");
-    }
-
-    public static void login(Scanner lmyScanner) {
-        System.out.println("login static method");
-        String userName = "admin";
-        String userPassword = "admin";
-
-        System.out.println("Enter user name: ");
-        String inputName = lmyScanner.next();
-        System.out.println("Enter password: ");
-        String inputPassword = lmyScanner.next();
-
-        if (Objects.equals(inputName, userName) && Objects.equals(inputPassword, userPassword)) {
-            userMenu(lmyScanner);
-        }
-        else {
-            System.out.println("Wrong password.");
-        }
-    }
-
-    public static void userMenu(Scanner lmyScanner) {
-        boolean exitUserMenu = false;
-        while (!exitUserMenu) {
-            System.out.println("1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout");
-            int userChoice = lmyScanner.nextInt();
-
-            switch (userChoice) {
-                case 1 -> requestBlood(lmyScanner);
-                case 2 -> recordDonation(lmyScanner);
-                case 3 -> viewStock();
-                case 4 -> exitUserMenu = true;
-                default -> System.out.println("Input not valid.\n");
             }
         }
     }
