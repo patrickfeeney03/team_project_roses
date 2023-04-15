@@ -48,6 +48,14 @@ public class UserManager {
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
         User newUser = new User(0, userEmail, userPassword, userName, userRole, userAddress, userPhone, userAge);
+        boolean wasRegistrationSuccessful = addUser(newUser);
+
+        if (wasRegistrationSuccessful) {
+            System.out.println("User registration successful.");
+        }
+        else {
+            System.out.println("Use registration failed.");
+        }
     }
 
     public boolean addUser(User user) {
