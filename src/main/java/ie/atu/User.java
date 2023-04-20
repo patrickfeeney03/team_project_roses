@@ -1,5 +1,6 @@
 package ie.atu;
 
+// This class is used by the hospital staff. This doesn't represent the actual patients.
 public class User {
 
     private int user_Id;
