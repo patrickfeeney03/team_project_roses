@@ -25,9 +25,12 @@ public class BloodManager {
     }
 
     public boolean recordDonation(BloodType donatedBloodType, int amount) {
+        int existingBloodStock = getAvailableBloodstock(donatedBloodType);
+
         if (amount <= 0) {
             return false;
         }
+
         return updateBloodStock(donatedBloodType, amount);
     }
 
@@ -103,7 +106,4 @@ public class BloodManager {
         }
         return updateSuccessful;
     }
-
-
-
 }

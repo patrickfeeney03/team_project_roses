@@ -1,6 +1,6 @@
 package ie.atu;
 
-public class BloodBank {
+public class BloodBank{
     private String bankID;
     private String bankEmail;
     private String bankAddress;
