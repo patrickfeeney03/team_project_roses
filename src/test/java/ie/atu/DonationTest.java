@@ -20,6 +20,9 @@ public class DonationTest {
                 "\nAge: " + donor1.getUser_age() +
                 "\nFirst visit: " + donor1.getFirst_Med());
         System.out.println("\nDonated amount: " + donatedAmount1 + " units.");
+        System.out.println("Donated amount info from donation2: " + donation2.getUnitsDonated());
         System.out.println("\nBloodType info: " + bloodType1.toString());
+        System.out.println("BloodType info from donor1: " + donor1.getBloodType().toString());
+        System.out.println("BloodType info from donation2: " + donation2.getDonor().getBloodType().toString());
     }
 }
