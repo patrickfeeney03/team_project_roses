@@ -14,9 +14,7 @@ public class UseBloodBankTest {
                 "thisIsAPhoneNumber");
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Session presets: "  + "\nBlood Bank ID: " + bloodBank.getBankID() +
-                "\nBlood Bank Email: " + bloodBank.getBankEmail() + "\nBlood Bank Address: " + bloodBank.getBankAddress() +
-                "\nBlood Bank Phone Number: " + bloodBank.getBankPhone());
+        System.out.println(bloodBank.toString());
         boolean exit = false;
         do {
             System.out.print("Are these details correct? (Y/N): ");

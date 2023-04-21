@@ -55,4 +55,12 @@ public class Donation {
     public void setUnitsDonated(int unitsDonated) {
         this.unitsDonated = unitsDonated;
     }
+
+    public BloodBank getBloodBank() {
+        return bloodBank;
+    }
+
+    public void setBloodBank(BloodBank bloodBank) {
+        this.bloodBank = bloodBank;
+    }
 }
