@@ -56,7 +56,7 @@ public class PatientManager {
         int patient_age = scanner.nextInt();
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
-        Patient newPatient = new User(0, patient_email, patient_firstName, patient_lastName, patient_address,
+        Patient newPatient = new Patient(0, patient_email, patient_firstName, patient_lastName, patient_address,
                 patient_phone, patient_emergencyPhone, patient_age);
         boolean wasRegistrationSuccessful = addPatient(newPatient);
 
