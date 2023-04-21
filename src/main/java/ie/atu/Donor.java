@@ -13,6 +13,14 @@ public class Donor extends User {
         this.bloodType = bloodType;
     }
 
+    public Donor(String bloodType) {
+        this.bloodType = bloodType;
+        this.Last_Med = "Yesterday";
+        this.First_Med = "A year ago";
+    }
+
+
+
     public String getBloodType() {
         return bloodType;
     }
