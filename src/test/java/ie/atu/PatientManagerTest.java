@@ -10,5 +10,8 @@ public class PatientManagerTest {
                 "Conroy", "someStreet09", "353 89 000 0000", "353 89 100 0000",
                 55);
 
+        // Test if addPatient was successful
+        boolean addPatientResult = PatientManager.addPatient(patientTest);
+        System.out.println("addUser result: " + addPatientResult);
     }
 }
