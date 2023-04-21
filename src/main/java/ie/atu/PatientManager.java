@@ -1,6 +1,7 @@
 package ie.atu;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -11,8 +12,30 @@ public class PatientManager {
     }
 
     public boolean addPatient(Patient patient) {
-        String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
+        String insertSQL = "INSERT INTO patient (patient_Id, patient_email, patient_firstName, patient_lastName, " +
+                "role, patient_address, patient_phone, patient_emergencyPhone, patient_age) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, patient.getPatient_email());
+            preparedStatement.setString(2, patient.getPatient_firstName());
+            preparedStatement.setString(3, patient.getPatient_firstName());
+            preparedStatement.setString(4, patient.getPatient_lastName());
+            preparedStatement.setString(5, patient.getPatient_address());
+            preparedStatement.setString(6, patient.getPatient_phone());
+            preparedStatement.setInt(7, patient.getPatient_emergencyPhone());
+            preparedStatement.setInt(8, patient.getPatient_age());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
