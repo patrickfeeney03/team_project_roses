@@ -3,6 +3,7 @@ package ie.atu;
 public class Donation {
     private int donationID;
     private Donor donor;
+    private BloodBank bloodBank;
     private int unitsDonated;
 
     public Donation(int donationID, Donor donor,
