@@ -24,7 +24,7 @@ public class PatientManager {
             preparedStatement.setString(4, patient.getPatient_lastName());
             preparedStatement.setString(5, patient.getPatient_address());
             preparedStatement.setString(6, patient.getPatient_phone());
-            preparedStatement.setInt(7, patient.getPatient_emergencyPhone());
+            preparedStatement.setString(7, patient.getPatient_emergencyPhone());
             preparedStatement.setInt(8, patient.getPatient_age());
 
             int rowsAffected = preparedStatement.executeUpdate();

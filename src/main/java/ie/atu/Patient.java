@@ -71,7 +71,7 @@ public class Patient {
         this.patient_phone = patient_phone;
     }
 
-    public int getPatient_emergencyPhone() {
+    public String getPatient_emergencyPhone() {
         return patient_emergencyPhone;
     }
 
