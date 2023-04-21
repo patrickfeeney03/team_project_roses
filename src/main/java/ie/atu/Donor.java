@@ -19,6 +19,8 @@ public class Donor extends User {
         this.First_Med = "A year ago";
     }
 
+
+
     public String getBloodType() {
         return bloodType;
     }

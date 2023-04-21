@@ -19,6 +19,11 @@ public class Donation {
         this.donationID = 0;
     }
 
+    public Donation(Donor donor, int unitsDonated) {
+        this.donor = donor;
+        this.unitsDonated = unitsDonated;
+    }
+
     //getters and setters
     public int getDonationID() {
         return donationID;
