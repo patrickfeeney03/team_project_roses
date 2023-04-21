@@ -25,6 +25,12 @@ public class Donation {
         this.unitsDonated = unitsDonated;
     }
 
+    public Donation(Donor donor, BloodBank bloodBank, int unitsDonated) {
+        this.donor = donor;
+        this.bloodBank = bloodBank;
+        this.unitsDonated = unitsDonated;
+    }
+
     //getters and setters
     public int getDonationID() {
         return donationID;

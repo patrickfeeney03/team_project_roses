@@ -8,5 +8,6 @@ public class UseBloodBankTest {
      */
     BloodBank bloodBank = new BloodBank("2", "email", "address",
             "thisIsAPhoneNumber");
+    //Donation donation = new Donation()
 
 }
