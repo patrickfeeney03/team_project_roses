@@ -3,14 +3,12 @@ package ie.atu;
 public class Donation {
     private int donationID;
     private Donor donor;
-    private BloodType bloodType;
     private int unitsDonated;
 
     public Donation(int donationID, Donor donor,
                     BloodType bloodtype, int unitsDonated) {
         this.donationID = donationID;
         this.donor = donor;
-        this.bloodType = bloodtype;
         this.unitsDonated = unitsDonated;
     }
 
@@ -29,14 +27,6 @@ public class Donation {
 
     public void setDonor(Donor donor) {
         this.donor = donor;
-    }
-
-    public BloodType getBloodType() {
-        return bloodType;
-    }
-
-    public void setBloodType(BloodType bloodType) {
-        this.bloodType = bloodType;
     }
 
     public int getUnitsDonated() {
