@@ -17,7 +17,7 @@ public class PatientManager {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, patient.getPatient_email());
             preparedStatement.setString(2, patient.getPatient_firstName());
             preparedStatement.setString(3, patient.getPatient_firstName());
