@@ -10,7 +10,13 @@ public class PatientManager {
         return DBConnectionUtils.getConnection();
     }
 
-    public void register(Scanner scanner) {
+    public boolean addPatient(Patient patient) {
+        String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    }
+
+
+        public void register(Scanner scanner) {
         System.out.print("Enter patient email: ");
         String patient_email = scanner.next();
         System.out.print("Enter patient's first name: ");
@@ -27,7 +33,7 @@ public class PatientManager {
         int patient_age = scanner.nextInt();
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
-        User newUser = new User(0, patient_email, patient_firstName, patient_lastName, patient_address,
+        Patient newPatient = new User(0, patient_email, patient_firstName, patient_lastName, patient_address,
                 patient_phone, patient_emergencyPhone, patient_age);
         boolean wasRegistrationSuccessful = addPatient(newPatient);
 
