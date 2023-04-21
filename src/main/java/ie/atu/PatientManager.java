@@ -25,5 +25,17 @@ public class PatientManager {
         String patient_emergencyPhone = scanner.next();
         System.out.print("Enter patient's age: ");
         int patient_age = scanner.nextInt();
+
+        // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
+        User newUser = new User(0, patient_email, patient_firstName, patient_lastName, patient_address,
+                patient_phone, patient_emergencyPhone, patient_age);
+        boolean wasRegistrationSuccessful = addPatient(newPatient);
+
+        if (wasRegistrationSuccessful) {
+            System.out.println("Patient's registration successful.");
+        }
+        else {
+            System.out.println("Patient's registration failed.");
+        }
     }
 }
