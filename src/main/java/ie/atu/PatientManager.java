@@ -12,6 +12,37 @@ public class PatientManager {
         return DBConnectionUtils.getConnection();
     }
 
+    public void register(Scanner scanner) {
+        System.out.print("Enter patient's first name: ");
+        String patient_firstName = scanner.next();
+        System.out.print("Enter patient's last name: ");
+        String patient_lastName = scanner.next();
+        System.out.print("Enter patient's age: ");
+        int patient_age = scanner.nextInt();
+        System.out.print("Enter patient's DOB: ");
+        Date patient_DOB = Date.valueOf(scanner.next());
+        System.out.print("Enter patient email: ");
+        String patient_email = scanner.next();
+        System.out.print("Enter patient's address: ");
+        String patient_address = scanner.next();
+        System.out.print("Enter patient's phone: ");
+        String patient_phone = scanner.next();
+        System.out.print("Enter patient's emergency phone: ");
+        String patient_emergencyPhone = scanner.next();
+
+        // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
+        Patient newPatient = new Patient(0, patient_firstName, patient_lastName, patient_age, patient_DOB,
+                patient_email, patient_address, patient_phone, patient_emergencyPhone);
+        boolean wasRegistrationSuccessful = addPatient(newPatient);
+
+        if (wasRegistrationSuccessful) {
+            System.out.println("Patient's registration successful.");
+        }
+        else {
+            System.out.println("Patient's registration failed.");
+        }
+    }
+
     public boolean addPatient(Patient patient) {
         String insertSQL = "INSERT INTO patient_info (patientID, patientFirstName, patientLastName, patientAge," +
                 "patientDOB, patientEmail, patientAddress, patientPhone, patientEmergencyPhone) " +
@@ -39,39 +70,5 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
-    }
-
-
-    public void register(Scanner scanner) {
-        System.out.print("Enter patient's first name: ");
-        String patient_firstName = scanner.next();
-        System.out.print("Enter patient's last name: ");
-        String patient_lastName = scanner.next();
-        System.out.print("Enter patient's age: ");
-        int patient_age = scanner.nextInt();
-        System.out.print("Enter patient's DOB: ");
-        Date patient_DOB = Date.valueOf(scanner.next());
-        System.out.print("Enter patient email: ");
-        String patient_email = scanner.next();
-        System.out.print("Enter patient's address: ");
-        String patient_address = scanner.next();
-        System.out.print("Enter patient's phone: ");
-        String patient_phone = scanner.next();
-        System.out.print("Enter patient's emergency phone: ");
-        String patient_emergencyPhone = scanner.next();
-
-
-
-        // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
-        Patient newPatient = new Patient(0, patient_firstName, patient_lastName, patient_age, patient_DOB,
-                patient_email, patient_address, patient_phone, patient_emergencyPhone);
-        boolean wasRegistrationSuccessful = addPatient(newPatient);
-
-        if (wasRegistrationSuccessful) {
-            System.out.println("Patient's registration successful.");
-        }
-        else {
-            System.out.println("Patient's registration failed.");
-        }
     }
 }
