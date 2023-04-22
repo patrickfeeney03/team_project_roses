@@ -59,7 +59,7 @@ public class Patient {
         this.patient_age = patient_age;
     }
 
-    public java.sql.Date getPatient_DOB() {
+    public Date getPatient_DOB() {
         return patient_DOB;
     }
 
