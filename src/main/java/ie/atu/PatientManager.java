@@ -1,10 +1,11 @@
 package ie.atu;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class PatientManager {
@@ -21,7 +22,7 @@ public class PatientManager {
         System.out.print("Enter patient's age: ");
         int patient_age = scanner.nextInt();
         System.out.print("Enter patient's DOB: ");
-        String patient_DOB = scanner.next();
+        String patient_DOB = scanner.nextLine();
         System.out.print("Enter patient email: ");
         String patient_email = scanner.next();
         System.out.print("Enter patient's address: ");
@@ -31,8 +32,13 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_emergencyPhone = scanner.next();
 
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-mm-dd");
-        Date date = simpleDate.parse(patient_DOB);
+
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = simpleDate.parse(patient_DOB);
+        } catch (ParseException e) {
+            System.out.println("Error");
+        }
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
         Patient newPatient = new Patient(0, patient_firstName, patient_lastName, patient_age, patient_DOB,
