@@ -194,6 +194,9 @@ public class PatientManager {
     }
 
     public Patient getSinglePatientInfo(int patientID) {
-
+        Patient patient = null;
+        String selectAllSQL = "SELECT u.*, e.* " +
+                "FROM patient_info u " +
+                "JOIN patient_medical_data e ON u.patientID = e.patientID";
     }
 }
