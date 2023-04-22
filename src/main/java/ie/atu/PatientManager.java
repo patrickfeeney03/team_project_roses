@@ -101,7 +101,7 @@ public class PatientManager {
     }
 
     public boolean updatePatient(Patient patient) {
-        String updateSQL = "UPDATE patient SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
+        String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
 
         try (Connection connection = getConnection();
