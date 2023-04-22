@@ -12,6 +12,6 @@ public class PatientManagerTest {
 
         // Test if addPatient was successful
         boolean addPatientResult = PatientManager.addPatient(patientTest);
-        System.out.println("addUser result: " + addPatientResult);
+        System.out.println("addPatient result: " + addPatientResult);
     }
 }
