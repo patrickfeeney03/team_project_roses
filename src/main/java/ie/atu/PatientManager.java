@@ -106,7 +106,6 @@ public class PatientManager {
 
         try (Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
-
             preparedStatement.setString(1, patient.getPatient_firstName());
             preparedStatement.setString(2, patient.getPatient_lastName());
             preparedStatement.setInt(3, patient.getPatient_age());

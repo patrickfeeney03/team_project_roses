@@ -14,14 +14,15 @@ public class PatientManagerTest {
         boolean addPatientResult = patientManager.addPatient(patientTest);
         System.out.println("addPatient result: " + addPatientResult);
 
-        // Test if removePatient was successful
-        boolean removePatientResult = patientManager.removePatient(patientTest);
-        System.out.println("removePatient result: " + removePatientResult);
-
         // Test for updatePatient()
         patientTest.setPatient_age(24);
         patientTest.setPatient_email("notGmail@gmail.com");
         boolean updatePatientResult = patientManager.updatePatient(patientTest);
         System.out.println("updatePatient result: " + updatePatientResult);
+
+        // Test if removePatient was successful
+        boolean removePatientResult = patientManager.removePatient(patientTest);
+        System.out.println("removePatient result: " + removePatientResult);
+
     }
 }
