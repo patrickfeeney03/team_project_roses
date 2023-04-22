@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UserManager {
     BloodManager bloodManager = new BloodManager();
-
+    private static PatientManager patientManager = new PatientManager();
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -63,8 +63,9 @@ public class UserManager {
 
     public void userMenu(Scanner scanner) {
         boolean exitUserMenu = false;
+        boolean patientMenu = false;
         while (!exitUserMenu) {
-            System.out.print("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: Logout" +
+            System.out.print("\nUser Menu:\n1: Request Blood\n2: Record Donation\n3: View Stock\n4: View Patients\n5: Logout" +
                     "\nEnter your choice: ");
             int userChoice = scanner.nextInt();
 
@@ -100,18 +101,54 @@ public class UserManager {
                                 ", Amount: " + bloodStock.getAmount());
                     }
                 }
-                case 4 -> exitUserMenu = true;
-                default -> System.out.println("Input not valid.\n");
+
+                case 4 ->{
+                    // View/register patients
+                    while (patientMenu != true) {
+                        System.out.println("Patient Information:\n1: Donor information\n2: Recipient information\n3:Logout" + "\nEnter Your Choice:");
+                        int second_User_Choice = scanner.nextInt();
+                        switch (second_User_Choice) {
+                            //Donor information
+                            case 1 -> {
+                                System.out.println("Donor Information:\n" + donor.getPatientInfo());
+                            }
+                            //Recipient Information
+                            case 2 -> {
+                                System.out.println("Recipient Information:" + recipient.getPatientInfo());
+                            }
+                            case 3 ->
+                                //Register New Donor
+                                    patientManager.register(scanner);
+                            break;
+
+
+                            case 4 ->
+                                //Register new Recipient
+                                    patientManager.register(scanner);
+                            break;
+
+
+                            case 5 -> patientMenu = true;
+                            default -> System.out.println("Input not valid.\n");
+                        }
+                    }
+                }
+
+
+
             }
+            case 5-> exitUserMenu = true;
+            default -> System.out.println("Input not valid.\n");
         }
     }
+}
 
     public boolean addUser(User user) {
         String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setInt(1, user.getUser_Id());
             preparedStatement.setString(2, user.getUser_email());
             preparedStatement.setString(3, user.getUser_password());
@@ -138,7 +175,7 @@ public class UserManager {
                 "age = ? WHERE userID = ?";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setString(1, user.getUser_email());
             preparedStatement.setString(2, user.getUser_password());
             preparedStatement.setString(3, user.getUser_name());
@@ -163,7 +200,7 @@ public class UserManager {
         String deleteSQL = "DELETE FROM user WHERE userID = ?";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
             preparedStatement.setInt(1, user.getUser_Id());
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -182,7 +219,7 @@ public class UserManager {
         String selectSQL = "SELECT * FROM user WHERE email = ?";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setString(1, email);
 
             ResultSet resultSet = preparedStatement.executeQuery();
