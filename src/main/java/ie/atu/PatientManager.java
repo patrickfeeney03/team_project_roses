@@ -20,7 +20,7 @@ public class PatientManager {
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, patient.getPatient_email());
             preparedStatement.setString(2, patient.getPatient_firstName());
-            preparedStatement.setString(3, patient.getPatient_firstName());
+            preparedStatement.setString(3, patient.getPatient_lastName());
             preparedStatement.setString(4, patient.getPatient_lastName());
             preparedStatement.setString(5, patient.getPatient_address());
             preparedStatement.setString(6, patient.getPatient_phone());
