@@ -195,8 +195,41 @@ public class PatientManager {
 
     public Patient getSinglePatientInfo(int patientID) {
         Patient patient = null;
-        String selectAllSQL = "SELECT u.*, e.* " +
+        String selectIndividualAllSQL = "SELECT u.*, e.* " +
                 "FROM patient_info u " +
                 "JOIN patient_medical_data e ON u.patientID = e.patientID";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
+                System.out.println("patientID: " + patient.getPatient_Id());
+                System.out.println("patientFirstName: " + patient.getPatient_firstName());
+                System.out.println("patientLastName: " + patient.getPatient_lastName());
+                System.out.println("patientAge: " + patient.getPatient_age());
+                System.out.println("patientDOB: " + patient.getPatient_DOB());
+                System.out.println("patientEmail: " + patient.getPatient_email());
+                System.out.println("patientAddress: " + patient.getPatient_address());
+                System.out.println("patientPhone: " + patient.getPatient_phone());
+                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
     }
 }
