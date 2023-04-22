@@ -1,8 +1,6 @@
 package ie.atu;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,12 +30,12 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_emergencyPhone = scanner.next();
 
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
         } catch (ParseException e) {
-            System.out.println("Error");
+            System.out.println("Date Error");
+            e.printStackTrace();
         }
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
@@ -80,5 +78,166 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean updatePatient(Patient patient) {
+        String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
+                "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, patient.getPatient_firstName());
+            preparedStatement.setString(2, patient.getPatient_lastName());
+            preparedStatement.setInt(3, patient.getPatient_age());
+            preparedStatement.setString(4, patient.getPatient_DOB());
+            preparedStatement.setString(5, patient.getPatient_email());
+            preparedStatement.setString(6, patient.getPatient_address());
+            preparedStatement.setString(7, patient.getPatient_phone());
+            preparedStatement.setString(8, patient.getPatient_emergencyPhone());
+            preparedStatement.setInt(9, patient.getPatient_Id());
+
+            // .executeUpdate() returns the number of rows affected.
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean removePatient(Patient patient) {
+        String deleteSQL = "DELETE FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, patient.getPatient_Id());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Patient getPatientByID(int patientID) {
+        Patient patient = null;
+        String selectSQL = "SELECT * FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
+
+    public Patient getPatientInfo() {
+        Patient patient = null;
+        String selectAllSQL = "SELECT u.*, e.* " +
+                "FROM patient_info u " +
+                "JOIN patient_medical_data e ON u.patientID = e.patientID";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             Statement statement = connection.createStatement();
+
+             ResultSet resultSet = statement.executeQuery(selectAllSQL)) {
+
+            while (resultSet.next())  {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
+                System.out.println("patientID: " + patient.getPatient_Id());
+                System.out.println("patientFirstName: " + patient.getPatient_firstName());
+                System.out.println("patientLastName: " + patient.getPatient_lastName());
+                System.out.println("patientAge: " + patient.getPatient_age());
+                System.out.println("patientDOB: " + patient.getPatient_DOB());
+                System.out.println("patientEmail: " + patient.getPatient_email());
+                System.out.println("patientAddress: " + patient.getPatient_address());
+                System.out.println("patientPhone: " + patient.getPatient_phone());
+                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
+
+    public Patient getSinglePatientInfo(int patientID) {
+
+        System.out.println("Enter the ID of the patient: ");
+        Scanner scanner = new Scanner(System.in);
+        int inputID = scanner.nextInt();
+        scanner.close();
+
+
+        Patient patient = null;
+        String selectIndividualAllSQL = "SELECT u.*, e.* " +
+                "FROM patient_info u " +
+                "JOIN patient_medical_data e ON u.patientID = e.patientID " +
+                "WHERE u.patientID = ?";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
+            preparedStatement.setInt(1, inputID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
+                System.out.println("patientID: " + patient.getPatient_Id());
+                System.out.println("patientFirstName: " + patient.getPatient_firstName());
+                System.out.println("patientLastName: " + patient.getPatient_lastName());
+                System.out.println("patientAge: " + patient.getPatient_age());
+                System.out.println("patientDOB: " + patient.getPatient_DOB());
+                System.out.println("patientEmail: " + patient.getPatient_email());
+                System.out.println("patientAddress: " + patient.getPatient_address());
+                System.out.println("patientPhone: " + patient.getPatient_phone());
+                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
     }
 }

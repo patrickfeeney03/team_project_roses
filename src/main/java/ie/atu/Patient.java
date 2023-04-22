@@ -25,6 +25,9 @@ public class Patient {
         this.patient_emergencyPhone = patient_emergencyPhone;
     }
 
+    public Patient() {
+    }
+
     public int getPatient_Id() {
         return patient_Id;
     }
