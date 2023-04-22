@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class PatientManager {
@@ -29,6 +30,9 @@ public class PatientManager {
         String patient_phone = scanner.next();
         System.out.print("Enter patient's emergency phone: ");
         String patient_emergencyPhone = scanner.next();
+
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = simpleDate.parse(patient_DOB);
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
         Patient newPatient = new Patient(0, patient_firstName, patient_lastName, patient_age, patient_DOB,
