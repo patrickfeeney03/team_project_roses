@@ -82,30 +82,12 @@ public class PatientManager {
         return false;
     }
 
-    public boolean removePatient(Patient patient) {
-        String deleteSQL = "DELETE FROM patient_info WHERE patientID = ?";
-
-        try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-            preparedStatement.setInt(1, patient.getPatient_Id());
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setString(1, patient.getPatient_firstName());
             preparedStatement.setString(2, patient.getPatient_lastName());
             preparedStatement.setInt(3, patient.getPatient_age());
@@ -117,6 +99,24 @@ public class PatientManager {
             preparedStatement.setInt(9, patient.getPatient_Id());
 
             // .executeUpdate() returns the number of rows affected.
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean removePatient(Patient patient) {
+        String deleteSQL = "DELETE FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, patient.getPatient_Id());
+
             int rowsAffected = preparedStatement.executeUpdate();
 
             if (rowsAffected > 0) {
