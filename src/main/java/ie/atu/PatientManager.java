@@ -20,7 +20,7 @@ public class PatientManager {
         System.out.print("Enter patient's age: ");
         int patient_age = scanner.nextInt();
         System.out.print("Enter patient's DOB: ");
-        Date patient_DOB = Date.valueOf(scanner.next());
+        String patient_DOB = scanner.next();
         System.out.print("Enter patient email: ");
         String patient_email = scanner.next();
         System.out.print("Enter patient's address: ");
@@ -53,12 +53,11 @@ public class PatientManager {
             preparedStatement.setString(1, patient.getPatient_firstName());
             preparedStatement.setString(2, patient.getPatient_lastName());
             preparedStatement.setInt(3, patient.getPatient_age());
-            preparedStatement.setDate(4, patient.getPatient_DOB());
+            preparedStatement.setString(4, patient.getPatient_DOB());
             preparedStatement.setString(5, patient.getPatient_email());
             preparedStatement.setString(6, patient.getPatient_address());
             preparedStatement.setString(7, patient.getPatient_phone());
             preparedStatement.setString(8, patient.getPatient_emergencyPhone());
-
 
             // .executeUpdate() returns the number of rows affected.
             int rowsAffected = preparedStatement.executeUpdate();
