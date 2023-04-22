@@ -1,9 +1,6 @@
 package ie.atu;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -157,9 +154,34 @@ public class PatientManager {
         return patient;
     }
 
-    public Patient getPatientInfo(int patientID) {
+    public Patient getPatientInfo() {
+        Patient patient = null;
         String selectAllSQL = "SELECT u.*, e.* " +
                 "FROM patient_info u " +
                 "JOIN patient_medical_data e ON u.patientID = e.patientID";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             Statement statement = connection.createStatement();
+
+             ResultSet resultSet = statement.executeQuery(selectAllSQL)) {
+
+            while (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
     }
 }
