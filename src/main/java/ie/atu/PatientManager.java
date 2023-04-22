@@ -32,7 +32,6 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_emergencyPhone = scanner.next();
 
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
