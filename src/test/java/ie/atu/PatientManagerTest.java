@@ -20,17 +20,19 @@ public class PatientManagerTest {
         boolean updatePatientResult = patientManager.updatePatient(patientTest);
         System.out.println("updatePatient result: " + updatePatientResult);
 
-        // Test if removePatient was successful
+        // Test for removePatient()
         boolean removePatientResult = patientManager.removePatient(patientTest);
         System.out.println("removePatient result: " + removePatientResult);
 
-        // Test for getPatientByID()
+        // Test for getPatientByID() (for the patient_info table)
         Patient patientResult = patientManager.getPatientByID(5);
         System.out.println("getPatientByID result (id): " + patientResult.getPatient_Id());
 
-        // Select all info of the patient
+        // Select all info of the patient getPatientInfo()
         Patient patientInfo = patientManager.getPatientInfo();
 
-
+        // Select all info from a patient getSinglePatientInfo() (patient_info and patient_medical_data)
+        Patient singlePatientInfo = patientManager.getSinglePatientInfo();
+        System.out.println("getPatientByID result (id): " + singlePatientInfo.getPatient_Id());
     }
 }

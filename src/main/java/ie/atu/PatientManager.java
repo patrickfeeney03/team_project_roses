@@ -177,15 +177,15 @@ public class PatientManager {
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
 
-                System.out.println("Patient ID: " + patient.getPatient_Id());
-                System.out.println("Patient First Name: " + patient.getPatient_firstName());
-                System.out.println("Patient Last Name: " + patient.getPatient_lastName());
-                System.out.println("Patient Age: " + patient.getPatient_age());
-                System.out.println("Patient DOB: " + patient.getPatient_DOB());
-                System.out.println("Patient Email: " + patient.getPatient_email());
-                System.out.println("Patient Address: " + patient.getPatient_address());
-                System.out.println("Patient Phone: " + patient.getPatient_phone());
-                System.out.println("Patient Emergency Phone: " + patient.getPatient_emergencyPhone());
+                System.out.println("patientID: " + patient.getPatient_Id());
+                System.out.println("patientFirstName: " + patient.getPatient_firstName());
+                System.out.println("patientLastName: " + patient.getPatient_lastName());
+                System.out.println("patientAge: " + patient.getPatient_age());
+                System.out.println("patientDOB: " + patient.getPatient_DOB());
+                System.out.println("patientEmail: " + patient.getPatient_email());
+                System.out.println("patientAddress: " + patient.getPatient_address());
+                System.out.println("patientPhone: " + patient.getPatient_phone());
+                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
