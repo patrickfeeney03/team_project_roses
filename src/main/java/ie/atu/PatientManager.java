@@ -103,5 +103,28 @@ public class PatientManager {
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setInt(1, patient.getPatient_Id());
+            preparedStatement.setString(2, patient.getPatient_firstName());
+            preparedStatement.setString(3, patient.getPatient_lastName());
+            preparedStatement.setInt(4, patient.getPatient_age());
+            preparedStatement.setString(5, patient.getPatient_DOB());
+            preparedStatement.setString(6, patient.getPatient_email());
+            preparedStatement.setString(7, patient.getPatient_address());
+            preparedStatement.setString(8, patient.getPatient_phone());
+            preparedStatement.setString(9, patient.getPatient_emergencyPhone());
+
+            // .executeUpdate() returns the number of rows affected.
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

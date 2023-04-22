@@ -21,7 +21,7 @@ public class PatientManagerTest {
         // Test for updateUser()
         patientTest.setPatient_age(24);
         patientTest.setPatient_email("notGmail@gmail.com");
-        boolean updateUserResult = PatientManager.updatePatient(patientTest);
+        boolean updateResult = PatientManager.updatePatient(patientTest);
         System.out.println("updateUser result: " + updateUserResult);
     }
 }
