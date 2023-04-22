@@ -17,25 +17,27 @@ public class PatientManager {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
+
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            preparedStatement.setString(1, patient.getPatient_email());
-            preparedStatement.setString(2, patient.getPatient_firstName());
-            preparedStatement.setString(3, patient.getPatient_lastName());
-            preparedStatement.setString(4, patient.getPatient_address());
-            preparedStatement.setString(6, patient.getPatient_phone());
-            preparedStatement.setString(7, patient.getPatient_emergencyPhone());
-            preparedStatement.setInt(8, patient.getPatient_age());
+                preparedStatement.setString(1, patient.getPatient_email());
+                preparedStatement.setString(2, patient.getPatient_firstName());
+                preparedStatement.setString(3, patient.getPatient_lastName());
+                preparedStatement.setString(4, patient.getPatient_address());
+                preparedStatement.setString(6, patient.getPatient_phone());
+                preparedStatement.setString(7, patient.getPatient_emergencyPhone());
+                preparedStatement.setInt(8, patient.getPatient_age());
 
-            int rowsAffected = preparedStatement.executeUpdate();
 
-            if (rowsAffected > 0) {
-                return true;
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    return true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
-    }
 
 
         public void register(Scanner scanner) {
