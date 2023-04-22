@@ -8,7 +8,7 @@ public class PatientManagerTest {
         // Initialise properties in the Patient class
         Patient patientTest = new Patient(100, "Sean", "Conroy", 55,
                 "1987-03-06", "another@gmail.com", "anotherAddress99",
-                "353 67 555 5555", "353 444 4444");
+                "353 67 555 5555", "353 44 444 7777");
 
         // Test if addPatient was successful
         boolean addPatientResult = patientManager.addPatient(patientTest);

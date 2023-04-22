@@ -106,15 +106,16 @@ public class PatientManager {
 
         try (Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
-            preparedStatement.setInt(1, patient.getPatient_Id());
-            preparedStatement.setString(2, patient.getPatient_firstName());
-            preparedStatement.setString(3, patient.getPatient_lastName());
-            preparedStatement.setInt(4, patient.getPatient_age());
-            preparedStatement.setString(5, patient.getPatient_DOB());
-            preparedStatement.setString(6, patient.getPatient_email());
-            preparedStatement.setString(7, patient.getPatient_address());
-            preparedStatement.setString(8, patient.getPatient_phone());
-            preparedStatement.setString(9, patient.getPatient_emergencyPhone());
+
+            preparedStatement.setString(1, patient.getPatient_firstName());
+            preparedStatement.setString(2, patient.getPatient_lastName());
+            preparedStatement.setInt(3, patient.getPatient_age());
+            preparedStatement.setString(4, patient.getPatient_DOB());
+            preparedStatement.setString(5, patient.getPatient_email());
+            preparedStatement.setString(6, patient.getPatient_address());
+            preparedStatement.setString(7, patient.getPatient_phone());
+            preparedStatement.setString(8, patient.getPatient_emergencyPhone());
+            preparedStatement.setInt(9, patient.getPatient_Id());
 
             // .executeUpdate() returns the number of rows affected.
             int rowsAffected = preparedStatement.executeUpdate();
