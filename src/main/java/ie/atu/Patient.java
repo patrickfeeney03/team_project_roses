@@ -1,18 +1,20 @@
 package ie.atu;
 
+import java.util.Date;
+
 public class Patient {
     private int patient_Id;
     private String patient_firstName;
     private String patient_lastName;
     private int patient_age;
-    private int patient_DOB;
+    private Date patient_DOB;
     private String patient_email;
     private String patient_address;
     private String patient_phone;
     private String patient_emergencyPhone;
 
 
-    public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, int patient_DOB,
+    public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, Date patient_DOB,
                    String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone) {
         this.patient_Id = patient_Id;
         this.patient_firstName = patient_firstName;
@@ -57,11 +59,11 @@ public class Patient {
         this.patient_age = patient_age;
     }
 
-    public int getPatient_DOB() {
+    public java.sql.Date getPatient_DOB() {
         return patient_DOB;
     }
 
-    public void setPatient_DOB(int patient_DOB) {
+    public void setPatient_DOB(Date patient_DOB) {
         this.patient_DOB = patient_DOB;
     }
 
