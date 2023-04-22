@@ -156,4 +156,8 @@ public class PatientManager {
         }
         return patient;
     }
+
+    public Patient getPatientInfo(int patientID) {
+
+    }
 }
