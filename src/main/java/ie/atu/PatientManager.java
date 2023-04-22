@@ -12,16 +12,16 @@ public class PatientManager {
     }
 
     public boolean addPatient(Patient patient) {
-        String insertSQL = "INSERT INTO patient_info (patientID, patientEmail, patientFirstName, patientLastName, " +
-                "role, patientAddress, patientPhone, patientEmergencyPhone, patientAge) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO patient_info (patientID, patientFirstName, patientLastName, patientAge," +
+                "patientDOB, patientEmail, patientAddress, patientPhone, patientEmergencyPhone) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
             preparedStatement.setString(1, patient.getPatient_email());
             preparedStatement.setString(2, patient.getPatient_firstName());
             preparedStatement.setString(3, patient.getPatient_lastName());
-            preparedStatement.setString(5, patient.getPatient_address());
+            preparedStatement.setString(4, patient.getPatient_address());
             preparedStatement.setString(6, patient.getPatient_phone());
             preparedStatement.setString(7, patient.getPatient_emergencyPhone());
             preparedStatement.setInt(8, patient.getPatient_age());
