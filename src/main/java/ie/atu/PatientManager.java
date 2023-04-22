@@ -36,7 +36,8 @@ public class PatientManager {
         try {
             Date date = simpleDate.parse(patient_DOB);
         } catch (ParseException e) {
-            System.out.println("Error");
+            System.out.println("Date Error");
+            e.printStackTrace();
         }
 
         // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.

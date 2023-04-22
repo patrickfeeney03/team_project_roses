@@ -6,7 +6,7 @@ public class PatientManagerTest {
         PatientManager PatientManager = new PatientManager();
 
         // Initialise properties in the Patient class
-        Patient patientTest = new Patient(55, "Sean", "Conroy", 55,
+        Patient patientTest = new Patient(100, "Sean", "Conroy", 55,
                 "1987-03-06", "another@gmail.com", "anotherAddress99",
                 "353 67 555 5555", "353 444 4444");
 
