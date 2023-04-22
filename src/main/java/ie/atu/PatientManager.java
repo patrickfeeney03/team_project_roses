@@ -80,4 +80,8 @@ public class PatientManager {
         }
         return false;
     }
+
+    public boolean removePatient(Patient patient) {
+        String deleteSQL = "DELETE FROM patient_info WHERE patientID = ?";
+    }
 }
