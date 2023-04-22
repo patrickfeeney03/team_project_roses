@@ -88,7 +88,7 @@ public class PatientManager {
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setString(1, patient.getPatient_firstName());
             preparedStatement.setString(2, patient.getPatient_lastName());
             preparedStatement.setInt(3, patient.getPatient_age());
@@ -133,6 +133,27 @@ public class PatientManager {
         Patient patient = null;
         String selectSQL = "SELECT * FROM patient_info WHERE patientID = ?";
 
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
 
     }
 }
