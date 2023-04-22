@@ -1,6 +1,6 @@
 package ie.atu;
 
-public class Recipient extends User {
+public class Recipient extends Patient {
 
     private String recipient_Disease;
     private String transfusion_History;
@@ -8,10 +8,8 @@ public class Recipient extends User {
     private String recipient_Bloodtype;
 
 
-    public Recipient(int user_Id, String user_email, String user_password, String user_Name, String user_role,
-                     String user_Address, String user_Phone, int user_Age, String recipient_Disease,
-                     String transfusion_History,String recipient_Bloodtype) {
-        super(user_Id, user_email, user_password, user_Name, user_role, user_Address, user_Phone, user_Age);
+    public Recipient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB, String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone, String recipient_Bloodtype,String transfusion_History, String recipient_Disease) {
+        super(patient_Id, patient_firstName, patient_lastName, patient_age, patient_DOB, patient_email, patient_address, patient_phone, patient_emergencyPhone);
         this.recipient_Disease = recipient_Disease;
         this.transfusion_History = transfusion_History;
         this.recipient_Bloodtype = recipient_Bloodtype;
