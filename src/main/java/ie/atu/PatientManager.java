@@ -83,5 +83,19 @@ public class PatientManager {
 
     public boolean removePatient(Patient patient) {
         String deleteSQL = "DELETE FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, patient.getPatient_Id());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
