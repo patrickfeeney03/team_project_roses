@@ -192,4 +192,8 @@ public class PatientManager {
         }
         return patient;
     }
+
+    public Patient getSinglePatientInfo(int patientID) {
+
+    }
 }
