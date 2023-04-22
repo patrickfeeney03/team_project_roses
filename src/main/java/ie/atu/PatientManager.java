@@ -99,4 +99,9 @@ public class PatientManager {
         }
         return false;
     }
+
+    public boolean updatePatient(Patient patient) {
+        String updateSQL = "UPDATE patient SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
+                "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
+    }
 }
