@@ -29,7 +29,8 @@ public class PatientManagerTest {
         System.out.println("getPatientByID result (id): " + patientResult.getPatient_Id());
 
         // Select all info of the patient
-        Patient patientInfo = patientManager.getPatientInfo(patientTest);
+        Patient patientInfo = patientManager.getPatientInfo();
+
 
     }
 }
