@@ -26,7 +26,7 @@ public class PatientManagerTest {
 
         // Test for getPatientByID()
         Patient patientResult = patientManager.getPatientByID(5);
-        System.out.println("getPatientByEmail result (id): " + patientResult.getPatient_Id());
+        System.out.println("getPatientByID result (id): " + patientResult.getPatient_Id());
 
     }
 }

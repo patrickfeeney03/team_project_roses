@@ -141,6 +141,7 @@ public class PatientManager {
 
             if (resultSet.next()) {
                 patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
                 patient.setPatient_lastName(resultSet.getString("patientLastName"));
                 patient.setPatient_age(resultSet.getInt("patientAge"));
@@ -154,6 +155,5 @@ public class PatientManager {
             e.printStackTrace();
         }
         return patient;
-
     }
 }
