@@ -14,7 +14,7 @@ public class PatientManagerTest {
         boolean addPatientResult = PatientManager.addPatient(patientTest);
         System.out.println("addPatient result: " + addPatientResult);
 
-        boolean removePatientResult = PatientManager.removePatient(PatientTest);
+        boolean removePatientResult = PatientManager.removePatient(patientTest);
         System.out.println("removePatient result: " + removePatientResult);
     }
 }
