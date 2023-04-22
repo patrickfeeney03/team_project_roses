@@ -165,7 +165,7 @@ public class PatientManager {
 
              ResultSet resultSet = statement.executeQuery(selectAllSQL)) {
 
-            while (resultSet.next()) {
+            if (resultSet.next())  {
                 patient = new Patient();
                 patient.setPatient_Id(resultSet.getInt("patientID"));
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
