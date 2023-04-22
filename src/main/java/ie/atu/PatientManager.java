@@ -12,8 +12,8 @@ public class PatientManager {
     }
 
     public boolean addPatient(Patient patient) {
-        String insertSQL = "INSERT INTO patient_info (patient_Id, patient_email, patient_firstName, patient_lastName, " +
-                "role, patient_address, patient_phone, patient_emergencyPhone, patient_age) " +
+        String insertSQL = "INSERT INTO patient_info (patientID, patientEmail, patientFirstName, patientLastName, " +
+                "role, patientAddress, patientPhone, patientEmergencyPhone, patientAge) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getConnection();
