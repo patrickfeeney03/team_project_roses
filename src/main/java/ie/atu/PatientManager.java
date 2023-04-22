@@ -197,7 +197,7 @@ public class PatientManager {
         Patient patient = null;
         String selectIndividualAllSQL = "SELECT u.*, e.* " +
                 "FROM patient_info u " +
-                "JOIN patient_medical_data e ON u.patientID = e.patientID";
+                "JOIN patient_medical_data e ON u.patientID = e.patientID WHERE u.patientID = ?";
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
