@@ -158,6 +158,8 @@ public class PatientManager {
     }
 
     public Patient getPatientInfo(int patientID) {
-
+        String selectAllSQL = "SELECT u.*, e.* " +
+                "FROM patient_info u " +
+                "JOIN patient_medical_data e ON u.patientID = e.patientID";
     }
 }
