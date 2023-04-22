@@ -2,6 +2,7 @@ package ie.atu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,5 +127,12 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Patient getPatientByID(int patientID) {
+        Patient patient = null;
+        String selectSQL = "SELECT * FROM patient_info WHERE patientID = ?";
+
+
     }
 }
