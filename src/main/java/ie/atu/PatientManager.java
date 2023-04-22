@@ -194,18 +194,26 @@ public class PatientManager {
     }
 
     public Patient getSinglePatientInfo(int patientID) {
+
+        System.out.println("Enter the ID of the patient: ");
+        Scanner scanner = new Scanner(System.in);
+        int inputID = scanner.nextInt();
+        scanner.close();
+
+
         Patient patient = null;
         String selectIndividualAllSQL = "SELECT u.*, e.* " +
                 "FROM patient_info u " +
-                "JOIN patient_medical_data e ON u.patientID = e.patientID WHERE u.patientID = ?";
+                "JOIN patient_medical_data e ON u.patientID = e.patientID " +
+                "WHERE u.patientID = ?";
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
-            preparedStatement.setInt(1, patientID);
+            preparedStatement.setInt(1, inputID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 patient = new Patient();
                 patient.setPatient_Id(resultSet.getInt("patientID"));
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
