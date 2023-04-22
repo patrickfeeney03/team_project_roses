@@ -18,10 +18,10 @@ public class PatientManagerTest {
         boolean removePatientResult = patientManager.removePatient(patientTest);
         System.out.println("removePatient result: " + removePatientResult);
 
-        // Test for updateUser()
+        // Test for updatePatient()
         patientTest.setPatient_age(24);
         patientTest.setPatient_email("notGmail@gmail.com");
-        boolean updateResult = PatientManager.updatePatient(patientTest);
-        System.out.println("updateUser result: " + updateUserResult);
+        boolean updatePatientResult = PatientManager.updatePatient(patientTest);
+        System.out.println("updatePatient result: " + updatePatientResult);
     }
 }
