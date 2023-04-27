@@ -110,21 +110,21 @@ public class UserManager {
                         switch (second_User_Choice) {
                             //Donor information
                             case 1 -> {
-                                System.out.println("Donor Information:\n" + donor.getPatientInfo());
+
                             }
                             //Recipient Information
                             case 2 -> {
-                                System.out.println("Recipient Information:" + recipient.getPatientInfo());
+
                             }
                             case 3 ->
                                 //Register New Donor
-                                    patientManager.register(scanner);
+
                             break;
 
 
                             case 4 ->
                                 //Register new Recipient
-                                    patientManager.register(scanner);
+                                   
                             break;
 
 
