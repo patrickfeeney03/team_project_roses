@@ -15,7 +15,7 @@ public class Donation {
 
     public Donation(BloodType donatedBloodType, int donatedAmount) {
         // Right now bloodType inside Donor is a string, so I will have to code for that. It should be the bloodtype object.
-        this.donor = new Donor(donatedBloodType.toString());
+        //this.donor = new Donor(donatedBloodType.toString());
         this.unitsDonated = donatedAmount;
         this.donationID = 0;
     }

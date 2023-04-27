@@ -78,6 +78,7 @@ public class UserManager {
                     System.out.print("Amount of units: ");
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+
                     System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {

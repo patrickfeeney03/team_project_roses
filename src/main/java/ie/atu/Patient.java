@@ -10,6 +10,8 @@ public class Patient {
     private String patient_address;
     private String patient_phone;
     private String patient_emergencyPhone;
+    private String last_visit;
+    private String register_date;
 
 
     public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
@@ -98,6 +100,22 @@ public class Patient {
 
     public void setPatient_emergencyPhone(String patient_emergencyPhone) {
         this.patient_emergencyPhone = patient_emergencyPhone;
+    }
+
+    public String getLast_visit() {
+        return last_visit;
+    }
+
+    public void setLast_visit(String last_visit) {
+        this.last_visit = last_visit;
+    }
+
+    public String getRegister_date() {
+        return register_date;
+    }
+
+    public void setRegister_date(String register_date) {
+        this.register_date = register_date;
     }
 }
 
