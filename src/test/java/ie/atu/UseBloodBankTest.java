@@ -45,9 +45,9 @@ public class UseBloodBankTest {
         } while (!exit);
 
         BloodType bloodType = new BloodType("A", '+');
-        Donor donor = new Donor(2, "email", "password", "name",
-                "noRole", "123Address", "999", 20, "Yesterday",
-                "Today", bloodType.toString());
+        Donor donor = new Donor(0, "Patrick", "Feeney", 19,
+                "15/12/2003", "emailpatrick", "patricksAddress", "999222212",
+                "393298292", bloodType);
         Donation donation = new Donation(donor, bloodBank, 1);
         System.out.println(donor.toString());
         System.out.println(donation.getBloodBank().getClass());
