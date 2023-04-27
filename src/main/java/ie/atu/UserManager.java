@@ -78,6 +78,11 @@ public class UserManager {
                     System.out.print("Amount of units: ");
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+                    Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
+                            20, "08/08/2003", "mikaelEmail", "addressMikaela",
+                            "123345123", "9785684834", bloodType);
+                    BloodBank bloodBank = new BloodBank("1", "bloodBank0 Email", "Galway",
+                            "1234131");
 
                     System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
