@@ -1,6 +1,7 @@
 package ie.atu;
 
 public class Receive {
+    private int receiveID;
     private Recipient recipient;
     private BloodBank bloodBank;
     private int unitsReceived;
