@@ -44,4 +44,13 @@ public class BloodBank{
     public void setBankPhone(String bankPhone) {
         this.bankPhone = bankPhone;
     }
+
+    @Override
+    public String toString() {
+        return "BloodBank values:\n" +
+                "bankID: " + bankID +
+                ", bankEmail: " + bankEmail +
+                ", bankAddress: " + bankAddress +
+                ", bankPhone=: " + bankPhone;
+    }
 }

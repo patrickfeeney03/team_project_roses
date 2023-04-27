@@ -92,6 +92,20 @@ public class User {
     public void setUser_age(int user_age) {
         this.user_age = user_age;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_Id=" + user_Id +
+                ", user_email='" + user_email + '\'' +
+                ", user_password='" + user_password + '\'' +
+                ", user_name='" + user_name + '\'' +
+                ", user_role='" + user_role + '\'' +
+                ", user_address='" + user_address + '\'' +
+                ", user_phone='" + user_phone + '\'' +
+                ", user_age=" + user_age +
+                '}';
+    }
 }
 
 

@@ -87,6 +87,7 @@ public class UserManager {
                     System.out.print("Donated Rh Factor: ");
                     char inputRhFactor = scanner.next().charAt(0);
                     System.out.print("Donated units: ");
+                    //
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
                     System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));

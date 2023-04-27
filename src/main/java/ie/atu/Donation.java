@@ -3,6 +3,7 @@ package ie.atu;
 public class Donation {
     private int donationID;
     private Donor donor;
+    private BloodBank bloodBank;
     private int unitsDonated;
 
     public Donation(int donationID, Donor donor,
@@ -21,6 +22,12 @@ public class Donation {
 
     public Donation(Donor donor, int unitsDonated) {
         this.donor = donor;
+        this.unitsDonated = unitsDonated;
+    }
+
+    public Donation(Donor donor, BloodBank bloodBank, int unitsDonated) {
+        this.donor = donor;
+        this.bloodBank = bloodBank;
         this.unitsDonated = unitsDonated;
     }
 
@@ -47,5 +54,13 @@ public class Donation {
 
     public void setUnitsDonated(int unitsDonated) {
         this.unitsDonated = unitsDonated;
+    }
+
+    public BloodBank getBloodBank() {
+        return bloodBank;
+    }
+
+    public void setBloodBank(BloodBank bloodBank) {
+        this.bloodBank = bloodBank;
     }
 }
