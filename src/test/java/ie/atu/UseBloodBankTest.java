@@ -49,9 +49,7 @@ public class UseBloodBankTest {
                 "noRole", "123Address", "999", 20, "Yesterday",
                 "Today", bloodType.toString());
         Donation donation = new Donation(donor, bloodBank, 1);
-        System.out.println(donation);
+        System.out.println(donor.toString());
+        System.out.println(donation.getBloodBank().getClass());
     }
-
-
-
 }
