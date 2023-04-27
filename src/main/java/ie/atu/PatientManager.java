@@ -195,12 +195,6 @@ public class PatientManager {
 
     public Patient getSinglePatientInfo(int patientID) {
 
-        System.out.println("Enter the ID of the patient: ");
-        Scanner scanner = new Scanner(System.in);
-        int inputID = scanner.nextInt();
-        scanner.close();
-
-
         Patient patient = null;
         String selectIndividualAllSQL = "SELECT u.*, e.* " +
                 "FROM patient_info u " +
@@ -209,7 +203,7 @@ public class PatientManager {
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
-            preparedStatement.setInt(1, inputID);
+            preparedStatement.setInt(1, patientID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UserManager {
     BloodManager bloodManager = new BloodManager();
-    private static PatientManager patientManager = new PatientManager();
+    PatientManager patientManager = new PatientManager();
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -62,6 +62,7 @@ public class UserManager {
     }
 
     public void userMenu(Scanner scanner) {
+        Scanner myScanner = new Scanner(System.in);
         boolean exitUserMenu = false;
         boolean patientMenu = false;
         while (!exitUserMenu) {
@@ -109,7 +110,7 @@ public class UserManager {
                     }
                 }
 
-                case 4 ->{
+                case 4 -> {
                     // View/register patients
                     while (patientMenu != true) {
                         System.out.println("Patient Information:\n1: Donor information\n2: Recipient information\n3:Logout" + "\nEnter Your Choice:");
@@ -117,23 +118,37 @@ public class UserManager {
                         switch (second_User_Choice) {
                             //Donor information
                             case 1 -> {
-
+                                System.out.println("Enter Donor ID: /n");
+                                int userInput = myScanner.nextInt();
+                                patientManager.getSinglePatientInfo(userInput);
                             }
+
                             //Recipient Information
                             case 2 -> {
-
+                                System.out.println("Enter Recipient ID: /n");
+                                int userInput = myScanner.nextInt();
+                                patientManager.getSinglePatientInfo(userInput);
                             }
-                            case 3 ->
+
+                            case 3 -> {
                                 //Register New Donor
+                                System.out.println("Enter New patient: /n");
+                                Patient patient = new Patient(0, "alan",
+                                        "hynes", 23, "20.04.2000",
+                                        "alanEmail", "South Park",
+                                        "086809765", "08976542");
+                                patientManager.addPatient(patient);
+                            }
 
-                            break;
-
-
-                            case 4 ->
-                                //Register new Recipient
-                                   
-                            break;
-
+                            case 4 -> {
+                                //Remove patient
+                                System.out.println("Enter a patient to be removed: /n");
+                                Patient patient = new Patient(2, "sean",
+                                        "koobs", 21, "20.05.2000",
+                                        "seanEmail", "West Park",
+                                        "08612344567", "0897654321");
+                                patientManager.removePatient(patient);
+                            }
 
                             case 5 -> patientMenu = true;
                             default -> System.out.println("Input not valid.\n");
@@ -141,14 +156,12 @@ public class UserManager {
                     }
                 }
 
-
-
             }
-            case 5-> exitUserMenu = true;
-            default -> System.out.println("Input not valid.\n");
+            //case 5-> exitUserMenu = true;
+            //default -> System.out.println("Input not valid.\n");
         }
     }
-}
+
 
     public boolean addUser(User user) {
         String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
