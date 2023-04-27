@@ -4,9 +4,10 @@ public class DonationTest {
     public static void main(String[] args) {
         // Use will input the info for populating the bloodType
         BloodType bloodType1 = new BloodType("A", '+');
-        Donor donor1 = new Donor(0, "email", "password", "name",
-                "noRole", "123Address", "999", 20, "Yesterday",
-                "Today", bloodType1.toString());
+        Donor donor1 = new Donor(0, "Patrick", "Feeney", 19,
+                "15/12/2003", "emailpatrick", "patricksAddress", "999222212",
+                "393298292", bloodType1);
+
         int donatedAmount1 = 3;
         /*
         Donation donation1 = new Donation(bloodType1, donatedAmount1);
