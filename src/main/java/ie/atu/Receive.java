@@ -10,4 +10,28 @@ public class Receive {
         this.bloodBank = bloodBank;
         this.unitsReceived = unitsReceived;
     }
+
+    public Recipient getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
+    }
+
+    public BloodBank getBloodBank() {
+        return bloodBank;
+    }
+
+    public void setBloodBank(BloodBank bloodBank) {
+        this.bloodBank = bloodBank;
+    }
+
+    public int getUnitsReceived() {
+        return unitsReceived;
+    }
+
+    public void setUnitsReceived(int unitsReceived) {
+        this.unitsReceived = unitsReceived;
+    }
 }
