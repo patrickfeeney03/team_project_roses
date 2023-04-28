@@ -187,10 +187,9 @@ public class UserManager {
                             case 4 -> {
                                 //Remove patient
                                 System.out.println("Enter a patient to be removed: \n");
-                                Patient patient = new Patient(2, "sean",
-                                        "koobs", 21, "2003-04-14",
-                                        "seanEmail", "West Park",
-                                        "08612344567", "0897654321");
+                                Patient patient = new Patient(1,"paul","lennon",
+                                        45,"1990-03-20","paulemail","Gort",
+                                        "025744443","0545651564" );
                                 patientManager.removePatient(patient);
                             }
 
