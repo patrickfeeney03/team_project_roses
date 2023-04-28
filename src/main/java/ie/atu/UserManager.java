@@ -88,13 +88,12 @@ public class UserManager {
                     // Create BloodType object using the recipient's Blood Details
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
-
                     // What blood types are compatible with the recipient's blood type?
                     List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
-                        // Get patient by id. If he doesnt exist, create new patient and add it to DB
+                        // Get patient by id. If he doesn't exist, create new patient and add it to DB
                         // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
@@ -106,17 +105,7 @@ public class UserManager {
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
-                    if (bloodBankDetails == 'N') {
-                        System.out.println("Print list of blood banks? [Y/N]");
-                        // Print list of bloodbanks with their ID, let user choose by using the ID.
-                        System.out.println("Details being replaced automatically for testing...");
-                        bloodBank.setBankID(2);
-                        bloodBank.setBankEmail("bankEmail2");
-                        bloodBank.setBankAddress("newBankAddress");
-                        bloodBank.setBankPhone("bankPhone2");
-                    } else{
-                        System.out.println("Details correct, proceeding...");
-                    }
+                    // Assuming they are correct...
 
                     // Retrieve blood from the stock with the highest amount of blood
                      // We have to add an expiry date to the blood too. So the blood
@@ -130,20 +119,40 @@ public class UserManager {
                     //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {
-                    // Record Donation
+                    // DONATION
+
+                    // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
                     System.out.print("Donated Rh Factor: ");
                     char inputRhFactor = scanner.next().charAt(0);
-                    System.out.print("Donated units: ");
-                    //
-                    int inputAmount = scanner.nextInt();
+
+                    // How many units were donated
+                    System.out.print("Units donated: ");
+                    int unitsDonated = scanner.nextInt();
+
+                    // Create BloodType of the donated blood.
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
                     //Create BloodUnit object to set the date of donation
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-                    System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
+                    // Get donors details. From DB of from terminal input.
+                        // Get patient by ID. If doesn't exist, crea new patient and set add it to DB.
+                    // This donor object is for testing.
+                    Donor donor = new Donor(0, "Patrick", "Feeney", 19,
+                            "15/12/2003", "patrick@gmail.com", "cherryPark",
+                            "999555222", "999555222", bloodType);
+
+                    // Create the donation object
+                    Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
+
+                    // Check if the presetted bloodBank values are correct.
+                    System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
+                    // Assuming they are correct...
+
+                    System.out.println("Donation Successful: " + bloodManager.recordDonation
+                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
                 }
                 case 3 -> {
                     // View Stock
