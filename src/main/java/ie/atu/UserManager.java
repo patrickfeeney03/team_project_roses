@@ -177,6 +177,7 @@ public class UserManager {
 
                             case 3 -> {
                                 //Register New Donor
+                                //this patient object does not need an id as sql will automatically enter one
                                 System.out.println("Enter New patient: \n");
                                 Patient patient = new Patient("paul","lennon",45,
                                         "1990-03-20","paulemail","Gort","025744443",
@@ -186,11 +187,10 @@ public class UserManager {
 
                             case 4 -> {
                                 //Remove patient
-                                System.out.println("Enter a patient to be removed: \n");
-                                Patient patient = new Patient(1,"paul","lennon",
-                                        45,"1990-03-20","paulemail","Gort",
-                                        "025744443","0545651564" );
-                                patientManager.removePatient(patient);
+                                // this patient object needs an id to be able to select which patient will be removed
+                                System.out.println("Enter a patient ID to be removed: \n");
+                                int userInput = myScanner.nextInt();
+                                patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
                             case 5 -> exitUserMenu = false;
