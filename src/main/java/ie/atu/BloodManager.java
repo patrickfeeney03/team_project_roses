@@ -106,4 +106,18 @@ public class BloodManager {
         }
         return updateSuccessful;
     }
+
+    public static List<String> getCompatibleBloodTypes(BloodType recipientBloodType) {
+        String[] bloodTypes = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
+        List<String> compatibleBloodTypesForRecipient = new ArrayList<>();
+
+        for (String bloodTypeString : bloodTypes) {
+            BloodType testAgainstBloodType = new BloodType( ( bloodTypeString.substring(0, bloodTypeString.length() - 1) ),
+                    ( bloodTypeString.charAt(bloodTypeString.length() - 1) ) );
+            if (BloodType.isCompatible(testAgainstBloodType, recipientBloodType)) {
+                compatibleBloodTypesForRecipient.add(testAgainstBloodType.toString());
+            }
+        }
+        return compatibleBloodTypesForRecipient;
+    }
 }
