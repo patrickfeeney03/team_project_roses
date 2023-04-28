@@ -88,6 +88,7 @@ public class UserManager {
                     // Create BloodType object using the recipient's Blood Details
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
+
                     // What blood types are compatible with the recipient's blood type?
                     List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
@@ -138,6 +139,10 @@ public class UserManager {
                     //
                     int inputAmount = scanner.nextInt();
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+
+                    //Create BloodUnit object to set the date of donation
+                    BloodUnit bloodUnit = new BloodUnit(bloodType);
+
                     System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, inputAmount));
                 }
                 case 3 -> {
