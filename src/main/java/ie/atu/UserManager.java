@@ -151,7 +151,8 @@ public class UserManager {
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     // Assuming they are correct...
 
-                    System.out.println("Donation Successful: " + bloodManager.recordDonation(bloodType, unitsDonated));
+                    System.out.println("Donation Successful: " + bloodManager.recordDonation
+                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
                 }
                 case 3 -> {
                     // View Stock
