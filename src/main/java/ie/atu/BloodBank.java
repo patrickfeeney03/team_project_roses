@@ -1,23 +1,23 @@
 package ie.atu;
 
 public class BloodBank{
-    private String bankID;
+    private int bankID;
     private String bankEmail;
     private String bankAddress;
     private String bankPhone;
 
-    public BloodBank(String bankID, String bankEmail, String bankAddress, String bankPhone) {
+    public BloodBank(int bankID, String bankEmail, String bankAddress, String bankPhone) {
         this.bankID = bankID;
         this.bankEmail = bankEmail;
         this.bankAddress = bankAddress;
         this.bankPhone = bankPhone;
     }
 
-    public String getBankID() {
+    public int getBankID() {
         return bankID;
     }
 
-    public void setBankID(String bankID) {
+    public void setBankID(int bankID) {
         this.bankID = bankID;
     }
 
