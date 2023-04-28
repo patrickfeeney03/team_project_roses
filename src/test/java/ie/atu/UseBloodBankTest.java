@@ -10,7 +10,7 @@ public class UseBloodBankTest {
         moves to a different location.
         */
         // bloodBank gets created at the beginning of the code execution.
-        BloodBank bloodBank = new BloodBank("2", "email", "address",
+        BloodBank bloodBank = new BloodBank(0, "email", "address",
                 "thisIsAPhoneNumber");
         Scanner scanner = new Scanner(System.in);
 
@@ -25,7 +25,7 @@ public class UseBloodBankTest {
             }
             else if (userInput == 'N') {
                 System.out.print("Enter the bank ID: ");
-                String bankID = scanner.next();
+                int bankID = scanner.nextInt();
                 System.out.print("Enter email: ");
                 String bankEmail = scanner.next();
                 System.out.print("Enter address: ");

@@ -63,6 +63,9 @@ public class UserManager {
 
     public void userMenu(Scanner scanner) {
         Scanner myScanner = new Scanner(System.in);
+        BloodBank bloodBank = new BloodBank(0, "bloodBank0 Email", "Galway",
+                "1234131");
+
         boolean exitUserMenu = false;
         boolean patientMenu = false;
         while (!exitUserMenu) {
@@ -72,21 +75,58 @@ public class UserManager {
 
             switch (userChoice) {
                 case 1 -> {
-                    // Request Blood
-                    System.out.print("Requested Blood Group: ");
+                    // Ask for recipient's Blood Details
+                    System.out.print("Recipient's Blood Group: ");
                     String inputBloodGroup = scanner.next();
-                    System.out.print("Requested Rh Factor: ");
+                    System.out.print("Recipient's Rh Factor: ");
                     char inputRhFactor = scanner.next().charAt(0);
-                    System.out.print("Amount of units: ");
+
+                    // How many units does the recipient need
+                    System.out.print("Amount of units required: ");
                     int inputAmount = scanner.nextInt();
+
+                    // Create BloodType object using the recipient's Blood Details
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+
+                    // What blood types are compatible with the recipient's blood type?
+                    List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
+                    System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
+
+                    // Get recipient details. From DB or from terminal input.
+                        // Get patient by id. If he doesnt exist, create new patient and add it to DB
+                        // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
                             "123345123", "9785684834", bloodType);
-                    BloodBank bloodBank = new BloodBank("1", "bloodBank0 Email", "Galway",
-                            "1234131");
 
-                    System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
+                    // Create the receive object.
+                    Receive receive = new Receive(recipient, bloodBank, inputAmount);
+
+                    // Check if BloodBank details are correct. The object is already created at the top of this method.
+                    System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
+                    char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
+                    if (bloodBankDetails == 'N') {
+                        System.out.println("Print list of blood banks? [Y/N]");
+                        // Print list of bloodbanks with their ID, let user choose by using the ID.
+                        System.out.println("Details being replaced automatically for testing...");
+                        bloodBank.setBankID(2);
+                        bloodBank.setBankEmail("bankEmail2");
+                        bloodBank.setBankAddress("newBankAddress");
+                        bloodBank.setBankPhone("bankPhone2");
+                    } else{
+                        System.out.println("Details correct, proceeding...");
+                    }
+
+                    // Retrieve blood from the stock with the highest amount of blood
+                     // We have to add an expiry date to the blood too. So the blood
+                    boolean requestSuccessful =
+                            bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
+
+                    if (requestSuccessful) {
+                        System.out.println("Request Sucessful: " + requestSuccessful);
+                    }
+
+                    //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
                 }
                 case 2 -> {
                     // Record Donation
