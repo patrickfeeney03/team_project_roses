@@ -223,7 +223,7 @@ public class UserManager {
                             case 2 -> {
                                 //Register new patient
                                 System.out.println("Enter New patient: /n");
-                                Patient patient = new Patient(0, "alan",
+                                patient = new Patient(0, "alan",
                                         "hynes", 23, "20.04.2000",
                                         "alanEmail", "South Park",
                                         "086809765", "08976542");
@@ -233,7 +233,7 @@ public class UserManager {
                             case 3 -> {
                                 //Remove patient
                                 System.out.println("Enter a patient to be removed: /n");
-                                Patient patient = new Patient(2, "sean",
+                                patient = new Patient(2, "sean",
                                         "koobs", 21, "20.05.2000",
                                         "seanEmail", "West Park",
                                         "08612344567", "0897654321");
@@ -245,7 +245,6 @@ public class UserManager {
                             default -> System.out.println("Input not valid.\n");
                         }
                     }
-                    return patient;
                 }
 
             }
