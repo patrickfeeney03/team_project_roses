@@ -5,31 +5,25 @@ public class Report {
 
     public void Donor_Report(){
         String selectSQL = "SELECT * FROM donor_info WHERE donorID = ?";
-
+        PatientManager patientManager = new PatientManager();
         BloodType bloodType = new BloodType("A",'+');
-        Donor donor = new Donor(0, "Mikaela", "Diaz",
-                20, "08/08/2003", "mikaelEmail", "addressMikaela",
-                "123345123", "9785684834", bloodType);
+        Donor donor = new Donor(patientManager.getSinglePatientInfo(2),bloodType);
+        BloodBank bloodBank = new BloodBank(3,"dsa","sad","dsa");
+        Donation donation = new Donation(donor,bloodBank,5);
 
-        System.out.println("name");
-        System.out.println("email");
-        System.out.println("phonenumber\n");
+        System.out.println(donation.getDonor().getBloodType().getBloodGroup());
 
-        System.out.println("units:");
-        System.out.println("Bloodtype");
 
     }
     public void Recipient_Report(){
-        BloodType bloodType = new BloodType("A",'+');
-        Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
-                20, "08/08/2003", "mikaelEmail", "addressMikaela",
-                "123345123", "9785684834", bloodType);
-        System.out.println("name");
-        System.out.println("email");
-        System.out.println("phonenumber\n");
 
-        System.out.println("units:");
-        System.out.println("Blood");
+        String selectSQL = "SELECT * FROM recipient_info WHERE recipientID = ?";
+        PatientManager patientManager = new PatientManager();
+        BloodType bloodType = new BloodType("A",'+');
+        Recipient recipient = new Recipient(patientManager.getSinglePatientInfo(2),bloodType);
+        BloodBank bloodBank = new BloodBank(3,"dsa","sad","dsa");
+        Receive receive = new Receive(recipient,bloodBank,6);
+
 
     }
 }
