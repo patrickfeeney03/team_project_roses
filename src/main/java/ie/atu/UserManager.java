@@ -176,7 +176,7 @@ public class UserManager {
                             }
 
                             case 3 -> {
-                                //Register New Donor
+                                //Register New Patient
                                 System.out.println("Enter New patient: /n");
                                 Patient patient = new Patient(0, "alan",
                                         "hynes", 23, "20.04.2000",
