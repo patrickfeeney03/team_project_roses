@@ -177,14 +177,7 @@ public class UserManager {
                                 patientManager.getSinglePatientInfo(userInput);
                             }
 
-                            //Recipient Information
                             case 2 -> {
-                                System.out.println("Enter Recipient ID: /n");
-                                int userInput = myScanner.nextInt();
-                                patientManager.getSinglePatientInfo(userInput);
-                            }
-
-                            case 3 -> {
                                 //Register New Donor
                                 System.out.println("Enter New patient: /n");
                                 Patient patient = new Patient(0, "alan",
@@ -194,7 +187,7 @@ public class UserManager {
                                 patientManager.addPatient(patient);
                             }
 
-                            case 4 -> {
+                            case 3 -> {
                                 //Remove patient
                                 System.out.println("Enter a patient to be removed: /n");
                                 Patient patient = new Patient(2, "sean",
@@ -204,7 +197,7 @@ public class UserManager {
                                 patientManager.removePatient(patient);
                             }
 
-                            case 5 -> patientMenu = true;
+                            case 4 -> patientMenu = true;
                             default -> System.out.println("Input not valid.\n");
                         }
                     }
