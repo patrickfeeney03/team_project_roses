@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 public class BloodUnit {
     private BloodType bloodType;
     private String date;
+    private int bloodIDSQL;
 
     public BloodUnit(BloodType bloodType) {
         LocalDate currentDate = LocalDate.now();
@@ -28,6 +29,15 @@ public class BloodUnit {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public int getBloodIDSQL() {
+        return bloodIDSQL;
+    }
+
+    public void setBloodIDSQL(int bloodIDSQL) {
+        this.bloodIDSQL = bloodIDSQL;
+    }
+
     @Override
     public String toString() {
         return "BloodUnit{" +

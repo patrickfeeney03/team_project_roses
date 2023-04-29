@@ -2,6 +2,7 @@ package ie.atu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TestAddBloodUnit {
@@ -9,12 +10,34 @@ public class TestAddBloodUnit {
         return DBConnectionUtils.getConnection();
     }
     public static void main(String[] args) {
-        BloodType bloodType = new BloodType("A", '+');
+        BloodType bloodType = new BloodType("AB", '+');
+        int unitsDonated = 2;
         BloodUnit bloodUnit = new BloodUnit(bloodType); // Holds date
+        BloodBank bloodBank = new BloodBank(1, "EmailBank", "BankAddress",
+                "bankPhone999");
         PatientManager patientManager = new PatientManager();
+        Donor donor = new Donor(patientManager.getPatientByID(6), bloodType); // Patient already exists in DB
+        Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
 
-        Patient patient = patientManager.getPatientByID(6);
-        System.out.println(patient);
+        // Figure out which blood_typeID corresponds to the bloodType object.
+        String getBloodTypeID = "SELECT id FROM blood_types " +
+                "WHERE blood_group = ? AND rh_factor = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeID)) {
+            preparedStatement.setString(1, donation.getDonor().getBloodType().getBloodGroup());
+            preparedStatement.setString(2, Character.toString
+                    (donation.getDonor().getBloodType().getRhFactor()));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                donation.getBloodUnit().setBloodIDSQL(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("doantion.getBloodUnit().setBloodIDSQL(): " + donation.getBloodUnit().getBloodIDSQL());
 
         // Add unit to blood_units_date table
         String addIntoUnitsSQL =
@@ -23,7 +46,7 @@ public class TestAddBloodUnit {
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(addIntoUnitsSQL)) {
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, 2);
             preparedStatement.setInt(2, 3);
             preparedStatement.setString(3, bloodUnit.getDate());
 
@@ -54,6 +77,18 @@ public class TestAddBloodUnit {
             if (rowsAffected > 0) {
                 System.out.println("Rows affected: " + rowsAffected);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Add the patient that just donated blood to the donor table.
+        String addPatientToDonorTableSQL = "INSERT INTO DONOR (corresponding_patient_id) " +
+                "VALUES (?)";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(addPatientToDonorTableSQL)) {
+            preparedStatement.setInt(1, 2);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
