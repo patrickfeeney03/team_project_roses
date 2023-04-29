@@ -80,35 +80,6 @@ public class PatientManager {
         return false;
     }
 
-    public boolean addPatientNew(Patient patient) {
-        String insertSQL = "INSERT INTO patient_info ( patientFirstName, patientLastName, patientAge," +
-                "patientDOB, patientEmail, patientAddress, patientPhone, patientEmergencyPhone) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-
-            preparedStatement.setString(1, patient.getPatient_firstName());
-            preparedStatement.setString(2, patient.getPatient_lastName());
-            preparedStatement.setInt(3, patient.getPatient_age());
-            preparedStatement.setString(4, patient.getPatient_DOB());
-            preparedStatement.setString(5, patient.getPatient_email());
-            preparedStatement.setString(6, patient.getPatient_address());
-            preparedStatement.setString(7, patient.getPatient_phone());
-            preparedStatement.setString(8, patient.getPatient_emergencyPhone());
-
-            // .executeUpdate() returns the number of rows affected.
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
