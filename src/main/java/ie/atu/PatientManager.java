@@ -202,7 +202,7 @@ public class PatientManager {
                 "WHERE u.patientID = ?";
 
         try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
             preparedStatement.setInt(1, patientID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
