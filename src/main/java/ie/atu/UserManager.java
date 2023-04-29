@@ -113,7 +113,7 @@ public class UserManager {
                             bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
 
                     if (requestSuccessful) {
-                        System.out.println("Request Sucessful: " + requestSuccessful);
+                        System.out.println("Request Successful: " + requestSuccessful);
                     }
 
                     //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
@@ -138,7 +138,7 @@ public class UserManager {
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
                     // Get donors details. From DB of from terminal input.
-                        // Get patient by ID. If doesn't exist, crea new patient and set add it to DB.
+                        // Get patient by ID. If it doesn't exist, crea new patient and set add it to DB.
                     // This donor object is for testing.
                     Donor donor = new Donor(0, "Patrick", "Feeney", 19,
                             "15/12/2003", "patrick@gmail.com", "cherryPark",
@@ -217,12 +217,11 @@ public class UserManager {
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
-
                             }
 
                             case 2 -> {
                                 //Register new patient
-                                System.out.println("Enter New patient: /n");
+                                System.out.println("\nEnter New patient: ");
                                 patient = new Patient(0, "alan",
                                         "hynes", 23, "20.04.2000",
                                         "alanEmail", "South Park",
@@ -232,7 +231,7 @@ public class UserManager {
 
                             case 3 -> {
                                 //Remove patient
-                                System.out.println("Enter a patient to be removed: /n");
+                                System.out.println("\nEnter a patient to be removed: ");
                                 patient = new Patient(2, "sean",
                                         "koobs", 21, "20.05.2000",
                                         "seanEmail", "West Park",
