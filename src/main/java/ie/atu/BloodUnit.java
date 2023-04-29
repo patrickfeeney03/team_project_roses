@@ -6,16 +6,13 @@ public class BloodUnit {
     private String date;
 
     public BloodUnit(BloodType bloodType) {
-
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = currentDate.format(formatter);
         System.out.println("Current date: " + formattedDate);
-
         this.bloodType = bloodType;
         this.date = formattedDate;
     }
-
 
     public BloodType getBloodType() {
         return bloodType;
