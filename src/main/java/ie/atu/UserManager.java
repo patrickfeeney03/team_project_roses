@@ -178,11 +178,11 @@ public class UserManager {
                                 //patientManager.getSinglePatientInfo(userInput);
 
                                 // Check SQL tables to see if patient is donor, recipient, or both
-                                String checkPatient = "SELECT 'donor' AS table_name = ?, patient_info.*" +
+                                String checkPatient = "SELECT donor AS table_name = ?, patient_info.* " +
                                 "FROM donor " +
-                                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID" +
+                                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
                                 "UNION " +
-                                "SELECT 'recipient' AS table_name, patient_info.*" +
+                                "SELECT recipient AS table_name, patient_info.* " +
                                 "FROM recipient " +
                                 "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
 
