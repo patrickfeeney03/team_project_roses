@@ -93,8 +93,13 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
+
+                    // Get patient by id. If he doesnt exist, create new patient and add it to DB
+                    // This recipient object is just for testing.
+
                         // Get patient by id. If he doesn't exist, create new patient and add it to DB
                         // This recipient object is just for testing.
+
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
                             "123345123", "9785684834", bloodType);
@@ -105,10 +110,23 @@ public class UserManager {
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
+
+                    if (bloodBankDetails == 'N') {
+                        System.out.println("Print list of blood banks? [Y/N]");
+                        // Print list of bloodbanks with their ID, let user choose by using the ID.
+                        System.out.println("Details being replaced automatically for testing...");
+                        bloodBank.setBankID(2);
+                        bloodBank.setBankEmail("bankEmail2");
+                        bloodBank.setBankAddress("newBankAddress");
+                        bloodBank.setBankPhone("bankPhone2");
+                    } else {
+                        System.out.println("Details correct, proceeding...");
+
                     // Assuming they are correct...
 
+
                     // Retrieve blood from the stock with the highest amount of blood
-                     // We have to add an expiry date to the blood too. So the blood
+                    // We have to add an expiry date to the blood too. So the blood
                     boolean requestSuccessful =
                             bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
 
@@ -167,52 +185,51 @@ public class UserManager {
                 case 4 -> {
                     // View/register patients
                     while (patientMenu != true) {
-                        System.out.println("Patient Information:\n1: Donor information\n2: Recipient information\n3:Logout" + "\nEnter Your Choice:");
+                        System.out.println("Patient Information:\n1: Search for Donor\n2: Search for recipient\n3: Register new Donor\n4: Remove patient\n5: Logout" + "\nEnter Your Choice:");
                         int second_User_Choice = scanner.nextInt();
                         switch (second_User_Choice) {
                             //Donor information
                             case 1 -> {
-                                System.out.println("Enter Donor ID: /n");
+                                System.out.println("Enter Donor ID: \n");
                                 int userInput = myScanner.nextInt();
                                 patientManager.getSinglePatientInfo(userInput);
                             }
 
                             //Recipient Information
                             case 2 -> {
-                                System.out.println("Enter Recipient ID: /n");
+                                System.out.println("Enter Recipient ID: \n");
                                 int userInput = myScanner.nextInt();
                                 patientManager.getSinglePatientInfo(userInput);
                             }
 
                             case 3 -> {
                                 //Register New Donor
-                                System.out.println("Enter New patient: /n");
-                                Patient patient = new Patient(0, "alan",
-                                        "hynes", 23, "20.04.2000",
-                                        "alanEmail", "South Park",
-                                        "086809765", "08976542");
-                                patientManager.addPatient(patient);
+                                //this patient object does not need an id as sql will automatically enter one
+                                System.out.println("Enter New patient: \n");
+                                Patient patient = new Patient("paul","lennon",45,
+                                        "1990-03-20","paulemail","Gort","025744443",
+                                        "0545651564","064", "sdsdad" );
+                                patientManager.addPatientNew(patient);
                             }
 
                             case 4 -> {
                                 //Remove patient
-                                System.out.println("Enter a patient to be removed: /n");
-                                Patient patient = new Patient(2, "sean",
-                                        "koobs", 21, "20.05.2000",
-                                        "seanEmail", "West Park",
-                                        "08612344567", "0897654321");
-                                patientManager.removePatient(patient);
+                                // this patient object needs an id to be able to select which patient will be removed
+                                System.out.println("Enter a patient ID to be removed: \n");
+                                int userInput = myScanner.nextInt();
+                                patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            case 5 -> patientMenu = true;
+                            case 5 -> exitUserMenu = false;
                             default -> System.out.println("Input not valid.\n");
                         }
                     }
                 }
 
+
+                case 5-> exitUserMenu = true;
+                default -> System.out.println("Input not valid.\n");
             }
-            //case 5-> exitUserMenu = true;
-            //default -> System.out.println("Input not valid.\n");
         }
     }
 
