@@ -178,11 +178,11 @@ public class UserManager {
                             case 3 -> {
                                 //Register New Donor
                                 //this patient object does not need an id as sql will automatically enter one
+
                                 System.out.println("Enter New patient: \n");
-                                Patient patient = new Patient("paul","lennon",45,
-                                        "1990-03-20","paulemail","Gort","025744443",
-                                        "0545651564","064", "sdsdad" );
-                                patientManager.addPatientNew(patient);
+                                patientManager.register(myScanner);
+
+
                             }
 
                             case 4 -> {

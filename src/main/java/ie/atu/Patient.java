@@ -28,7 +28,7 @@ public class Patient {
     }
 
     public Patient(String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
-                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone, String last_visit, String register_date) {
+                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone /*String last_visit, String register_date*/) {
 
         this.patient_firstName = patient_firstName;
         this.patient_lastName = patient_lastName;
@@ -38,8 +38,8 @@ public class Patient {
         this.patient_address = patient_address;
         this.patient_phone = patient_phone;
         this.patient_emergencyPhone = patient_emergencyPhone;
-        this.last_visit = last_visit;
-        this.register_date = register_date;
+       /* this.last_visit = last_visit;
+        this.register_date = register_date;*/
     }
 
     public Patient() {
@@ -116,7 +116,7 @@ public class Patient {
     public void setPatient_emergencyPhone(String patient_emergencyPhone) {
         this.patient_emergencyPhone = patient_emergencyPhone;
     }
-
+/*
     public String getLast_visit() {
         return last_visit;
     }
@@ -132,5 +132,7 @@ public class Patient {
     public void setRegister_date(String register_date) {
         this.register_date = register_date;
     }
+    */
+
 }
 
