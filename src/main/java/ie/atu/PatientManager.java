@@ -277,7 +277,7 @@ public class PatientManager {
         String getDonorSQL = "SELECT d.donor_unique_id " +
         "FROM donor d " +
         "JOIN patient_info pi ON d.corresponding_patient_id = pi.patientID " +
-        "WHERE pi.patientID = <your_patientID> ";
+        "WHERE pi.patientID = ?";
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getDonorSQL)) {

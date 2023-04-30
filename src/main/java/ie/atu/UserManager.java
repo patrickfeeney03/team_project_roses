@@ -147,7 +147,10 @@ public class UserManager {
 
 
                     // Create the donation object
-                    String bloodTypeString = BloodManager.getDonorBloodTypeString(examplePatientID);
+                    int donorID = PatientManager.getDonorIDFromPatientID(examplePatientID);
+                    String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
+                    System.out.println("The patient with id " + examplePatientID + " has " + donorBloodTypeString +
+                            " blood type.");
                     //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
 
                     // Check if the presetted bloodBank values are correct.
