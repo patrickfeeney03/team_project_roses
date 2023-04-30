@@ -13,6 +13,7 @@ public class BloodBankManager {
         return DBConnectionUtils.getConnection();
     }
 
+    public static BloodBank getBloodBankByID(int bankID) {
 
-
+    }
 }
