@@ -161,7 +161,7 @@ public class UserManager {
                         System.out.println("Added patient to donor table: " +
                                 patientManager.addPatientToDonorTable(patientID));
 
-                        // Update the patient_medical_data since we now know their bloodType.
+
                     }
                     System.out.println("Patients blood type: " + bloodType.toString());
 
@@ -184,6 +184,7 @@ public class UserManager {
                     Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
                     boolean donated_bloodTableSuccessful = BloodManager.addBloodToDonated_blood(donation);
                     boolean stockUpdated = BloodStockManager.updateTable_blood_stock();
+                    // update pmd here
                     System.out.println("donated_bloodTable successful: " + donated_bloodTableSuccessful);
                     System.out.println("stock table updated: " + stockUpdated);
                 }

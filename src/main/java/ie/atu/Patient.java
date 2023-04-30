@@ -12,6 +12,11 @@ public class Patient {
     private String patient_emergencyPhone;
     private String last_visit;
     private String register_date;
+    private String lastReceive;
+    private String firstReceive;
+    private String lastDonation;
+    private String firstDonation;
+    private String patientDisease;
 
 
     public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
@@ -131,6 +136,46 @@ public class Patient {
 
     public void setRegister_date(String register_date) {
         this.register_date = register_date;
+    }
+
+    public String getLastReceive() {
+        return lastReceive;
+    }
+
+    public void setLastReceive(String lastReceive) {
+        this.lastReceive = lastReceive;
+    }
+
+    public String getFirstReceive() {
+        return firstReceive;
+    }
+
+    public void setFirstReceive(String firstReceive) {
+        this.firstReceive = firstReceive;
+    }
+
+    public String getLastDonation() {
+        return lastDonation;
+    }
+
+    public void setLastDonation(String lastDonation) {
+        this.lastDonation = lastDonation;
+    }
+
+    public String getFirstDonation() {
+        return firstDonation;
+    }
+
+    public void setFirstDonation(String firstDonation) {
+        this.firstDonation = firstDonation;
+    }
+
+    public String getPatientDisease() {
+        return patientDisease;
+    }
+
+    public void setPatientDisease(String patientDisease) {
+        this.patientDisease = patientDisease;
     }
 
     @Override
