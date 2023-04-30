@@ -142,6 +142,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "Nothing found";
+        return "";
     }
 }
