@@ -236,43 +236,6 @@ public class PatientManager {
         return patient;
     }
 
-    /*
-    public Patient getCompletePatientInfo(int patientID) {
-        // This includes the bloodType, if the patient has been attended previously.
-        Patient patient = new Patient();
-        String retrievePatientInfoAndMedical = "SELECT pi.patientFirstName, bt.blood_group, bt.rh_factor " +
-                "FROM blood_types bt " +
-                "JOIN patient_medical_data pmd ON bt.id = pmd.bloodTypeID " +
-                "JOIN patient_info pi ON pi.patientID = pmd.patientID " +
-                "WHERE pi.patientID = ?";
-
-        try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(retrievePatientInfoAndMedical)) {
-            preparedStatement.setInt(1, patientID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-                patient.setPatient_Id(patientID);
-                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
-                patient.setPatient_lastName(resultSet.getString("patientLastName"));
-                patient.setPatient_age(resultSet.getInt("patientAge"));
-                patient.setPatient_DOB(resultSet.getString("patientDOB"));
-                patient.setPatient_email(resultSet.getString("patientEmail"));
-                patient.setPatient_address(resultSet.getString("patientAddress"));
-                patient.setPatient_phone(resultSet.getString("patientPhone"));
-                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return patient;
-    }
-     */
-
-
     public static int getDonorIDFromPatientID(int patientID) {
         String getDonorSQL = "SELECT d.donor_unique_id " +
         "FROM donor d " +
@@ -293,6 +256,6 @@ public class PatientManager {
             e.printStackTrace();
         }
 
-        return 777;
+        return 0;
     }
 }

@@ -126,18 +126,32 @@ public class UserManager {
                     // Patient comes to the hospital/blood bank to donate blood.
                     // Nurse check if he's a new patient or if he's already registered.
                     // If the patient doesn't know their ID, well, they are not registered, for now.
-
+                        // To register them, the nurse would need to go back? And chooose option 3: Patients, and then
+                        // Option 2.
 
 
                     // Nurse asks the patient for their ID. Patient responds
-                    System.out.println("Patients id: ");
-                    int examplePatientID = scanner.nextInt();
+                    System.out.print("Patients id: ");
+                    int patientID = scanner.nextInt();
 
-                    //
+                    // This two lines will try to get the bloodType of the already registered patient.
+                    int donorID = PatientManager.getDonorIDFromPatientID(patientID);
+                    if (donorID != 0) {
+                        String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
+                        BloodType bloodType = new BloodType
+                                (donorBloodTypeString.substring(0, donorBloodTypeString.length() - 1),
+                                        donorBloodTypeString.charAt(donorBloodTypeString.length() - 1));
+                    } else {
+                        System.out.println("Patient hasn't donated blood yet. Blood details needed. ");
+                        System.out.println("Blood Group: ");
+                        String bloodGroup = scanner.next();
+                        System.out.println("Rh factor: ");
+                        char rhFactor = scanner.next().charAt(0);
+                        BloodType bloodType = new BloodType(bloodGroup, rhFactor);
 
-                    // Get the blood type of the already registered patient.
-                    int donorID = PatientManager.getDonorIDFromPatientID(examplePatientID);
-                    String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
+                    }
+
+
                     // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
@@ -154,10 +168,6 @@ public class UserManager {
                     //Create BloodUnit object to set the date of donation
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-
-
-                    System.out.println("The patient with id " + examplePatientID + " has " + donorBloodTypeString +
-                            " blood type.");
                     //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
 
                     // Check if the presetted bloodBank values are correct.
