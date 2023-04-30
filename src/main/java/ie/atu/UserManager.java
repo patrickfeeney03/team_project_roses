@@ -137,11 +137,14 @@ public class UserManager {
                     // This two lines will try to get the bloodType of the already registered patient.
                     int donorID = PatientManager.getDonorIDFromPatientID(patientID);
                     if (donorID != 0) {
+                        // If the code gets in here the patient has donated previously.
+                        // So we retrieve their known blood type.
                         String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
                         BloodType bloodType = new BloodType
                                 (donorBloodTypeString.substring(0, donorBloodTypeString.length() - 1),
                                         donorBloodTypeString.charAt(donorBloodTypeString.length() - 1));
                     } else {
+                        // If the code gets in here, it means that the patient exists but hasn't donated yet.
                         System.out.println("Patient hasn't donated blood yet. Blood details needed. ");
                         System.out.println("Blood Group: ");
                         String bloodGroup = scanner.next();
@@ -149,8 +152,8 @@ public class UserManager {
                         char rhFactor = scanner.next().charAt(0);
                         BloodType bloodType = new BloodType(bloodGroup, rhFactor);
 
+                        // Add insert method that connects the donor table with this patient.
                     }
-
 
                     // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
@@ -186,7 +189,6 @@ public class UserManager {
                                 ", Amount: " + bloodStock.getAmount());
                     }
                 }
-
                 case 4 -> {
                     Patient patient = null;
                     // View/register patients
