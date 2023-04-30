@@ -144,4 +144,45 @@ public class BloodManager {
         }
         return "";
     }
+
+    public static boolean addBloodToDonated_blood(Donation donation) {
+        // Loop?
+        String insertTo_donated_blood = "INSERT INTO donated_blood (blood_typesID, donation_date, donorID_relation," +
+                "blood_bankID_relation) " +
+                "VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
+            preparedStatement.setInt(1, 1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static int get_blood_typeID(String bloodType) {
+        String selectBloodTypeID = "SELECT id " +
+                "FROM blood_types " +
+                "WHERE blood_group = ? AND rh_factor = ?";
+
+        String group = bloodType.substring(0, bloodType.length() - 1);
+        char rh_factor = bloodType.charAt(bloodType.length() - 1);
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectBloodTypeID)) {
+            preparedStatement.setString(1, group);
+            preparedStatement.setString(2, Character.toString(rh_factor));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

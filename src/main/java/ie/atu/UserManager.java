@@ -93,8 +93,6 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
-
-
                         // Get patient by id. If he doesn't exist, create new patient and add it to DB
                         // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
@@ -185,8 +183,14 @@ public class UserManager {
 
                     Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
 
+
+
+                    /*
+                        This is the old version, this updates blood_stock directly instead of adding the blood first
+                        to the donated_blood table.
                     System.out.println("Donation Successful: " + bloodManager.recordDonation
                             (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
+                    */
 
                 }
                 case 3 -> {
