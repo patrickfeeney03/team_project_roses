@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class PatientManager {
-
     public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -30,7 +29,6 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
 
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
@@ -38,7 +36,6 @@ public class PatientManager {
             System.out.println("Date Error");
             e.printStackTrace();
         }
-
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
@@ -93,11 +90,9 @@ public class PatientManager {
             if (rowsAffected > 0) {
                 return true;
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }
-
         return false;
     }
     
@@ -190,7 +185,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
