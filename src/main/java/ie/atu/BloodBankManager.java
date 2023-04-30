@@ -14,6 +14,8 @@ public class BloodBankManager {
     }
 
     public static BloodBank getBloodBankByID(int bankID) {
-
+        BloodBank bloodBank = null;
+        String selectBankInfoSQ = "SELECT * FROM blood_bank "
+                + "WHERE bankID = ?";
     }
 }
