@@ -44,5 +44,14 @@ public class BloodBankManager {
         BloodBank bloodBank = null;
         String selectAllBankInfoSQ = "SELECT * FROM blood_bank ";
 
-    }
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectAllBankInfoSQ)) {
+            preparedStatement.setInt(1, bankID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bloodBank;    }
 }
