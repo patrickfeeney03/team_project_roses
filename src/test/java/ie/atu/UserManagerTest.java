@@ -28,6 +28,8 @@ public class UserManagerTest {
         System.out.println("getUserByEmail result (id): " + userResult.getUser_Id());
 
         // Test for login(), user input is required on this case, for now...
-        userManager.login(new Scanner(System.in));
+        //userManager.login(new Scanner(System.in));
+
+        userManager.userMenu(new Scanner(System.in));
     }
 }

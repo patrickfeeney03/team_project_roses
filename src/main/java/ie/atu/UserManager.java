@@ -115,7 +115,7 @@ public class UserManager {
                             bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
 
                     if (requestSuccessful) {
-                        System.out.println("Request Sucessful: " + requestSuccessful);
+                        System.out.println("Request Successful: " + requestSuccessful);
                     }
 
                     //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
@@ -140,7 +140,7 @@ public class UserManager {
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
                     // Get donors details. From DB of from terminal input.
-                        // Get patient by ID. If doesn't exist, crea new patient and set add it to DB.
+                        // Get patient by ID. If it doesn't exist, crea new patient and set add it to DB.
                     // This donor object is for testing.
                     Donor donor = new Donor(0, "Patrick", "Feeney", 19,
                             "15/12/2003", "patrick@gmail.com", "cherryPark",
@@ -167,50 +167,86 @@ public class UserManager {
                 }
 
                 case 4 -> {
+                    Patient patient = null;
                     // View/register patients
                     while (patientMenu != true) {
-                        System.out.println("Patient Information:\n1: Donor information\n2: Recipient information\n3:Logout" + "\nEnter Your Choice:");
+                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Logout\nEnter Your Choice: ");
                         int second_User_Choice = scanner.nextInt();
                         switch (second_User_Choice) {
                             //Donor information
                             case 1 -> {
-                                System.out.println("Enter Donor ID: /n");
+                                System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
-                                patientManager.getSinglePatientInfo(userInput);
+                                //patientManager.getSinglePatientInfo(userInput);
+
+                                // Check SQL tables to see if patient is donor, recipient, or both
+                                String checkPatient = "SELECT donor AS table_name, patient_info.* " +
+                                "FROM donor " +
+                                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
+                                "UNION " +
+                                "SELECT recipient AS table_name, patient_info.* " +
+                                "FROM recipient " +
+                                "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
+
+                                try (Connection connection = DBConnectionUtils.getConnection();
+                                    PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
+                                    preparedStatement.setInt(1, userInput);
+
+                                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                                    if (resultSet.next()) {
+                                        patient = new Patient();
+                                        patient.setPatient_Id(resultSet.getInt("patientID"));
+                                        patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                                        patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                                        patient.setPatient_age(resultSet.getInt("patientAge"));
+                                        patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                                        patient.setPatient_email(resultSet.getString("patientEmail"));
+                                        patient.setPatient_address(resultSet.getString("patientAddress"));
+                                        patient.setPatient_phone(resultSet.getString("patientPhone"));
+                                        patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
+                                        System.out.println("patientID: " + patient.getPatient_Id());
+                                        System.out.println("patientFirstName: " + patient.getPatient_firstName());
+                                        System.out.println("patientLastName: " + patient.getPatient_lastName());
+                                        System.out.println("patientAge: " + patient.getPatient_age());
+                                        System.out.println("patientDOB: " + patient.getPatient_DOB());
+                                        System.out.println("patientEmail: " + patient.getPatient_email());
+                                        System.out.println("patientAddress: " + patient.getPatient_address());
+                                        System.out.println("patientPhone: " + patient.getPatient_phone());
+                                        System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
                             }
 
-                            //Recipient Information
                             case 2 -> {
-                                System.out.println("Enter Recipient ID: /n");
-                                int userInput = myScanner.nextInt();
-                                patientManager.getSinglePatientInfo(userInput);
-                            }
-
-                            case 3 -> {
-                                //Register New Donor
-                                System.out.println("Enter New patient: /n");
-                                Patient patient = new Patient(0, "alan",
+                                //Register new patient
+                                System.out.println("\nEnter New patient: ");
+                                patient = new Patient(0, "alan",
                                         "hynes", 23, "20.04.2000",
                                         "alanEmail", "South Park",
                                         "086809765", "08976542");
                                 patientManager.addPatient(patient);
                             }
 
-                            case 4 -> {
+                            case 3 -> {
                                 //Remove patient
-                                System.out.println("Enter a patient to be removed: /n");
-                                Patient patient = new Patient(2, "sean",
-                                        "koobs", 21, "20.05.2000",
-                                        "seanEmail", "West Park",
-                                        "08612344567", "0897654321");
-                                patientManager.removePatient(patient);
+                                // this patient object needs an id to be able to select which patient will be removed
+                                System.out.println("Enter a patient ID to be removed: \n");
+                                int userInput = myScanner.nextInt();
+                                patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            case 5 -> patientMenu = true;
+                            case 4 -> patientMenu = true;
+
                             default -> System.out.println("Input not valid.\n");
                         }
                     }
                 }
+                case 5-> exitUserMenu = true;
+                default -> System.out.println("Input not valid.\n");
             }
         }
     }
