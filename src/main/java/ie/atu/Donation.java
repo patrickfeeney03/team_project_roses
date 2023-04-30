@@ -4,6 +4,7 @@ public class Donation {
     private int donationID;
     private Donor donor;
     private BloodBank bloodBank;
+    private BloodUnit bloodUnit;
     private int unitsDonated;
 
     public Donation(Donor donor, int unitsDonated) {
@@ -14,6 +15,21 @@ public class Donation {
     public Donation(Donor donor, BloodBank bloodBank, int unitsDonated) {
         this.donor = donor;
         this.bloodBank = bloodBank;
+        this.unitsDonated = unitsDonated;
+    }
+
+    public Donation(int donationID, Donor donor, BloodBank bloodBank, BloodUnit bloodUnit, int unitsDonated) {
+        this.donationID = donationID;
+        this.donor = donor;
+        this.bloodBank = bloodBank;
+        this.bloodUnit = bloodUnit;
+        this.unitsDonated = unitsDonated;
+    }
+
+    public Donation(Donor donor, BloodBank bloodBank, BloodUnit bloodUnit, int unitsDonated) {
+        this.donor = donor;
+        this.bloodBank = bloodBank;
+        this.bloodUnit = bloodUnit;
         this.unitsDonated = unitsDonated;
     }
 
@@ -48,5 +64,13 @@ public class Donation {
 
     public void setBloodBank(BloodBank bloodBank) {
         this.bloodBank = bloodBank;
+    }
+
+    public BloodUnit getBloodUnit() {
+        return bloodUnit;
+    }
+
+    public void setBloodUnit(BloodUnit bloodUnit) {
+        this.bloodUnit = bloodUnit;
     }
 }

@@ -4,18 +4,15 @@ import java.time.format.DateTimeFormatter;
 public class BloodUnit {
     private BloodType bloodType;
     private String date;
+    private int bloodIDSQL;
 
     public BloodUnit(BloodType bloodType) {
-
         LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-        System.out.println("Current date: " + formattedDate);
-
         this.bloodType = bloodType;
         this.date = formattedDate;
     }
-
 
     public BloodType getBloodType() {
         return bloodType;
@@ -32,6 +29,15 @@ public class BloodUnit {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public int getBloodIDSQL() {
+        return bloodIDSQL;
+    }
+
+    public void setBloodIDSQL(int bloodIDSQL) {
+        this.bloodIDSQL = bloodIDSQL;
+    }
+
     @Override
     public String toString() {
         return "BloodUnit{" +

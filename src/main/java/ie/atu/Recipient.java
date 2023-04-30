@@ -10,6 +10,12 @@ public class Recipient extends Patient {
                 patient_phone, patient_emergencyPhone);
         this.bloodType = bloodType;
     }
+    public Recipient(Patient patient, BloodType bloodType) {
+        super(patient.getPatient_Id(), patient.getPatient_firstName(), patient.getPatient_lastName(), patient.getPatient_age(), patient.getPatient_DOB(), patient.getPatient_email(), patient.getPatient_address(),
+                patient.getPatient_phone(), patient.getPatient_emergencyPhone());
+        this.bloodType = bloodType;
+    }
+
 
     public BloodType getBloodType() {
         return bloodType;

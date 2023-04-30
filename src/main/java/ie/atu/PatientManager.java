@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class PatientManager {
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
 
@@ -20,7 +20,7 @@ public class PatientManager {
         System.out.print("Enter patient's age: ");
         int patient_age = scanner.nextInt();
         System.out.print("Enter patient's DOB: ");
-        String patient_DOB = scanner.nextLine();
+        String patient_DOB = scanner.next();
         System.out.print("Enter patient email: ");
         String patient_email = scanner.next();
         System.out.print("Enter patient's address: ");
@@ -28,7 +28,8 @@ public class PatientManager {
         System.out.print("Enter patient's phone: ");
         String patient_phone = scanner.next();
         System.out.print("Enter patient's emergency phone: ");
-        String patient_emergencyPhone = scanner.next();
+        String patient_EmergencyPhone = scanner.next();
+
 
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -38,9 +39,9 @@ public class PatientManager {
             e.printStackTrace();
         }
 
-        // By setting the ID to 0, the auto-increment from SQL will automatically set the ID.
-        Patient newPatient = new Patient(0, patient_firstName, patient_lastName, patient_age, patient_DOB,
-                patient_email, patient_address, patient_phone, patient_emergencyPhone);
+
+        Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
+                patient_email, patient_address, patient_phone,patient_EmergencyPhone);
         boolean wasRegistrationSuccessful = addPatient(newPatient);
 
         if (wasRegistrationSuccessful) {
@@ -79,7 +80,27 @@ public class PatientManager {
         }
         return false;
     }
+    public boolean addPatientToDonorTable(int patientID) {
+        String addToDonor = "INSERT INTO donor (corresponding_patient_id) " +
+                "VALUES(?)";
 
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(addToDonor)) {
+            preparedStatement.setInt(1, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
@@ -153,6 +174,25 @@ public class PatientManager {
         }
         return patient;
     }
+    public boolean patientExistsInDB(int patientID) {
+        String searchPatient = "SELECT * FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(searchPatient)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public Patient getPatientInfo() {
         Patient patient = null;
@@ -202,7 +242,7 @@ public class PatientManager {
                 "WHERE u.patientID = ?";
 
         try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
             preparedStatement.setInt(1, patientID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -233,5 +273,28 @@ public class PatientManager {
             e.printStackTrace();
         }
         return patient;
+    }
+
+    public static int getDonorIDFromPatientID(int patientID) {
+        String getDonorSQL = "SELECT d.donor_unique_id " +
+        "FROM donor d " +
+        "JOIN patient_info pi ON d.corresponding_patient_id = pi.patientID " +
+        "WHERE pi.patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getDonorSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("donor_unique_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }
