@@ -174,6 +174,25 @@ public class PatientManager {
         }
         return patient;
     }
+    public boolean patientExistsInDB(int patientID) {
+        String searchPatient = "SELECT * FROM patient_info WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(searchPatient)) {
+            preparedStatement.setInt(1, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public Patient getPatientInfo() {
         Patient patient = null;

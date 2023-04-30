@@ -131,8 +131,13 @@ public class UserManager {
 
 
                     // Nurse asks the patient for their ID. Patient responds
-                    System.out.print("Patients id: ");
+                    System.out.print("Patient's id: ");
                     int patientID = scanner.nextInt();
+
+                    // Check if the patientID Actually exists in the table...
+
+
+                    System.out.println("This is the patients info: " + patient);
 
                     // This two lines will try to get the bloodType of the already registered patient.
                     int donorID = PatientManager.getDonorIDFromPatientID(patientID);
@@ -146,13 +151,15 @@ public class UserManager {
                     } else {
                         // If the code gets in here, it means that the patient exists but hasn't donated yet.
                         System.out.println("Patient hasn't donated blood yet. Blood details needed. ");
-                        System.out.println("Blood Group: ");
+                        System.out.print("Blood Group: ");
                         String bloodGroup = scanner.next();
-                        System.out.println("Rh factor: ");
+                        System.out.print("Rh factor: ");
                         char rhFactor = scanner.next().charAt(0);
                         BloodType bloodType = new BloodType(bloodGroup, rhFactor);
 
-                        // Add insert method that connects the donor table with this patient.
+                        // Method that add the patient to the donor table.
+                        System.out.println("Added patient to donor table: " +
+                                patientManager.addPatientToDonorTable(patientID));
                     }
 
                     // Ask for donor's Blood Details
