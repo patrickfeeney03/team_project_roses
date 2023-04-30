@@ -297,4 +297,6 @@ public class PatientManager {
 
         return 0;
     }
+
+    //public static int updateTable
 }
