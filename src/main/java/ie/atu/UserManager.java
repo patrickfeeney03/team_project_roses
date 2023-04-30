@@ -232,6 +232,15 @@ public class UserManager {
                             }
 
                             case 3 -> {
+                                //Register New Donor
+                                //this patient object does not need an id as sql will automatically enter one
+
+                                System.out.println("Enter New patient: \n");
+                                patientManager.register(myScanner);
+                            }
+
+                            case 4 -> {
+
                                 //Remove patient
                                 // this patient object needs an id to be able to select which patient will be removed
                                 System.out.println("Enter a patient ID to be removed: \n");
