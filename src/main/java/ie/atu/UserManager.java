@@ -133,28 +133,26 @@ public class UserManager {
                     System.out.print("Units donated: ");
                     int unitsDonated = scanner.nextInt();
 
+                    // Patient Already exists in the DB
+                    //Donor donor = new Donor(patientManager.getSinglePatientInfo(12), );
+
                     // Create BloodType of the donated blood.
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
                     //Create BloodUnit object to set the date of donation
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-                    // Get donors details. From DB of from terminal input.
-                        // Get patient by ID. If it doesn't exist, crea new patient and set add it to DB.
-                    // This donor object is for testing.
-                    Donor donor = new Donor(0, "Patrick", "Feeney", 19,
-                            "15/12/2003", "patrick@gmail.com", "cherryPark",
-                            "999555222", "999555222", bloodType);
+
 
                     // Create the donation object
-                    Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
+                    //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
 
                     // Check if the presetted bloodBank values are correct.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     // Assuming they are correct...
 
-                    System.out.println("Donation Successful: " + bloodManager.recordDonation
-                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
+                    //System.out.println("Donation Successful: " + bloodManager.recordDonation
+                            //(donation.getDonor().getBloodType(), donation.getUnitsDonated()));
                 }
                 case 3 -> {
                     // View Stock
