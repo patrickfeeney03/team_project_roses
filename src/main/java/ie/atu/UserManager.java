@@ -123,7 +123,7 @@ public class UserManager {
                 case 2 -> {
                     // DONATION
 
-                    int examplePatientID = 3;
+                    int examplePatientID = 2;
 
                     // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
@@ -135,20 +135,16 @@ public class UserManager {
                     System.out.print("Units donated: ");
                     int unitsDonated = scanner.nextInt();
 
-                    // Patient Already exists in the DB
-                    //Donor donor = new Donor(patientManager.getSinglePatientInfo(12), );
-
                     // Create BloodType of the donated blood.
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
                     //Create BloodUnit object to set the date of donation
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-
-
-                    // Create the donation object
+                    // Get the blood type of the already registered patient.
                     int donorID = PatientManager.getDonorIDFromPatientID(examplePatientID);
                     String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
+
                     System.out.println("The patient with id " + examplePatientID + " has " + donorBloodTypeString +
                             " blood type.");
                     //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
