@@ -13,6 +13,9 @@ public class BloodBank{
         this.bankPhone = bankPhone;
     }
 
+    public BloodBank() {
+    }
+
     public int getBankID() {
         return bankID;
     }
