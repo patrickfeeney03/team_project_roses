@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodManager {
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
 
@@ -119,5 +119,29 @@ public class BloodManager {
             }
         }
         return compatibleBloodTypesForRecipient;
+    }
+
+    public static String getDonorBloodTypeString(int donorID) {
+        PatientManager patientManager = new PatientManager();
+        String getBloodTypeSQL = "SELECT pi.patientFirstName, CONCAT(bt.blood_group, bt.rh_factor) AS blood_type " +
+                "FROM patient_info pi " +
+                "JOIN donor d ON pi.patientID = d.corresponding_patient_id " +
+                "JOIN donated_blood db ON d.donor_unique_id = db.donorID_relation " +
+                "JOIN blood_types bt ON db.blood_typesID = bt.id " +
+                "WHERE d.donor_unique_id = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeSQL)) {
+            preparedStatement.setInt(1, donorID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("blood_type");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Nothing found";
     }
 }

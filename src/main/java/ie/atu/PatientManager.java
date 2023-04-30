@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class PatientManager {
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
 
@@ -236,6 +236,7 @@ public class PatientManager {
         return patient;
     }
 
+    /*
     public Patient getCompletePatientInfo(int patientID) {
         // This includes the bloodType, if the patient has been attended previously.
         Patient patient = new Patient();
@@ -252,6 +253,7 @@ public class PatientManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+
                 patient.setPatient_Id(patientID);
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
                 patient.setPatient_lastName(resultSet.getString("patientLastName"));
@@ -265,6 +267,32 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return patient;
+    }
+     */
+
+
+    public static int getDonorIDFromPatientID(int patientID) {
+        String getDonorSQL = "SELECT d.donor_unique_id " +
+        "FROM donor d " +
+        "JOIN patient_info pi ON d.corresponding_patient_id = pi.patientID " +
+        "WHERE pi.patientID = <your_patientID> ";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(getDonorSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("donor_unique_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 777;
     }
 }

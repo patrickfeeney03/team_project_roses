@@ -123,6 +123,8 @@ public class UserManager {
                 case 2 -> {
                     // DONATION
 
+                    int examplePatientID = 3;
+
                     // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
@@ -145,6 +147,7 @@ public class UserManager {
 
 
                     // Create the donation object
+                    String bloodTypeString = BloodManager.getDonorBloodTypeString(examplePatientID);
                     //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
 
                     // Check if the presetted bloodBank values are correct.
