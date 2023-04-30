@@ -57,7 +57,10 @@ public class BloodBankManager {
                 bloodBank.setBankAddress(resultSet.getString("bankAddress"));
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
 
-
+                System.out.println("bankID: " + bloodBank.getBankID());
+                System.out.println("bankEmail: " + bloodBank.getBankEmail());
+                System.out.println("bankAddress: " + bloodBank.getBankAddress());
+                System.out.println("bankPhone: " + bloodBank.getBankPhone());
             }
 
         } catch (SQLException e) {
