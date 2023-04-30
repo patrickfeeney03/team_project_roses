@@ -22,7 +22,7 @@ public class BloodBankManager {
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectBankInfoSQ)) {
-            preparedStatement.setInt(100, bankID);
+            preparedStatement.setInt(1, bankID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
