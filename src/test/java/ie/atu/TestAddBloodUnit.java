@@ -16,34 +16,30 @@ public class TestAddBloodUnit {
         BloodBank bloodBank = new BloodBank(1, "EmailBank", "BankAddress",
                 "bankPhone999");
         PatientManager patientManager = new PatientManager();
-        Donor donor = new Donor(patientManager.getPatientByID(6), bloodType); // Patient already exists in DB
+        Donor donor = new Donor(patientManager.getPatientByID(10), bloodType); // Patient already exists in DB
         Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
 
         // Figure out which blood_typeID corresponds to the bloodType object.
         String getBloodTypeID = "SELECT id FROM blood_types " +
                 "WHERE blood_group = ? AND rh_factor = ?";
-
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeID)) {
             preparedStatement.setString(1, donation.getDonor().getBloodType().getBloodGroup());
             preparedStatement.setString(2, Character.toString
                     (donation.getDonor().getBloodType().getRhFactor()));
-
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if (resultSet.next()) {
                 donation.getBloodUnit().setBloodIDSQL(resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("doantion.getBloodUnit().setBloodIDSQL(): " + donation.getBloodUnit().getBloodIDSQL());
+        System.out.println("Patient's blood type: ");
 
         // Add unit to blood_units_date table
         String addIntoUnitsSQL =
                 "INSERT INTO blood_units_date (blood_typesID, donorID, blood_date) " +
                         "VALUES (?, ?, ?)";
-
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(addIntoUnitsSQL)) {
             preparedStatement.setInt(1, 2);
@@ -87,7 +83,7 @@ public class TestAddBloodUnit {
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(addPatientToDonorTableSQL)) {
-            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(1, 1);
 
         } catch (SQLException e) {
             e.printStackTrace();

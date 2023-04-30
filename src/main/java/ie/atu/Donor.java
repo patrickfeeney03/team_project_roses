@@ -18,8 +18,6 @@ public class Donor extends Patient {
         this.bloodType = bloodType;
     }
 
-
-
     public BloodType getBloodType() {
         return bloodType;
     }
