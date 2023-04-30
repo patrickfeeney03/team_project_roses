@@ -298,5 +298,9 @@ public class PatientManager {
         return 0;
     }
 
-    //public static int updateTable
+    public static boolean updateTable_patient_medical_data() {
+        String updatePMD = "";
+
+        return false;
+    }
 }
