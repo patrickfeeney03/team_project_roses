@@ -1,9 +1,6 @@
 package ie.atu;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class BloodBankManager {
 
@@ -40,15 +37,14 @@ public class BloodBankManager {
         return bloodBank;
     }
 
-    public static BloodBank getAllBloodBankByID(int bankID) {
+    public static BloodBank getAllBloodBankByID() {
         BloodBank bloodBank = null;
         String selectAllBankInfoSQ = "SELECT * FROM blood_bank ";
 
         try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectAllBankInfoSQ)) {
-            preparedStatement.setInt(1, bankID);
+             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+             ResultSet resultSet = statement.executeQuery(selectAllBankInfoSQ)) {
 
             if(resultSet.next()) {
                 bloodBank = new BloodBank();
