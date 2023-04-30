@@ -39,4 +39,8 @@ public class BloodBankManager {
         }
         return bloodBank;
     }
+
+    public static BloodBank getAllBloodBankByID(int bankID) {
+
+    }
 }
