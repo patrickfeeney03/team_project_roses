@@ -300,13 +300,7 @@ public class PatientManager {
         return 0;
     }
 
-    public static boolean updateTable_patient_medical_data() {
-        String updatePMD = "";
-
-        return false;
-    }
-
-    public List<String> getTableValues_patient_medical_data(int patientID) {
+    public static List<String> getTableValues_patient_medical_data(int patientID) {
         List<String> pmdQueryResults = new ArrayList<>();
         String selectPMDSQL = "SELECT patientID, patientDisease, bloodTypeID, lastReceive, firstReceive, lastDonation, " +
                 "firstDonation " +
@@ -332,5 +326,36 @@ public class PatientManager {
             e.printStackTrace();
         }
         return pmdQueryResults;
+    }
+
+    public static boolean setTable_patient_medical_data(int patientID, String patientDisease, int bloodTypeID,
+                                                String  lastReceive, String firstReceive, String lastDonation,
+                                                String firstDonation) {
+        String setTableSQL = "UPDATE patient_medical_data " +
+                "SET patientID = ? " +
+                "patientDisease = ? " +
+                "bloodTypeId = ?" +
+                "";
+        /*
+        UPDATE patient_medical_data
+        SET patientID = 3,
+        patientDisease = 'HIV',
+        bloodTypeID = 2,
+        lastReceive = '2022-04-30',
+        firstReceive = '2022-04-28',
+        lastDonation = '2022-04-25',
+        firstDonation = '2022-04-20'
+        WHERE patientID = 3;
+
+         */
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(setTableSQL)) {
+            //preparedStatement.set
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

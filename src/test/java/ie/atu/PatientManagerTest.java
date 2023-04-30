@@ -32,6 +32,7 @@ public class PatientManagerTest {
         Patient patientInfo = patientManager.getPatientInfo();
 
         // Select all info from a patient getSinglePatientInfo() (patient_info and patient_medical_data)
-        Patient singlePatientInfo = patientManager.getSinglePatientInfo(0);
+        Patient singlePatientInfo = patientManager.getSinglePatientInfo(1);
+        System.out.println(singlePatientInfo.toString());
     }
 }
