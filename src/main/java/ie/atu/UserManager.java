@@ -122,35 +122,32 @@ public class UserManager {
                 }
                 case 2 -> {
                     // DONATION
-
                     // Patient comes to the hospital/blood bank to donate blood.
                     // Nurse check if he's a new patient or if he's already registered.
                     // If the patient doesn't know their ID, well, they are not registered, for now.
                         // To register them, the nurse would need to go back? And chooose option 3: Patients, and then
                         // Option 2.
 
-
                     // Nurse asks the patient for their ID. Patient responds
                     System.out.print("Patient's id: ");
                     int patientID = scanner.nextInt();
 
-                    // Check if the patientID Actually exists in the table...
+                    // This checks if the patientID is valid.
                     if (!patientManager.patientExistsInDB(patientID)) {
-                        System.out.println("The patient with id of " + patientID + "doesn't exist in the database." +
+                        System.out.println("The patient with id of " + patientID + " doesn't exist in the database." +
                                 "\nPlease register.");
+                        // This break makes the code jump back to the top of the while loop.
                         break;
                     }
 
-
-                    System.out.println("This gets printed after the thing");
-
                     // This two lines will try to get the bloodType of the already registered patient.
                     int donorID = PatientManager.getDonorIDFromPatientID(patientID);
+                    BloodType bloodType = null;
                     if (donorID != 0) {
                         // If the code gets in here the patient has donated previously.
                         // So we retrieve their known blood type.
                         String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
-                        BloodType bloodType = new BloodType
+                        bloodType = new BloodType
                                 (donorBloodTypeString.substring(0, donorBloodTypeString.length() - 1),
                                         donorBloodTypeString.charAt(donorBloodTypeString.length() - 1));
                     } else {
@@ -160,37 +157,37 @@ public class UserManager {
                         String bloodGroup = scanner.next();
                         System.out.print("Rh factor: ");
                         char rhFactor = scanner.next().charAt(0);
-                        BloodType bloodType = new BloodType(bloodGroup, rhFactor);
+                        bloodType = new BloodType(bloodGroup, rhFactor);
 
-                        // Method that add the patient to the donor table.
+                        // Method that adds the patient to the donor table.
                         System.out.println("Added patient to donor table: " +
                                 patientManager.addPatientToDonorTable(patientID));
-                    }
 
-                    // Ask for donor's Blood Details
-                    System.out.print("Donated Blood Group: ");
-                    String inputBloodGroup = scanner.next();
-                    System.out.print("Donated Rh Factor: ");
-                    char inputRhFactor = scanner.next().charAt(0);
+                        // Update the patient_medical_data since we now know their bloodType.
+                    }
+                    System.out.println("Patients blood type: " + bloodType.toString());
 
                     // How many units were donated
-                    System.out.print("Units donated: ");
+                    System.out.print("How many units of type " + bloodType.toString() + "will be donated: ");
                     int unitsDonated = scanner.nextInt();
 
-                    // Create BloodType of the donated blood.
-                    BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
-
-                    //Create BloodUnit object to set the date of donation
+                    // Create BloodUnit object to set the date of donation
+                    // This saves the date
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-                    //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
+                    Patient patient = patientManager.getSinglePatientInfo(patientID);
+                    Donor donor = new Donor(patient, bloodType);
 
                     // Check if the presetted bloodBank values are correct.
+                    // Add column to blood_unit_dates connecting it to the bloodBank**
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
-                    // Assuming they are correct...
+                    System.out.println("Assuming they are, for now, we proceed...");
 
-                    //System.out.println("Donation Successful: " + bloodManager.recordDonation
-                            //(donation.getDonor().getBloodType(), donation.getUnitsDonated()));
+                    Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
+
+                    System.out.println("Donation Successful: " + bloodManager.recordDonation
+                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
+
                 }
                 case 3 -> {
                     // View Stock
