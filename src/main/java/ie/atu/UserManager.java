@@ -202,7 +202,7 @@ public class UserManager {
                     Patient patient = null;
                     // View/register patients
                     while (patientMenu != true) {
-                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Logout\nEnter Your Choice: ");
+                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Return to first Menu\nEnter Your Choice: ");
                         int second_User_Choice = scanner.nextInt();
                         switch (second_User_Choice) {
                             //Donor information
@@ -280,7 +280,12 @@ public class UserManager {
                                 patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            //case 4 -> patientMenu = true;
+                            case 5 ->
+                            {
+                                //Return to first menu
+                                patientMenu = true;
+
+                            }
 
                             default -> System.out.println("Input not valid.\n");
                         }
