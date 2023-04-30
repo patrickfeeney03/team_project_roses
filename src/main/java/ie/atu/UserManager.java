@@ -248,7 +248,7 @@ public class UserManager {
                                 patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            case 4 -> patientMenu = true;
+                            case 5 -> patientMenu = true;
 
                             default -> System.out.println("Input not valid.\n");
                         }
