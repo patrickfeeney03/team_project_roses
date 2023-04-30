@@ -177,12 +177,14 @@ public class UserManager {
                     Donor donor = new Donor(patient, bloodType);
 
                     // Check if the presetted bloodBank values are correct.
-                    // Add column to blood_unit_dates connecting it to the bloodBank**
+                    // Add column to blood_unit_dates connecting it to the bloodBank
+
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     System.out.println("Assuming they are, for now, we proceed...");
 
                     Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
-
+                    boolean donated_bloodTableSucessfull = BloodManager.addBloodToDonated_blood(donation);
+                    System.out.println("Added to table status: " + donated_bloodTableSucessfull);
 
 
                     /*

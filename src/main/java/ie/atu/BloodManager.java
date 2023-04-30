@@ -147,21 +147,33 @@ public class BloodManager {
 
     public static boolean addBloodToDonated_blood(Donation donation) {
         // Loop?
-        String insertTo_donated_blood = "INSERT INTO donated_blood (blood_typesID, donation_date, donorID_relation," +
-                "blood_bankID_relation) " +
-                "VALUES (?, ?, ?, ?)";
+        int unitsDonated = donation.getUnitsDonated();
+        int rowsAffected = 0;
+        for (int i = 0; i < unitsDonated; i++) {
+            String insertTo_donated_blood = "INSERT INTO donated_blood (blood_typesID, donation_date, donorID_relation," +
+                    "blood_bankID_relation) " +
+                    "VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
-            preparedStatement.setInt(1, get_blood_typeID(donation.getDonor().getBloodType().toString()));
-            preparedStatement.setString(2, donation.getBloodUnit().getDate());
-            preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
-                    donation.getDonor().getPatient_Id()));
-            preparedStatement.setInt(4, 3);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
+                preparedStatement.setInt(1, get_blood_typeID(donation.getDonor().getBloodType().toString()));
+                preparedStatement.setString(2, donation.getBloodUnit().getDate());
+                preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
+                        donation.getDonor().getPatient_Id()));
+                preparedStatement.setInt(4, 3);
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    rowsAffected++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
+        if (rowsAffected > 0) {
+            System.out.println("Rows Affected: " + rowsAffected);
+            return true;
+        }
         return false;
     }
 
