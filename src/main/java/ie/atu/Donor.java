@@ -10,6 +10,19 @@ public class Donor extends Patient {
                 patient_phone, patient_emergencyPhone);
         this.bloodType = bloodType;
     }
+    public Donor(Patient patient, BloodType bloodType) {
+        super(patient.getPatient_Id(), patient.getPatient_firstName(), patient.getPatient_lastName(),
+                patient.getPatient_age(), patient.getPatient_DOB(), patient.getPatient_email(),
+                patient.getPatient_address(), patient.getPatient_phone(), patient.getPatient_emergencyPhone());
+        this.bloodType = bloodType;
+    }
+
+    public Donor(Patient patient, BloodType bloodType) {
+        super(patient.getPatient_Id(), patient.getPatient_firstName(), patient.getPatient_lastName(),
+                patient.getPatient_age(), patient.getPatient_DOB(), patient.getPatient_email(),
+                patient.getPatient_address(), patient.getPatient_phone(), patient.getPatient_emergencyPhone());
+        this.bloodType = bloodType;
+    }
 
     public BloodType getBloodType() {
         return bloodType;
@@ -17,5 +30,12 @@ public class Donor extends Patient {
 
     public void setBloodType(BloodType bloodType) {
         this.bloodType = bloodType;
+    }
+
+    @Override
+    public String toString() {
+        return "Donor{" +
+                "bloodType=" + bloodType +
+                "} " + super.toString();
     }
 }

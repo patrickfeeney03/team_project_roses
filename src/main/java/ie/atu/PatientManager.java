@@ -80,9 +80,7 @@ public class PatientManager {
         }
         return false;
     }
-
-
-
+    
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
                 "patientEmail = ?, patientAddress = ?, patientPhone = ?, patientEmergencyPhone = ? WHERE patientID = ?";
@@ -205,7 +203,7 @@ public class PatientManager {
                 "WHERE u.patientID = ?";
 
         try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(selectIndividualAllSQL)) {
             preparedStatement.setInt(1, patientID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
