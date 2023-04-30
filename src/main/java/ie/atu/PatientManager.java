@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class PatientManager {
-
     public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -30,7 +29,6 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
 
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
@@ -38,7 +36,6 @@ public class PatientManager {
             System.out.println("Date Error");
             e.printStackTrace();
         }
-
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
@@ -93,11 +90,9 @@ public class PatientManager {
             if (rowsAffected > 0) {
                 return true;
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }
-
         return false;
     }
     
@@ -190,7 +185,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -216,16 +210,6 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                System.out.println("patientID: " + patient.getPatient_Id());
-                System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                System.out.println("patientLastName: " + patient.getPatient_lastName());
-                System.out.println("patientAge: " + patient.getPatient_age());
-                System.out.println("patientDOB: " + patient.getPatient_DOB());
-                System.out.println("patientEmail: " + patient.getPatient_email());
-                System.out.println("patientAddress: " + patient.getPatient_address());
-                System.out.println("patientPhone: " + patient.getPatient_phone());
-                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -258,16 +242,6 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                System.out.println("patientID: " + patient.getPatient_Id());
-                System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                System.out.println("patientLastName: " + patient.getPatient_lastName());
-                System.out.println("patientAge: " + patient.getPatient_age());
-                System.out.println("patientDOB: " + patient.getPatient_DOB());
-                System.out.println("patientEmail: " + patient.getPatient_email());
-                System.out.println("patientAddress: " + patient.getPatient_address());
-                System.out.println("patientPhone: " + patient.getPatient_phone());
-                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
