@@ -16,6 +16,7 @@ public class Patient {
     private String firstReceive;
     private String lastDonation;
     private String firstDonation;
+    private String patientDisease;
 
 
     public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
@@ -167,6 +168,14 @@ public class Patient {
 
     public void setFirstDonation(String firstDonation) {
         this.firstDonation = firstDonation;
+    }
+
+    public String getPatientDisease() {
+        return patientDisease;
+    }
+
+    public void setPatientDisease(String patientDisease) {
+        this.patientDisease = patientDisease;
     }
 
     @Override
