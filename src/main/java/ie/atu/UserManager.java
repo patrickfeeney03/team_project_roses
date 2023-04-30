@@ -135,9 +135,14 @@ public class UserManager {
                     int patientID = scanner.nextInt();
 
                     // Check if the patientID Actually exists in the table...
+                    if (!patientManager.patientExistsInDB(patientID)) {
+                        System.out.println("The patient with id of " + patientID + "doesn't exist in the database." +
+                                "\nPlease register.");
+                        break;
+                    }
 
 
-                    System.out.println("This is the patients info: " + patient);
+                    System.out.println("This gets printed after the thing");
 
                     // This two lines will try to get the bloodType of the already registered patient.
                     int donorID = PatientManager.getDonorIDFromPatientID(patientID);

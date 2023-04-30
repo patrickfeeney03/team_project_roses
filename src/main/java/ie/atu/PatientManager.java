@@ -181,9 +181,9 @@ public class PatientManager {
             PreparedStatement preparedStatement = connection.prepareStatement(searchPatient)) {
             preparedStatement.setInt(1, patientID);
 
-            int rowsAffected = preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (rowsAffected > 0) {
+            if (resultSet.next()) {
                 return true;
             }
 
