@@ -7,10 +7,6 @@ import java.sql.SQLException;
 
 public class BloodBankManager {
 
-    // here there will be two methods
-    // 1 getBloodBankByID
-    // 2 printBloodBanks
-
     public Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -37,9 +33,7 @@ public class BloodBankManager {
                 System.out.println("bankEmail: " + bloodBank.getBankEmail());
                 System.out.println("bankAddress: " + bloodBank.getBankAddress());
                 System.out.println("bankPhone: " + bloodBank.getBankPhone());
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
