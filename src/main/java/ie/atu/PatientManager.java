@@ -3,6 +3,7 @@ package ie.atu;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -305,5 +306,31 @@ public class PatientManager {
         return false;
     }
 
-    public List<String>
+    public List<String> getTableValues_patient_medical_data(int patientID) {
+        List<String> pmdQueryResults = new ArrayList<>();
+        String selectPMDSQL = "SELECT patientID, patientDisease, bloodTypeID, lastReceive, firstReceive, lastDonation, " +
+                "firstDonation " +
+                "FROM patient_medical_data WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectPMDSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                pmdQueryResults.add(Integer.toString(resultSet.getInt("patientID")));
+                pmdQueryResults.add(resultSet.getString("patientDisease"));
+                pmdQueryResults.add(Integer.toString(resultSet.getInt("bloodTypeID")));
+                pmdQueryResults.add(resultSet.getString("lastReceive"));
+                pmdQueryResults.add(resultSet.getString("firstReceive"));
+                pmdQueryResults.add(resultSet.getString("lastDonation"));
+                pmdQueryResults.add(resultSet.getString("firstDonation"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pmdQueryResults;
+    }
 }
