@@ -25,7 +25,16 @@ public class BloodBankManager {
             preparedStatement.setInt(100, bankID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e) {
+
+            if(resultSet.next()) {
+                bloodBank = new BloodBank();
+                bloodBank.setBankID(resultSet.getInt("bankID"));
+                bloodBank.setBankEmail(resultSet.getString("bankEmail"));
+                bloodBank.setBankAddress(resultSet.getString("bankAddress"));
+                bloodBank.setBankPhone(resultSet.getString("bankPhone"));
+            }
+
+            } catch (SQLException e) {
             e.printStackTrace();
         }
         return bloodBank;
