@@ -117,5 +117,22 @@ public class Patient {
     public void setRegister_date(String register_date) {
         this.register_date = register_date;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "patient_Id=" + patient_Id +
+                ", patient_firstName='" + patient_firstName + '\'' +
+                ", patient_lastName='" + patient_lastName + '\'' +
+                ", patient_age=" + patient_age +
+                ", patient_DOB='" + patient_DOB + '\'' +
+                ", patient_email='" + patient_email + '\'' +
+                ", patient_address='" + patient_address + '\'' +
+                ", patient_phone='" + patient_phone + '\'' +
+                ", patient_emergencyPhone='" + patient_emergencyPhone + '\'' +
+                ", last_visit='" + last_visit + '\'' +
+                ", register_date='" + register_date + '\'' +
+                '}';
+    }
 }
 

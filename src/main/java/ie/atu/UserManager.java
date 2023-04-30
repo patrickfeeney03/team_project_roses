@@ -93,6 +93,8 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
+
+
                         // Get patient by id. If he doesn't exist, create new patient and add it to DB
                         // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
@@ -209,13 +211,9 @@ public class UserManager {
                         }
                     }
                 }
-
             }
-            //case 5-> exitUserMenu = true;
-            //default -> System.out.println("Input not valid.\n");
         }
     }
-
 
     public boolean addUser(User user) {
         String insertSQL = "INSERT INTO user (userID, email, password, name, role, address, phone, age) " +
