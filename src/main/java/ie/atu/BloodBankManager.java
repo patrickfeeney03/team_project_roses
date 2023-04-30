@@ -34,7 +34,7 @@ public class BloodBankManager {
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
             }
 
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return bloodBank;
