@@ -123,6 +123,8 @@ public class UserManager {
                 case 2 -> {
                     // DONATION
 
+                    int examplePatientID = 2;
+
                     // Ask for donor's Blood Details
                     System.out.print("Donated Blood Group: ");
                     String inputBloodGroup = scanner.next();
@@ -139,22 +141,20 @@ public class UserManager {
                     //Create BloodUnit object to set the date of donation
                     BloodUnit bloodUnit = new BloodUnit(bloodType);
 
-                    // Get donors details. From DB of from terminal input.
-                        // Get patient by ID. If it doesn't exist, crea new patient and set add it to DB.
-                    // This donor object is for testing.
-                    Donor donor = new Donor(0, "Patrick", "Feeney", 19,
-                            "15/12/2003", "patrick@gmail.com", "cherryPark",
-                            "999555222", "999555222", bloodType);
+                    // Get the blood type of the already registered patient.
+                    int donorID = PatientManager.getDonorIDFromPatientID(examplePatientID);
+                    String donorBloodTypeString = BloodManager.getDonorBloodTypeString(donorID);
 
-                    // Create the donation object
-                    Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
+                    System.out.println("The patient with id " + examplePatientID + " has " + donorBloodTypeString +
+                            " blood type.");
+                    //Donation donation = new Donation(0, donor, bloodBank, bloodUnit, unitsDonated);
 
                     // Check if the presetted bloodBank values are correct.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     // Assuming they are correct...
 
-                    System.out.println("Donation Successful: " + bloodManager.recordDonation
-                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
+                    //System.out.println("Donation Successful: " + bloodManager.recordDonation
+                            //(donation.getDonor().getBloodType(), donation.getUnitsDonated()));
                 }
                 case 3 -> {
                     // View Stock
