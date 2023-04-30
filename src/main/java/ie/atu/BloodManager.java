@@ -153,7 +153,11 @@ public class BloodManager {
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, get_blood_typeID(donation.getDonor().getBloodType().toString()));
+            preparedStatement.setString(2, donation.getBloodUnit().getDate());
+            preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
+                    donation.getDonor().getPatient_Id()));
+            preparedStatement.setInt(4, 3);
         } catch (SQLException e) {
             e.printStackTrace();
         }
