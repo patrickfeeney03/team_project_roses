@@ -253,17 +253,9 @@ public class UserManager {
                                 }
                             }
 
-                            case 2 -> {
-                                //Register new patient
-                                System.out.println("\nEnter New patient: ");
-                                patient = new Patient(0, "alan",
-                                        "hynes", 23, "20.04.2000",
-                                        "alanEmail", "South Park",
-                                        "086809765", "08976542");
-                                patientManager.addPatient(patient);
-                            }
 
-                            case 3 -> {
+
+                            case 2 -> {
                                 //Register New Donor
                                 //this patient object does not need an id as sql will automatically enter one
 
@@ -271,7 +263,7 @@ public class UserManager {
                                 patientManager.register(myScanner);
                             }
 
-                            case 4 -> {
+                            case 3 -> {
 
                                 //Remove patient
                                 // this patient object needs an id to be able to select which patient will be removed
@@ -280,7 +272,7 @@ public class UserManager {
                                 patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            case 5 ->
+                            case 4 ->
                             {
                                 //Return to first menu
                                 patientMenu = true;
