@@ -41,7 +41,7 @@ public class BloodBankManager {
 
              ResultSet resultSet = statement.executeQuery(selectAllBankInfoSQ)) {
 
-            if(resultSet.next()) {
+            while(resultSet.next()) {
                 bloodBank = new BloodBank();
                 bloodBank.setBankID(resultSet.getInt("bankID"));
                 bloodBank.setBankEmail(resultSet.getString("bankEmail"));
