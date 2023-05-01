@@ -360,6 +360,8 @@ public class PatientManager {
         return pmdQueryResults;
     }
 
+    // I currently can't set the whole table since I don't know if the date columns are populated or not. And which
+    // ones to populate or which ones not to. I'm writing methods for that, such as setFirstDonation, getFirstDonation
     public static boolean setTable_patient_medical_data(int patientID, String patientDisease, int bloodTypeID,
                                                 String  lastReceive, String firstReceive, String lastDonation,
                                                 String firstDonation) {
@@ -388,6 +390,27 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String getFirstDonation(int patientID) {
+        String firstDonationSQL = "SELECT firstDonation " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(firstDonationSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("firstDonation");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Patient not found";
     }
 }
 
