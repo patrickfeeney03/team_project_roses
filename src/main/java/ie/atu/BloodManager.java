@@ -30,7 +30,6 @@ public class BloodManager {
         if (amount <= 0) {
             return false;
         }
-
         return updateBloodStock(donatedBloodType, amount);
     }
 
@@ -54,7 +53,6 @@ public class BloodManager {
                 BloodStock bloodStock = new BloodStock(bloodType, amount);
                 bloodStockList.add(bloodStock);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,7 +78,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return availableAmount;
     }
 
@@ -198,7 +195,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return 0;
     }
 }

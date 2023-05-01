@@ -9,8 +9,6 @@ public class BloodType {
         this.rhFactor = rhFactor;
     }
 
-    // Getter sand setters...
-
     public String getBloodGroup() {
         return bloodGroup;
     }
@@ -26,7 +24,6 @@ public class BloodType {
     public void setRhFactor(char rhFactor) {
         this.rhFactor = rhFactor;
     }
-
 
     @Override
     // Return type of blood as text
