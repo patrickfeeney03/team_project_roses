@@ -30,13 +30,37 @@ public class BloodUnitManager {
              ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int blood_units_dateID = resultSet.getInt("blood_units_dateID");
+                int bloodUnitsDateID = resultSet.getInt("blood_units_dateID");
                 String bloodType = resultSet.getString("blood_typesID");
 
                 // print the blood units by their primary key
-                System.out.println("Blood Units Date ID: " + blood_units_dateID + ", Blood Type: " + bloodType);
+                System.out.println("Blood Units Date ID: " + bloodUnitsDateID + ", Blood Type: " + bloodType);
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static BloodStock getBestBloodByAmount() {
+        BloodStock bloodStock = null;
+
+        // MySQL code to select blood from the blood bank with the most amount
+        String selectBloodAmount = "SELECT * FROM blood_stock ORDER BY amount DESC LIMIT 3;";
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodAmount)) {
+             ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int BloodID = resultSet.getInt("id");
+                int BloodTypeID = resultSet.getInt("blood_type_id");
+                int BloodUnits = resultSet.getInt("amount");
+
+                // print the blood units by their primary key
+                System.out.println("Blood ID: " + BloodID + ", Blood Type ID: " + BloodTypeID + "Blood Units: " + BloodUnits);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
