@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-// Method to select the blood to be donated with the closest expiration date
+
 public class BloodUnitManager {
 
+    // Method to select the blood to be donated with the closest expiration date
     public static BloodUnit getBestBloodByDate() {
         BloodUnit bloodUnit = null;
 
@@ -43,6 +44,7 @@ public class BloodUnitManager {
         return null;
     }
 
+    // Method to select the blood to be donated with the most amount of blood
     public static BloodStock getBestBloodByAmount() {
         BloodStock bloodStock = null;
 

@@ -161,7 +161,6 @@ public class UserManager {
                         System.out.println("Added patient to donor table: " +
                                 patientManager.addPatientToDonorTable(patientID));
 
-
                     }
                     System.out.println("Patients blood type: " + bloodType.toString());
 
@@ -210,7 +209,6 @@ public class UserManager {
                                 System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
                                 patientManager.getPatientInfoAll(userInput);
-
                             }
 
                             case 2 -> {
@@ -228,11 +226,9 @@ public class UserManager {
                                 patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            case 4 ->
-                            {
+                            case 4 -> {
                                 //Return to first menu
                                 patientMenu = true;
-
                             }
 
                             default -> System.out.println("Input not valid.\n");
