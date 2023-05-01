@@ -42,4 +42,9 @@ public class BloodUnitManager {
         }
         return null;
     }
+
+    public static BloodStock getBestBloodByAmount() {
+
+        return null;
+    }
 }
