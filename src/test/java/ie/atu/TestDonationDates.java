@@ -2,6 +2,7 @@ package ie.atu;
 
 public class TestDonationDates {
     public static void main(String[] args) {
+        /*
         System.out.println(PatientManager.getFirstDonation(2));
 
         System.out.println(PatientManager.setFirstDonation(2, "1990-01-01"));
@@ -24,5 +25,13 @@ public class TestDonationDates {
                 " was on " + PatientManager.getFirstDonation(testPatientID));
         System.out.println("The last donation for the patient: " + testPatientID +
                 " was on " + PatientManager.getLastDonation(testPatientID));
+         */
+
+        // Receive
+        int patientID = 3;
+        System.out.println(PatientManager.getFirstReceive(patientID));
+        System.out.println(PatientManager.setFirstReceive(patientID, "1999-03-30"));
+        System.out.println(PatientManager.getFirstReceive(patientID));
+
     }
 }

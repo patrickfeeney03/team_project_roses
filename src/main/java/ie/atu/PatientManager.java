@@ -474,6 +474,48 @@ public class PatientManager {
         }
         return "";
     }
+
+    public static String getFirstReceive(int patientID) {
+        String firstDonationSQL = "SELECT firstReceive " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(firstDonationSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("firstReceive");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Patient not found";
+    }
+
+    public static boolean setFirstReceive(int patientID, String date) {
+        String setFirstDonationSQL = "UPDATE patient_medical_data " +
+                "SET firstReceive = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setFirstDonationSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
 
