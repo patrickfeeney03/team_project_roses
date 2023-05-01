@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static ie.atu.BloodBankManager.getBloodBankByID;
+
 public class UserManager {
     BloodManager bloodManager = new BloodManager();
     PatientManager patientManager = new PatientManager();
@@ -94,8 +96,11 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
-                        // Get patient by id. If he doesn't exist, create new patient and add it to DB
-                        // This recipient object is just for testing.
+
+                    // Get patient by id. If he doesn't exist, create new patient and add it to DB
+
+
+                    // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
                             "123345123", "9785684834", bloodType);
@@ -106,18 +111,31 @@ public class UserManager {
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
-                    // Assuming they are correct...
 
-                    // Retrieve blood from the stock with the highest amount of blood
-                     // We have to add an expiry date to the blood too. So the blood
-                    boolean requestSuccessful =
-                            bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
+                    if(bloodBankDetails == 'N') {
+                        //Print blood bank details
+                        bloodBank = BloodBankManager.getAllBloodBankByID();
 
-                    if (requestSuccessful) {
-                        System.out.println("Request Successful: " + requestSuccessful);
+
+                        //Select the right blood bank by ID
+
                     }
 
-                    //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
+                    else {
+
+                        // Retrieve blood from the stock with the highest amount of blood
+
+
+                        // We have to add an expiry date to the blood too. So the blood
+                        boolean requestSuccessful =
+                                bloodManager.requestBlood(receive.getRecipient().getBloodType(), receive.getUnitsReceived());
+
+                        if (requestSuccessful) {
+                            System.out.println("Request Successful: " + requestSuccessful);
+                        }
+
+                        //System.out.println("Request Successful: " + bloodManager.requestBlood(bloodType, inputAmount));
+                    }
                 }
                 case 2 -> {
                     // DONATION
