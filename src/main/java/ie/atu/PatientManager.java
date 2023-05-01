@@ -552,12 +552,12 @@ public class PatientManager {
     }
 
     public static String getDisease_From_PMD(int patientID) {
-        String DiseaseSQL = "SELECT patientDisease" +
+        String getDiseaseSQL = "SELECT patientDisease" +
                 "FROM patient_medical_data" +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DiseaseSQL)){
+             PreparedStatement preparedStatement = connection.prepareStatement(getDiseaseSQL)){
             preparedStatement.setInt(1,patientID);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -569,5 +569,27 @@ public class PatientManager {
              return  "Patient not found";
 
     }
+
+    public static boolean setDisease_From_PMD(int patientID,String Disease){
+    String setDiseaseSQL = "UPDATE patient_medical_data " +
+            "SET patientDisease = ? " +
+            "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+        preparedStatement.setString(1, Disease);
+        preparedStatement.setInt(2, patientID);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            return true;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return false;
+}
+
 
 }
