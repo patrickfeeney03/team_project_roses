@@ -287,7 +287,7 @@ public class PatientManager {
                 "SELECT 'recipient' AS table_name, patient_info.* " +
                 "FROM recipient " +
                 "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
-                
+
                 /*
                 My suggestion for this sql query:
                 SELECT 'donor' AS table_name, patient_info.* 
@@ -420,6 +420,27 @@ public class PatientManager {
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(setFirstDonationSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean setLastDonation(int patientID, String date) {
+        String setLastDonationSQL = "UPDATE patient_medical_data " +
+                "SET lastDonation = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(setLastDonationSQL)) {
             preparedStatement.setString(1, date);
             preparedStatement.setInt(2, patientID);
 
