@@ -4,7 +4,7 @@ public class Report {
 
 
     public void Donor_Report(){
-        String selectSQL = "SELECT * FROM donor_info WHERE donorID = ?";
+
         PatientManager patientManager = new PatientManager();
         BloodType bloodType = new BloodType("A",'+');
         Donor donor = new Donor(patientManager.getSinglePatientInfo(2),bloodType);
@@ -17,7 +17,7 @@ public class Report {
     }
     public void Recipient_Report(){
 
-        String selectSQL = "SELECT * FROM recipient_info WHERE recipientID = ?";
+
         PatientManager patientManager = new PatientManager();
         BloodType bloodType = new BloodType("A",'+');
         Recipient recipient = new Recipient(patientManager.getSinglePatientInfo(2),bloodType);
