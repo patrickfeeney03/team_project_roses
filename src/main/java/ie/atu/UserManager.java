@@ -34,18 +34,19 @@ public class UserManager {
     }
 
     public void register(Scanner scanner) {
+        scanner.nextLine();
         System.out.print("Enter user email: ");
-        String userEmail = scanner.next();
+        String userEmail = scanner.nextLine();
         System.out.print("Enter user password: ");
-        String userPassword = scanner.next();
+        String userPassword = scanner.nextLine();
         System.out.print("Enter user name: ");
-        String userName = scanner.next();
+        String userName = scanner.nextLine();
         System.out.print("Enter user role: ");
-        String userRole = scanner.next();
+        String userRole = scanner.nextLine();
         System.out.print("Enter user address: ");
-        String userAddress = scanner.next();
+        String userAddress = scanner.nextLine();
         System.out.print("Enter user phone: ");
-        String userPhone = scanner.next();
+        String userPhone = scanner.nextLine();
         System.out.print("Enter user age: ");
         int userAge = scanner.nextInt();
 
