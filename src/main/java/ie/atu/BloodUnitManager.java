@@ -23,7 +23,7 @@ public class BloodUnitManager {
         String selectBloodDate = "SELECT * FROM blood_units_date " +
         "WHERE DATE_ADD(blood_date, INTERVAL 2 MONTH) >= CURDATE() " +
         "ORDER BY DATEDIFF(DATE_ADD(blood_date, INTERVAL 2 MONTH), CURDATE()) ASC " +
-        "LIMIT 1";
+        "LIMIT 5";
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
