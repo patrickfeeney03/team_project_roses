@@ -23,23 +23,23 @@ public class BloodUnitManager {
         String selectBloodDate = "SELECT * FROM blood_units_date " +
         "WHERE DATE_ADD(blood_date, INTERVAL 2 MONTH) >= CURDATE() " +
         "ORDER BY DATEDIFF(DATE_ADD(blood_date, INTERVAL 2 MONTH), CURDATE()) ASC " +
-        "LIMIT 5";
+        "LIMIT 1";
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
-
              ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                bloodUnit = new BloodUnit();
-                //bloodStock.se
-               // bloodStock.setPatient_firstName(resultSet.getString("patientFirstName"));
+            while (resultSet.next()) {
+                int blood_units_dateID = resultSet.getInt("blood_units_dateID");
+                String bloodType = resultSet.getString("blood_typesID");
 
+                // print the blood units by their primary key
+                System.out.println("Blood Units Date ID: " + blood_units_dateID + ", Blood Type: " + bloodType);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return bloodUnit;
+        return null;
     }
 }
