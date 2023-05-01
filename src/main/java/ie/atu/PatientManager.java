@@ -412,6 +412,27 @@ public class PatientManager {
 
         return "Patient not found";
     }
+
+    public static boolean setFirstDonation(int patientID, String date) {
+        String setFirstDonationSQL = "UPDATE patient_medical_data " +
+                "SET firstDonation = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setFirstDonationSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
 
