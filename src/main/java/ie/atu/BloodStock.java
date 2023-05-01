@@ -10,6 +10,9 @@ public class BloodStock {
         this.amount = amount;
     }
 
+    public BloodStock() {
+    }
+
     //getters and setters
     public BloodType getBloodGroup() {
         return bloodGroup;

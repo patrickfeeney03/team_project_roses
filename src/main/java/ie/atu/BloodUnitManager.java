@@ -31,6 +31,12 @@ public class BloodUnitManager {
 
              ResultSet resultSet = preparedStatement.executeQuery();
 
+           // if (resultSet.next()) {
+               // bloodStock = new BloodStock();
+                //bloodStock.se
+               // bloodStock.setPatient_firstName(resultSet.getString("patientFirstName"));
+
+           // }
 
         } catch (SQLException e) {
             e.printStackTrace();
