@@ -20,6 +20,42 @@ public class Patient {
 
 
     public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
+                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone,String last_visit, String register_date,
+                   String lastReceive,String firstReceive,String lastDonation,String firstDonation,String patientDisease) {
+        this.patient_Id = patient_Id;
+        this.patient_firstName = patient_firstName;
+        this.patient_lastName = patient_lastName;
+        this.patient_age = patient_age;
+        this.patient_DOB = patient_DOB;
+        this.patient_email = patient_email;
+        this.patient_address = patient_address;
+        this.patient_phone = patient_phone;
+        this.patient_emergencyPhone = patient_emergencyPhone;
+        this.last_visit = last_visit;
+        this.register_date = register_date;
+        this.lastReceive = lastReceive;
+        this.firstReceive = firstReceive;
+        this.lastDonation = lastDonation;
+        this.firstDonation = firstDonation;
+        this.patientDisease = patientDisease;
+    }
+
+    public Patient(String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
+                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone) {
+
+        this.patient_firstName = patient_firstName;
+        this.patient_lastName = patient_lastName;
+        this.patient_age = patient_age;
+        this.patient_DOB = patient_DOB;
+        this.patient_email = patient_email;
+        this.patient_address = patient_address;
+        this.patient_phone = patient_phone;
+        this.patient_emergencyPhone = patient_emergencyPhone;
+
+
+    }
+
+    public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
                    String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone) {
         this.patient_Id = patient_Id;
         this.patient_firstName = patient_firstName;
@@ -30,21 +66,6 @@ public class Patient {
         this.patient_address = patient_address;
         this.patient_phone = patient_phone;
         this.patient_emergencyPhone = patient_emergencyPhone;
-    }
-
-    public Patient(String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
-                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone /*String last_visit, String register_date*/) {
-
-        this.patient_firstName = patient_firstName;
-        this.patient_lastName = patient_lastName;
-        this.patient_age = patient_age;
-        this.patient_DOB = patient_DOB;
-        this.patient_email = patient_email;
-        this.patient_address = patient_address;
-        this.patient_phone = patient_phone;
-        this.patient_emergencyPhone = patient_emergencyPhone;
-       /* this.last_visit = last_visit;
-        this.register_date = register_date;*/
     }
 
     public Patient() {

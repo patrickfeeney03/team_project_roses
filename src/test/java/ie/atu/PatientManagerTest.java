@@ -2,7 +2,7 @@ package ie.atu;
 
 public class PatientManagerTest {
     public static void main(String[] args) {
-        // Create PatientManager object
+       /* // Create PatientManager object
         PatientManager patientManager = new PatientManager();
 
         // Initialise properties in the Patient class
@@ -34,5 +34,6 @@ public class PatientManagerTest {
         // Select all info from a patient getSinglePatientInfo() (patient_info and patient_medical_data)
         Patient singlePatientInfo = patientManager.getSinglePatientInfo(1);
         System.out.println(singlePatientInfo.toString());
-    }
+    }*/
+}
 }

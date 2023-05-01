@@ -197,4 +197,25 @@ public class BloodManager {
         }
         return 0;
     }
+
+   /* public static int set_blood_type_ID(int patientID,String bloodType){
+        String setBloodTypeSQL = "UPDATE patient_medical_data" +
+                "SET patientBloodType = ?" +
+                "WHERE patientID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+            preparedStatement.setString(1, Disease);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;}*/
+
+
 }
