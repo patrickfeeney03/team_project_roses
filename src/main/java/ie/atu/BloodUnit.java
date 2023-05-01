@@ -14,6 +14,10 @@ public class BloodUnit {
         this.date = formattedDate;
     }
 
+    public BloodUnit() {
+
+    }
+
     public BloodType getBloodType() {
         return bloodType;
     }
