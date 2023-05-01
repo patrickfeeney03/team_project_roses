@@ -211,6 +211,21 @@ public class UserManager {
                                 System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
                                 Patient patient = patientManager.getPatientInfoAll(userInput);
+                                if (patient != null) {
+                                    System.out.println("\nPatient Information:");
+                                    System.out.println("Patient ID: " + patient.getPatient_Id());
+                                    System.out.println("First Name: " + patient.getPatient_firstName());
+                                    System.out.println("Last Name: " + patient.getPatient_lastName());
+                                    System.out.println("Age: " + patient.getPatient_age());
+                                    System.out.println("DOB: " + patient.getPatient_DOB());
+                                    System.out.println("Email: " + patient.getPatient_email());
+                                    System.out.println("Address: " + patient.getPatient_address());
+                                    System.out.println("Phone: " + patient.getPatient_phone());
+                                    System.out.println("Emergency Phone: " + patient.getPatient_emergencyPhone());
+                                    System.out.println("Disease: " + patient.getPatientDisease());
+                                } else {
+                                    System.out.println("Patient not found.");
+                                }
 
 
 
