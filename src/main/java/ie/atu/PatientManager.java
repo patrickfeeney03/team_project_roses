@@ -314,30 +314,7 @@ public class PatientManager {
         }
         return patient;
     }
-                
-                /*
-                My suggestion for this sql query:
-                SELECT 'donor' AS table_name, patient_info.* 
-                FROM donor
-                JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID
-                WHERE patient_info.patientID = ?
-                UNION
-                SELECT 'recipient' AS table_name, patient_info.*
-                FROM recipient
-                JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID
-                WHERE patient_info.patientID = ?;
-                
-                In your SQL query you dont' have any '?' symbols, so you what I think you are doing is retriving ALL the info,
-                instead of the info of just one patient. Which is fine, but then, if thats the case, there is no need to the
-                int userInput parameter.
-                I'm also deleting the System out since we won't always want to print and to make it more modular.
-                
-                This is new, but also ask for the patientDisease. I'll make a method to just update the patientDisease method; of a single patient.
-                Using their patientID.
-                */
-
-
-
+    
     public static List<String> getTableValues_patient_medical_data(int patientID) {
         List<String> pmdQueryResults = new ArrayList<>();
         String selectPMDSQL = "SELECT patientID, patientDisease, bloodTypeID, lastReceive, firstReceive, lastDonation, " +
@@ -365,36 +342,204 @@ public class PatientManager {
         return pmdQueryResults;
     }
 
+    // I currently can't set the whole table since I don't know if the date columns are populated or not. And which
+    // ones to populate or which ones not to. I'm writing methods for that, such as setFirstDonation, getFirstDonation
     public static boolean setTable_patient_medical_data(int patientID, String patientDisease, int bloodTypeID,
                                                 String  lastReceive, String firstReceive, String lastDonation,
                                                 String firstDonation) {
         String setTableSQL = "UPDATE patient_medical_data " +
-                "SET patientID = ? " +
-                "patientDisease = ? " +
-                "bloodTypeId = ?" +
-                "";
-        /*
-        UPDATE patient_medical_data
-        SET patientID = 3,
-        patientDisease = 'HIV',
-        bloodTypeID = 2,
-        lastReceive = '2022-04-30',
-        firstReceive = '2022-04-28',
-        lastDonation = '2022-04-25',
-        firstDonation = '2022-04-20'
-        WHERE patientID = 3;
-         */
+                "SET patientDisease = ?, " +
+                "bloodTypeId = ?, " +
+                "lastReceive = ?, " +
+                "firstReceive = ?, " +
+                "lastDonation = ?, " +
+                "firstDonation = ? " +
+                "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(setTableSQL)) {
-            //preparedStatement.set
+            preparedStatement.setString(1, patientDisease);
+            preparedStatement.setInt(2, bloodTypeID);
+            preparedStatement.setString(3, lastReceive);
+            preparedStatement.setString(4, firstReceive);
+            preparedStatement.setString(5, lastDonation);
+            preparedStatement.setString(6, firstDonation);
+            preparedStatement.setInt(7, patientID);
 
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+    public static String getFirstDonation(int patientID) {
+        String firstDonationSQL = "SELECT firstDonation " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(firstDonationSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("firstDonation");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Patient not found";
+    }
+
+    public static boolean setFirstDonation(int patientID, String date) {
+        String setFirstDonationSQL = "UPDATE patient_medical_data " +
+                "SET firstDonation = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setFirstDonationSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean setLastDonation(int patientID, String date) {
+        String setLastDonationSQL = "UPDATE patient_medical_data " +
+                "SET lastDonation = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(setLastDonationSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String getLastDonation(int patientID) {
+        String lastDonationSQL = "SELECT lastDonation " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(lastDonationSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("lastDonation");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Patient not found";
+    }
+
+    public static String getFirstReceive(int patientID) {
+        String firstReceiveSQL = "SELECT firstReceive " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(firstReceiveSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("firstReceive");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "Patient not found";
+    }
+
+    public static boolean setFirstReceive(int patientID, String date) {
+        String setFirstReceiveSQL = "UPDATE patient_medical_data " +
+                "SET firstReceive = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setFirstReceiveSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean setLastReceive(int patientID, String date) {
+        String setLastReceiveSQL = "UPDATE patient_medical_data " +
+                "SET lastReceive = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setLastReceiveSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String getLastReceive(int patientID) {
+        String lastReceiveSQL = "SELECT lastReceive " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(lastReceiveSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("lastReceive");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Patient not found";
+    }
 }
-
-
-
