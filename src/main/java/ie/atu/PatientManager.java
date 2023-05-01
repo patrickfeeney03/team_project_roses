@@ -366,26 +366,29 @@ public class PatientManager {
                                                 String  lastReceive, String firstReceive, String lastDonation,
                                                 String firstDonation) {
         String setTableSQL = "UPDATE patient_medical_data " +
-                "SET patientID = ? " +
-                "patientDisease = ? " +
-                "bloodTypeId = ?" +
-                "";
-        /*
-        UPDATE patient_medical_data
-        SET patientID = 3,
-        patientDisease = 'HIV',
-        bloodTypeID = 2,
-        lastReceive = '2022-04-30',
-        firstReceive = '2022-04-28',
-        lastDonation = '2022-04-25',
-        firstDonation = '2022-04-20'
-        WHERE patientID = 3;
-         */
+                "SET patientDisease = ?, " +
+                "bloodTypeId = ?, " +
+                "lastReceive = ?, " +
+                "firstReceive = ?, " +
+                "lastDonation = ?, " +
+                "firstDonation = ? " +
+                "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(setTableSQL)) {
-            //preparedStatement.set
+            preparedStatement.setString(1, patientDisease);
+            preparedStatement.setInt(2, bloodTypeID);
+            preparedStatement.setString(3, lastReceive);
+            preparedStatement.setString(4, firstReceive);
+            preparedStatement.setString(5, lastDonation);
+            preparedStatement.setString(6, firstDonation);
+            preparedStatement.setInt(7, patientID);
 
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

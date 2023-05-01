@@ -28,6 +28,7 @@ public class TestDonationDates {
          */
 
         // Receive
+        /*
         int patientID = 3;
         System.out.println(PatientManager.setFirstReceive(patientID, "1999-06-10"));
         System.out.println(PatientManager.getFirstReceive(patientID));
@@ -38,6 +39,11 @@ public class TestDonationDates {
         System.out.println(PatientManager.getLastReceive(patientID));
         System.out.println(PatientManager.setLastReceive(patientID, "1888-02-20"));
         System.out.println(PatientManager.getLastReceive(patientID));
+         */
+
+        // setTable_patient_medical_data method
+        PatientManager.setTable_patient_medical_data(5, "None", 5, "2020-02-20",
+                "2020-01-20", "2020-01-17", "2020-01-15");
 
     }
 }
