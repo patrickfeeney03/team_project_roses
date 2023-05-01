@@ -32,6 +32,8 @@ public class PatientManager {
         System.out.println("Enter patient's rh factor");
         char patient_rhFactor = scanner.next().charAt(0);
 
+
+
         /*
         We can change this later. SQL expects the date to be in the yyyy-mm-dd format,
         but the yyyy/mm/dd format also works, and the code right under this prints to
@@ -224,6 +226,7 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -315,7 +318,12 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-               /* patient.setPatientDisease(resultSet.getString("patientDiease"));*/
+                patient.setPatientDisease(resultSet.getString("patientDisease"));
+                patient.setRegister_date(resultSet.getString("patientRegisterDate"));
+                patient.setLastReceive(resultSet.getString("patientLastReceive"));
+                patient.setFirstReceive(resultSet.getString("patientFirstReceive"));
+                patient.setLastDonation(resultSet.getString("patientLastDonation"));
+                patient.setFirstDonation(resultSet.getString("patientFirstDonation"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -584,4 +592,45 @@ public class PatientManager {
         }
         return 0;
     }
+
+    public static String getDisease_From_PMD(int patientID) {
+        String getDiseaseSQL = "SELECT patientDisease " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getDiseaseSQL)){
+            preparedStatement.setInt(1,patientID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return  resultSet.getString("patientDisease");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+             return  "Patient not found";
+
+    }
+
+    public static boolean setDisease_From_PMD(int patientID,String disease){
+    String setDiseaseSQL = "UPDATE patient_medical_data " +
+            "SET patientDisease = ? " +
+            "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+    PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+        preparedStatement.setString(1, disease);
+        preparedStatement.setInt(2, patientID);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            return true;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return false;
+  }
+
 }
