@@ -198,14 +198,14 @@ public class BloodManager {
         return 0;
     }
 
-   public static boolean set_BloodType_ID(int patientID,String bloodType){
-        String setBloodTypeSQL = "UPDATE patient_medical_data" +
+   public static boolean set_BloodType_ID (int patientID,String bloodType){
+        String setBloodTypeSQL = "UPDATE patient_medical_data " +
                 "SET bloodTypeID = ?" +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(setBloodTypeSQL)) {
-            preparedStatement.setInt(1, BloodManager.get_blood_typeID(bloodType) );
+            preparedStatement.setString(1, bloodType );
             preparedStatement.setInt(2, patientID);
 
             int rowsAffected = preparedStatement.executeUpdate();
