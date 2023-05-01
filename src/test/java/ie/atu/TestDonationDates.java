@@ -29,9 +29,15 @@ public class TestDonationDates {
 
         // Receive
         int patientID = 3;
+        System.out.println(PatientManager.setFirstReceive(patientID, "1999-06-10"));
         System.out.println(PatientManager.getFirstReceive(patientID));
-        System.out.println(PatientManager.setFirstReceive(patientID, "1999-03-30"));
+        System.out.println(PatientManager.setFirstReceive(patientID, "1900-03-30"));
         System.out.println(PatientManager.getFirstReceive(patientID));
+
+        System.out.println(PatientManager.setLastReceive(patientID, "2003-12-15"));
+        System.out.println(PatientManager.getLastReceive(patientID));
+        System.out.println(PatientManager.setLastReceive(patientID, "1888-02-20"));
+        System.out.println(PatientManager.getLastReceive(patientID));
 
     }
 }
