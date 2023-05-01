@@ -93,8 +93,6 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
-
-
                         // Get patient by id. If he doesn't exist, create new patient and add it to DB
                         // This recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
@@ -163,12 +161,12 @@ public class UserManager {
                         System.out.println("Added patient to donor table: " +
                                 patientManager.addPatientToDonorTable(patientID));
 
-                        // Update the patient_medical_data since we now know their bloodType.
+
                     }
                     System.out.println("Patients blood type: " + bloodType.toString());
 
                     // How many units were donated
-                    System.out.print("How many units of type " + bloodType.toString() + "will be donated: ");
+                    System.out.print("How many units of type " + bloodType.toString() + " will be donated: ");
                     int unitsDonated = scanner.nextInt();
 
                     // Create BloodUnit object to set the date of donation
@@ -179,15 +177,16 @@ public class UserManager {
                     Donor donor = new Donor(patient, bloodType);
 
                     // Check if the presetted bloodBank values are correct.
-                    // Add column to blood_unit_dates connecting it to the bloodBank**
+
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     System.out.println("Assuming they are, for now, we proceed...");
 
                     Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
-
-                    System.out.println("Donation Successful: " + bloodManager.recordDonation
-                            (donation.getDonor().getBloodType(), donation.getUnitsDonated()));
-
+                    boolean donated_bloodTableSuccessful = BloodManager.addBloodToDonated_blood(donation);
+                    boolean stockUpdated = BloodStockManager.updateTable_blood_stock();
+                    // update pmd here
+                    System.out.println("donated_bloodTable successful: " + donated_bloodTableSuccessful);
+                    System.out.println("stock table updated: " + stockUpdated);
                 }
                 case 3 -> {
                     // View Stock

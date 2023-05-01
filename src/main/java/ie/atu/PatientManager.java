@@ -3,11 +3,12 @@ package ie.atu;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class PatientManager {
-
     public static Connection getConnection() throws SQLException {
         return DBConnectionUtils.getConnection();
     }
@@ -30,7 +31,6 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
 
-
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
@@ -38,7 +38,6 @@ public class PatientManager {
             System.out.println("Date Error");
             e.printStackTrace();
         }
-
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
@@ -93,11 +92,9 @@ public class PatientManager {
             if (rowsAffected > 0) {
                 return true;
             }
-
         } catch (SQLException e){
             e.printStackTrace();
         }
-
         return false;
     }
     
@@ -190,7 +187,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -216,16 +212,6 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                System.out.println("patientID: " + patient.getPatient_Id());
-                System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                System.out.println("patientLastName: " + patient.getPatient_lastName());
-                System.out.println("patientAge: " + patient.getPatient_age());
-                System.out.println("patientDOB: " + patient.getPatient_DOB());
-                System.out.println("patientEmail: " + patient.getPatient_email());
-                System.out.println("patientAddress: " + patient.getPatient_address());
-                System.out.println("patientPhone: " + patient.getPatient_phone());
-                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -258,16 +244,6 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                System.out.println("patientID: " + patient.getPatient_Id());
-                System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                System.out.println("patientLastName: " + patient.getPatient_lastName());
-                System.out.println("patientAge: " + patient.getPatient_age());
-                System.out.println("patientDOB: " + patient.getPatient_DOB());
-                System.out.println("patientEmail: " + patient.getPatient_email());
-                System.out.println("patientAddress: " + patient.getPatient_address());
-                System.out.println("patientPhone: " + patient.getPatient_phone());
-                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -298,8 +274,7 @@ public class PatientManager {
         return 0;
     }
 
-    public Patient getPatientInfoAll(int userInput )
-    {
+    public Patient getPatientInfoAll(int userInput) {
         Patient patient = null;
         String checkPatient = "SELECT donor AS table_name, patient_info.* " +
                 "FROM donor " +
@@ -308,15 +283,32 @@ public class PatientManager {
                 "SELECT recipient AS table_name, patient_info.* " +
                 "FROM recipient " +
                 "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
+                
+                /*
+                My suggestion for this sql query:
+                SELECT 'donor' AS table_name, patient_info.* 
+                FROM donor
+                JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID
+                WHERE patient_info.patientID = ?
+                UNION
+                SELECT 'recipient' AS table_name, patient_info.*
+                FROM recipient
+                JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID
+                WHERE patient_info.patientID = ?;
+                
+                In your SQL query you dont' have any '?' symbols, so you what I think you are doing is retriving ALL the info,
+                instead of the info of just one patient. Which is fine, but then, if thats the case, there is no need to the
+                int userInput parameter.
+                I'm also deleting the System out since we won't always want to print and to make it more modular.
+                
+                This is new, but also ask for the patientDisease. I'll make a method to just update the patientDisease method; of a single patient.
+                Using their patientID.
+                */
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
             preparedStatement.setInt(1, userInput);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                patient = new Patient();
+            patient = new Patient();
                 patient.setPatient_Id(resultSet.getInt("patientID"));
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
                 patient.setPatient_lastName(resultSet.getString("patientLastName"));
@@ -326,16 +318,6 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                System.out.println("patientID: " + patient.getPatient_Id());
-                System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                System.out.println("patientLastName: " + patient.getPatient_lastName());
-                System.out.println("patientAge: " + patient.getPatient_age());
-                System.out.println("patientDOB: " + patient.getPatient_DOB());
-                System.out.println("patientEmail: " + patient.getPatient_email());
-                System.out.println("patientAddress: " + patient.getPatient_address());
-                System.out.println("patientPhone: " + patient.getPatient_phone());
-                System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -343,7 +325,62 @@ public class PatientManager {
         return patient;
     }
 
+    public static List<String> getTableValues_patient_medical_data(int patientID) {
+        List<String> pmdQueryResults = new ArrayList<>();
+        String selectPMDSQL = "SELECT patientID, patientDisease, bloodTypeID, lastReceive, firstReceive, lastDonation, " +
+                "firstDonation " +
+                "FROM patient_medical_data WHERE patientID = ?";
 
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectPMDSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                pmdQueryResults.add(Integer.toString(resultSet.getInt("patientID")));
+                pmdQueryResults.add(resultSet.getString("patientDisease"));
+                pmdQueryResults.add(Integer.toString(resultSet.getInt("bloodTypeID")));
+                pmdQueryResults.add(resultSet.getString("lastReceive"));
+                pmdQueryResults.add(resultSet.getString("firstReceive"));
+                pmdQueryResults.add(resultSet.getString("lastDonation"));
+                pmdQueryResults.add(resultSet.getString("firstDonation"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pmdQueryResults;
+    }
+
+    public static boolean setTable_patient_medical_data(int patientID, String patientDisease, int bloodTypeID,
+                                                String  lastReceive, String firstReceive, String lastDonation,
+                                                String firstDonation) {
+        String setTableSQL = "UPDATE patient_medical_data " +
+                "SET patientID = ? " +
+                "patientDisease = ? " +
+                "bloodTypeId = ?" +
+                "";
+        /*
+        UPDATE patient_medical_data
+        SET patientID = 3,
+        patientDisease = 'HIV',
+        bloodTypeID = 2,
+        lastReceive = '2022-04-30',
+        firstReceive = '2022-04-28',
+        lastDonation = '2022-04-25',
+        firstDonation = '2022-04-20'
+        WHERE patientID = 3;
+         */
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(setTableSQL)) {
+            //preparedStatement.set
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
 
