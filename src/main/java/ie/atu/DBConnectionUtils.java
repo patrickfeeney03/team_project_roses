@@ -12,8 +12,6 @@ public class DBConnectionUtils {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final DataSource dataSource;
-
-
     static {
         MysqlDataSource mysqlDataSource = new MysqlDataSource();
         mysqlDataSource.setURL(URL);

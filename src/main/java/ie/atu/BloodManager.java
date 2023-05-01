@@ -30,7 +30,6 @@ public class BloodManager {
         if (amount <= 0) {
             return false;
         }
-
         return updateBloodStock(donatedBloodType, amount);
     }
 
@@ -54,7 +53,6 @@ public class BloodManager {
                 BloodStock bloodStock = new BloodStock(bloodType, amount);
                 bloodStockList.add(bloodStock);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,7 +78,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return availableAmount;
     }
 
@@ -143,5 +140,61 @@ public class BloodManager {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static boolean addBloodToDonated_blood(Donation donation) {
+        // Loop?
+        int unitsDonated = donation.getUnitsDonated();
+        int rowsAffected = 0;
+        for (int i = 0; i < unitsDonated; i++) {
+            String insertTo_donated_blood = "INSERT INTO donated_blood (blood_typesID, donation_date, donorID_relation," +
+                    "blood_bankID_relation) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
+                preparedStatement.setInt(1, get_blood_typeID(donation.getDonor().getBloodType().toString()));
+                preparedStatement.setString(2, donation.getBloodUnit().getDate());
+                preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
+                        donation.getDonor().getPatient_Id()));
+                preparedStatement.setInt(4, 3);
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    rowsAffected++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (rowsAffected > 0) {
+            System.out.println("Rows Affected: " + rowsAffected);
+            return true;
+        }
+        return false;
+    }
+
+    public static int get_blood_typeID(String bloodType) {
+        String selectBloodTypeID = "SELECT id " +
+                "FROM blood_types " +
+                "WHERE blood_group = ? AND rh_factor = ?";
+
+        String group = bloodType.substring(0, bloodType.length() - 1);
+        char rh_factor = bloodType.charAt(bloodType.length() - 1);
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectBloodTypeID)) {
+            preparedStatement.setString(1, group);
+            preparedStatement.setString(2, Character.toString(rh_factor));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -4,13 +4,14 @@ public class BloodStock {
     private BloodType bloodGroup;
     private int amount;
 
-    //constructor
     public BloodStock(BloodType bloodGroup, int amount) {
         this.bloodGroup = bloodGroup;
         this.amount = amount;
     }
 
-    //getters and setters
+    public BloodStock() {
+    }
+
     public BloodType getBloodGroup() {
         return bloodGroup;
     }
