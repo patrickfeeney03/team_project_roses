@@ -49,6 +49,15 @@ public class BloodUnitManager {
         // MySQL code to select blood from the blood bank with the most amount
         String selectBloodAmount = "SELECT * FROM blood_stock ORDER BY amount DESC LIMIT 1;";
 
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodAmount)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }
