@@ -198,80 +198,28 @@ public class UserManager {
                     }
                 }
                 case 4 -> {
-                    Patient patient = null;
+
                     // View/register patients
                     while (patientMenu != true) {
-                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Logout\nEnter Your Choice: ");
+                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Return to first Menu\nEnter Your Choice: ");
                         int second_User_Choice = scanner.nextInt();
                         switch (second_User_Choice) {
                             //Donor information
                             case 1 -> {
                                 System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
-                                //patientManager.getSinglePatientInfo(userInput);
+                                patientManager.getPatientInfoAll(userInput);
 
-                                // Check SQL tables to see if patient is donor, recipient, or both
-                                String checkPatient = "SELECT donor AS table_name, patient_info.* " +
-                                "FROM donor " +
-                                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
-                                "UNION " +
-                                "SELECT recipient AS table_name, patient_info.* " +
-                                "FROM recipient " +
-                                "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
-
-                                try (Connection connection = DBConnectionUtils.getConnection();
-                                    PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
-                                    preparedStatement.setInt(1, userInput);
-
-                                    ResultSet resultSet = preparedStatement.executeQuery();
-
-                                    if (resultSet.next()) {
-                                        patient = new Patient();
-                                        patient.setPatient_Id(resultSet.getInt("patientID"));
-                                        patient.setPatient_firstName(resultSet.getString("patientFirstName"));
-                                        patient.setPatient_lastName(resultSet.getString("patientLastName"));
-                                        patient.setPatient_age(resultSet.getInt("patientAge"));
-                                        patient.setPatient_DOB(resultSet.getString("patientDOB"));
-                                        patient.setPatient_email(resultSet.getString("patientEmail"));
-                                        patient.setPatient_address(resultSet.getString("patientAddress"));
-                                        patient.setPatient_phone(resultSet.getString("patientPhone"));
-                                        patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-
-                                        System.out.println("patientID: " + patient.getPatient_Id());
-                                        System.out.println("patientFirstName: " + patient.getPatient_firstName());
-                                        System.out.println("patientLastName: " + patient.getPatient_lastName());
-                                        System.out.println("patientAge: " + patient.getPatient_age());
-                                        System.out.println("patientDOB: " + patient.getPatient_DOB());
-                                        System.out.println("patientEmail: " + patient.getPatient_email());
-                                        System.out.println("patientAddress: " + patient.getPatient_address());
-                                        System.out.println("patientPhone: " + patient.getPatient_phone());
-                                        System.out.println("patientEmergencyPhone: " + patient.getPatient_emergencyPhone());
-                                    }
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
-                                }
                             }
 
                             case 2 -> {
-                                //Register new patient
-                                System.out.println("\nEnter New patient: ");
-                                patient = new Patient(0, "alan",
-                                        "hynes", 23, "20.04.2000",
-                                        "alanEmail", "South Park",
-                                        "086809765", "08976542");
-                                patientManager.addPatient(patient);
-                            }
-
-                            case 3 -> {
                                 //Register New Donor
                                 //this patient object does not need an id as sql will automatically enter one
-
                                 System.out.println("Enter New patient: \n");
                                 patientManager.register(myScanner);
                             }
 
-                            case 4 -> {
-
+                            case 3 -> {
                                 //Remove patient
                                 // this patient object needs an id to be able to select which patient will be removed
                                 System.out.println("Enter a patient ID to be removed: \n");
@@ -279,7 +227,12 @@ public class UserManager {
                                 patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
                             }
 
-                            //case 4 -> patientMenu = true;
+                            case 4 ->
+                            {
+                                //Return to first menu
+                                patientMenu = true;
+
+                            }
 
                             default -> System.out.println("Input not valid.\n");
                         }

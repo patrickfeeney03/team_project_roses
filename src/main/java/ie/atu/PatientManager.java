@@ -274,6 +274,57 @@ public class PatientManager {
         return 0;
     }
 
+    public Patient getPatientInfoAll(int userInput) {
+        Patient patient = null;
+        String checkPatient = "SELECT donor AS table_name, patient_info.* " +
+                "FROM donor " +
+                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
+                "UNION " +
+                "SELECT recipient AS table_name, patient_info.* " +
+                "FROM recipient " +
+                "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
+                
+                /*
+                My suggestion for this sql query:
+                SELECT 'donor' AS table_name, patient_info.* 
+                FROM donor
+                JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID
+                WHERE patient_info.patientID = ?
+                UNION
+                SELECT 'recipient' AS table_name, patient_info.*
+                FROM recipient
+                JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID
+                WHERE patient_info.patientID = ?;
+                
+                In your SQL query you dont' have any '?' symbols, so you what I think you are doing is retriving ALL the info,
+                instead of the info of just one patient. Which is fine, but then, if thats the case, there is no need to the
+                int userInput parameter.
+                I'm also deleting the System out since we won't always want to print and to make it more modular.
+                
+                This is new, but also ask for the patientDisease. I'll make a method to just update the patientDisease method; of a single patient.
+                Using their patientID.
+                */
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
+            preparedStatement.setInt(1, userInput);
+            patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
+
     public static List<String> getTableValues_patient_medical_data(int patientID) {
         List<String> pmdQueryResults = new ArrayList<>();
         String selectPMDSQL = "SELECT patientID, patientDisease, bloodTypeID, lastReceive, firstReceive, lastDonation, " +
@@ -295,7 +346,6 @@ public class PatientManager {
                 pmdQueryResults.add(resultSet.getString("lastDonation"));
                 pmdQueryResults.add(resultSet.getString("firstDonation"));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -320,7 +370,6 @@ public class PatientManager {
         lastDonation = '2022-04-25',
         firstDonation = '2022-04-20'
         WHERE patientID = 3;
-
          */
 
         try (Connection connection = getConnection();
@@ -333,3 +382,6 @@ public class PatientManager {
         return false;
     }
 }
+
+
+
