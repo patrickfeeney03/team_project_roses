@@ -44,6 +44,10 @@ public class BloodUnitManager {
     }
 
     public static BloodStock getBestBloodByAmount() {
+        BloodStock bloodStock = null;
+
+        // MySQL code to select blood from the blood bank with the most amount
+        String selectBloodAmount = "SELECT * FROM blood_stock ORDER BY amount DESC LIMIT 1;";
 
         return null;
     }
