@@ -472,16 +472,16 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "";
+        return "Patient not found";
     }
 
     public static String getFirstReceive(int patientID) {
-        String firstDonationSQL = "SELECT firstReceive " +
+        String firstReceiveSQL = "SELECT firstReceive " +
                 "FROM patient_medical_data " +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(firstDonationSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(firstReceiveSQL)) {
             preparedStatement.setInt(1, patientID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -497,12 +497,12 @@ public class PatientManager {
     }
 
     public static boolean setFirstReceive(int patientID, String date) {
-        String setFirstDonationSQL = "UPDATE patient_medical_data " +
+        String setFirstReceiveSQL = "UPDATE patient_medical_data " +
                 "SET firstReceive = ? " +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(setFirstDonationSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(setFirstReceiveSQL)) {
             preparedStatement.setString(1, date);
             preparedStatement.setInt(2, patientID);
 
@@ -515,6 +515,47 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static boolean setLastReceive(int patientID, String date) {
+        String setLastReceiveSQL = "UPDATE patient_medical_data " +
+                "SET lastReceive = ? " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(setLastReceiveSQL)) {
+            preparedStatement.setString(1, date);
+            preparedStatement.setInt(2, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String getLastReceive(int patientID) {
+        String lastReceiveSQL = "SELECT lastReceive " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(lastReceiveSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("lastReceive");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Patient not found";
     }
 }
 
