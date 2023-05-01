@@ -115,12 +115,7 @@ public class UserManager {
                     if(bloodBankDetails == 'N') {
                         //Print blood bank details
                         List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBankByID();
-                        for (BloodBank bank : bloodBanks) {
-                            System.out.println("bankID: " + bloodBank.getBankID());
-                            System.out.println("bankEmail: " + bloodBank.getBankEmail());
-                            System.out.println("bankAddress: " + bloodBank.getBankAddress());
-                            System.out.println("bankPhone: " + bloodBank.getBankPhone());
-                        }
+
 
                         // Select the right blood bank by ID
                         System.out.println("Select the right Blood Bank by entering the ID");
