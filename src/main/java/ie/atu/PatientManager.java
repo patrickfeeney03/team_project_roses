@@ -27,6 +27,10 @@ public class PatientManager {
         String patient_phone = scanner.next();
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
+        System.out.println("Enter patient's blood group: ");
+        String patient_bloodGroup = scanner.next();
+        System.out.println("Enter patient's rh factor");
+        char patient_rhFactor = scanner.next().charAt(0);
 
         /*
         We can change this later. SQL expects the date to be in the yyyy-mm-dd format,
@@ -45,7 +49,11 @@ public class PatientManager {
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
+        BloodType bloodType = new BloodType(patient_bloodGroup, patient_rhFactor);
+        // addPatient adds just to patient_info
         boolean wasRegistrationSuccessful = addPatient(newPatient);
+        // So we also need to add the patient to patient_medical_data
+        int retrievedPatientID = PatientManager.getPatientIDWithPatientObject(newPatient);
 
         if (wasRegistrationSuccessful) {
             System.out.println("Patient's registration successful.");
@@ -541,5 +549,39 @@ public class PatientManager {
             e.printStackTrace();
         }
         return "Patient not found";
+    }
+
+    public static int getPatientIDWithPatientObject(Patient patient) {
+        String select_patientID = "SELECT patientID " +
+                "FROM patient_info " +
+                "WHERE patientFirstName = ? " +
+                "AND patientLastName = ? " +
+                "AND patientAge = ? " +
+                "AND patientDOB = ? " +
+                "AND patientEmail = ? " +
+                "AND patientAddress = ? " +
+                "AND patientPhone = ? " +
+                "AND patientEmergencyPhone = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(select_patientID)) {
+            preparedStatement.setString(1, patient.getPatient_firstName());
+            preparedStatement.setString(2, patient.getPatient_lastName());
+            preparedStatement.setInt(3, patient.getPatient_age());
+            preparedStatement.setString(4, patient.getPatient_DOB());
+            preparedStatement.setString(5, patient.getPatient_email());
+            preparedStatement.setString(6, patient.getPatient_address());
+            preparedStatement.setString(7, patient.getPatient_phone());
+            preparedStatement.setString(8, patient.getPatient_emergencyPhone());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("patientID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
