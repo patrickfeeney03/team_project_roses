@@ -552,8 +552,8 @@ public class PatientManager {
     }
 
     public static String getDisease_From_PMD(int patientID) {
-        String getDiseaseSQL = "SELECT patientDisease" +
-                "FROM patient_medical_data" +
+        String getDiseaseSQL = "SELECT patientDisease " +
+                "FROM patient_medical_data " +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
@@ -570,14 +570,14 @@ public class PatientManager {
 
     }
 
-    public static boolean setDisease_From_PMD(int patientID,String Disease){
+    public static boolean setDisease_From_PMD(int patientID,String disease){
     String setDiseaseSQL = "UPDATE patient_medical_data " +
             "SET patientDisease = ? " +
             "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
     PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
-        preparedStatement.setString(1, Disease);
+        preparedStatement.setString(1, disease);
         preparedStatement.setInt(2, patientID);
 
         int rowsAffected = preparedStatement.executeUpdate();

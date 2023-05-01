@@ -55,6 +55,19 @@ public class Patient {
 
     }
 
+    public Patient(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
+                   String patient_email, String patient_address, String patient_phone, String patient_emergencyPhone) {
+        this.patient_Id = patient_Id;
+        this.patient_firstName = patient_firstName;
+        this.patient_lastName = patient_lastName;
+        this.patient_age = patient_age;
+        this.patient_DOB = patient_DOB;
+        this.patient_email = patient_email;
+        this.patient_address = patient_address;
+        this.patient_phone = patient_phone;
+        this.patient_emergencyPhone = patient_emergencyPhone;
+    }
+
     public Patient() {
     }
 
