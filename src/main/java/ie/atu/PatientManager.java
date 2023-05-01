@@ -274,7 +274,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return 0;
     }
 
