@@ -2,7 +2,6 @@ package ie.atu;
 
 public class Report {
 
-
     public void Donor_Report(){
         String selectSQL = "SELECT * FROM donor_info WHERE donorID = ?";
         PatientManager patientManager = new PatientManager();
@@ -12,8 +11,6 @@ public class Report {
         Donation donation = new Donation(donor,bloodBank,5);
 
         System.out.println(donation.getDonor().getBloodType().getBloodGroup());
-
-
     }
     public void Recipient_Report(){
 
@@ -23,7 +20,5 @@ public class Report {
         Recipient recipient = new Recipient(patientManager.getSinglePatientInfo(2),bloodType);
         BloodBank bloodBank = new BloodBank(3,"dsa","sad","dsa");
         Receive receive = new Receive(recipient,bloodBank,6);
-
-
     }
 }

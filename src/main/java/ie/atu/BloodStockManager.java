@@ -31,8 +31,6 @@ public class BloodStockManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
-
 }
