@@ -276,11 +276,11 @@ public class PatientManager {
 
     public Patient getPatientInfoAll(int userInput) {
         Patient patient = null;
-        String checkPatient = "SELECT donor AS table_name, patient_info.* " +
+        String checkPatient = "SELECT 'donor' AS table_name, patient_info.* " +
                 "FROM donor " +
                 "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
                 "UNION " +
-                "SELECT recipient AS table_name, patient_info.* " +
+                "SELECT 'recipient' AS table_name, patient_info.* " +
                 "FROM recipient " +
                 "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
                 
@@ -305,10 +305,14 @@ public class PatientManager {
                 Using their patientID.
                 */
 
-        try (Connection connection = DBConnectionUtils.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
-            preparedStatement.setInt(1, userInput);
-            patient = new Patient();
+            //preparedStatement.setInt(1, userInput);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                patient = new Patient();
                 patient.setPatient_Id(resultSet.getInt("patientID"));
                 patient.setPatient_firstName(resultSet.getString("patientFirstName"));
                 patient.setPatient_lastName(resultSet.getString("patientLastName"));
