@@ -1,5 +1,6 @@
 package ie.atu;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BloodBankManagerTest {
@@ -8,6 +9,6 @@ public class BloodBankManagerTest {
         BloodBank bloodBankInfo = BloodBankManager.getBloodBankByID(100);
 
         // Select info from all bloodBanks by using their ID
-        BloodBank allBloodBankInfo = BloodBankManager.getAllBloodBankByID();
+        List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBankByID();
     }
 }
