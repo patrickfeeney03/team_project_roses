@@ -133,7 +133,7 @@ public class UserManager {
                     // This checks if the patientID is valid.
                     if (!patientManager.patientExistsInDB(patientID)) {
                         System.out.println("The patient with id of " + patientID + " doesn't exist in the database." +
-                                "\nPlease register.");
+                                "\nPlease go back and register.");
                         // This break makes the code jump back to the top of the while loop.
                         break;
                     }
@@ -201,7 +201,8 @@ public class UserManager {
 
                     // View/register patients
                     while (patientMenu != true) {
-                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient\n3: Remove a Patient\n4:Return to first Menu\nEnter Your Choice: ");
+                        System.out.println("\nPatient Information:\n1: View Patient Information\n2: Register New Patient" +
+                                "\n3: Remove a Patient\n4:Return to first Menu\nEnter Your Choice: ");
                         int second_User_Choice = scanner.nextInt();
                         switch (second_User_Choice) {
                             //Donor information
@@ -215,7 +216,7 @@ public class UserManager {
                             case 2 -> {
                                 //Register New Donor
                                 //this patient object does not need an id as sql will automatically enter one
-                                System.out.println("Enter New patient: \n");
+                                //System.out.println("Enter New patient: \n");
                                 patientManager.register(myScanner);
                             }
 

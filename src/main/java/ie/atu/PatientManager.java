@@ -1,10 +1,7 @@
 package ie.atu;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,6 +28,11 @@ public class PatientManager {
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
 
+        /*
+        We can change this later. SQL expects the date to be in the yyyy-mm-dd format,
+        but the yyyy/mm/dd format also works, and the code right under this prints to
+        the terminal errors even when it does work.
+
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = simpleDate.parse(patient_DOB);
@@ -38,6 +40,8 @@ public class PatientManager {
             System.out.println("Date Error");
             e.printStackTrace();
         }
+
+        */
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
