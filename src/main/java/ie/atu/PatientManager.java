@@ -454,6 +454,26 @@ public class PatientManager {
         }
         return false;
     }
+
+    public static String getLastDonation(int patientID) {
+        String lastDonationSQL = "SELECT lastDonation " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(lastDonationSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("lastDonation");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
 
 

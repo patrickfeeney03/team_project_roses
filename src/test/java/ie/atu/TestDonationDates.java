@@ -19,5 +19,10 @@ public class TestDonationDates {
             PatientManager.setLastDonation(testPatientID, testDate);
         }
         System.out.println();
+
+        System.out.println("The first donation for the patient: " + testPatientID +
+                " was on " + PatientManager.getFirstDonation(testPatientID));
+        System.out.println("The last donation for the patient: " + testPatientID +
+                " was on " + PatientManager.getLastDonation(testPatientID));
     }
 }
