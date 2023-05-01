@@ -287,7 +287,7 @@ public class PatientManager {
                 "UNION " +
                 "SELECT 'recipient' AS table_name, patient_info.* " +
                 "FROM recipient " +
-                "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID " +
+                "JOIN patient_info ON recipient.relation_id_patient = patient_info.patientID " +
                 "WHERE patient_info.patientID = ?";
 
         try (Connection connection = getConnection();
@@ -308,7 +308,7 @@ public class PatientManager {
                 patient.setPatient_address(resultSet.getString("patientAddress"));
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-                patient.setPatientDisease(resultSet.getString("patientDiease"));
+               /* patient.setPatientDisease(resultSet.getString("patientDiease"));*/
             }
         } catch (SQLException e) {
             e.printStackTrace();

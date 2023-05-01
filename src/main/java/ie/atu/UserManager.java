@@ -210,7 +210,9 @@ public class UserManager {
                             case 1 -> {
                                 System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
-                                patientManager.getPatientInfoAll(userInput);
+                                Patient patient = patientManager.getPatientInfoAll(userInput);
+
+
 
                             }
 
