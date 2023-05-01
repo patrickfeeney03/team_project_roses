@@ -34,18 +34,19 @@ public class UserManager {
     }
 
     public void register(Scanner scanner) {
+        scanner.nextLine();
         System.out.print("Enter user email: ");
-        String userEmail = scanner.next();
+        String userEmail = scanner.nextLine();
         System.out.print("Enter user password: ");
-        String userPassword = scanner.next();
+        String userPassword = scanner.nextLine();
         System.out.print("Enter user name: ");
-        String userName = scanner.next();
+        String userName = scanner.nextLine();
         System.out.print("Enter user role: ");
-        String userRole = scanner.next();
+        String userRole = scanner.nextLine();
         System.out.print("Enter user address: ");
-        String userAddress = scanner.next();
+        String userAddress = scanner.nextLine();
         System.out.print("Enter user phone: ");
-        String userPhone = scanner.next();
+        String userPhone = scanner.nextLine();
         System.out.print("Enter user age: ");
         int userAge = scanner.nextInt();
 
@@ -208,7 +209,23 @@ public class UserManager {
                             case 1 -> {
                                 System.out.println("\nEnter Patient ID: ");
                                 int userInput = myScanner.nextInt();
-                                patientManager.getPatientInfoAll(userInput);
+                                
+                                Patient patient = patientManager.getPatientInfoAll(userInput);
+                                if (patient != null) {
+                                    System.out.println("\nPatient Information:");
+                                    System.out.println("Patient ID: " + patient.getPatient_Id());
+                                    System.out.println("First Name: " + patient.getPatient_firstName());
+                                    System.out.println("Last Name: " + patient.getPatient_lastName());
+                                    System.out.println("Age: " + patient.getPatient_age());
+                                    System.out.println("DOB: " + patient.getPatient_DOB());
+                                    System.out.println("Email: " + patient.getPatient_email());
+                                    System.out.println("Address: " + patient.getPatient_address());
+                                    System.out.println("Phone: " + patient.getPatient_phone());
+                                    System.out.println("Emergency Phone: " + patient.getPatient_emergencyPhone());
+                                    System.out.println("Disease: " + patient.getPatientDisease());
+                                } else {
+                                    System.out.println("Patient not found.");
+                                }
                             }
 
                             case 2 -> {

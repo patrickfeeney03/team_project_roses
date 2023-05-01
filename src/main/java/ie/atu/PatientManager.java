@@ -277,15 +277,43 @@ public class PatientManager {
         return 0;
     }
 
-    public Patient getPatientInfoAll(int userInput) {
+    public Patient getPatientInfoAll(int patientId) {
         Patient patient = null;
         String checkPatient = "SELECT 'donor' AS table_name, patient_info.* " +
                 "FROM donor " +
                 "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
+                "WHERE patient_info.patientID = ? " +
                 "UNION " +
                 "SELECT 'recipient' AS table_name, patient_info.* " +
                 "FROM recipient " +
-                "JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID ";
+                "JOIN patient_info ON recipient.relation_id_patient = patient_info.patientID " +
+                "WHERE patient_info.patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
+            preparedStatement.setInt(1, patientId);
+            preparedStatement.setInt(2, patientId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                patient = new Patient();
+                patient.setPatient_Id(resultSet.getInt("patientID"));
+                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
+                patient.setPatient_lastName(resultSet.getString("patientLastName"));
+                patient.setPatient_age(resultSet.getInt("patientAge"));
+                patient.setPatient_DOB(resultSet.getString("patientDOB"));
+                patient.setPatient_email(resultSet.getString("patientEmail"));
+                patient.setPatient_address(resultSet.getString("patientAddress"));
+                patient.setPatient_phone(resultSet.getString("patientPhone"));
+                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
+               /* patient.setPatientDisease(resultSet.getString("patientDiease"));*/
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return patient;
+    }
                 
                 /*
                 My suggestion for this sql query:
@@ -308,29 +336,7 @@ public class PatientManager {
                 Using their patientID.
                 */
 
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
-            //preparedStatement.setInt(1, userInput);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                patient = new Patient();
-                patient.setPatient_Id(resultSet.getInt("patientID"));
-                patient.setPatient_firstName(resultSet.getString("patientFirstName"));
-                patient.setPatient_lastName(resultSet.getString("patientLastName"));
-                patient.setPatient_age(resultSet.getInt("patientAge"));
-                patient.setPatient_DOB(resultSet.getString("patientDOB"));
-                patient.setPatient_email(resultSet.getString("patientEmail"));
-                patient.setPatient_address(resultSet.getString("patientAddress"));
-                patient.setPatient_phone(resultSet.getString("patientPhone"));
-                patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return patient;
-    }
 
     public static List<String> getTableValues_patient_medical_data(int patientID) {
         List<String> pmdQueryResults = new ArrayList<>();
