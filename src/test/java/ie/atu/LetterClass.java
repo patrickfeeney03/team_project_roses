@@ -29,8 +29,8 @@ public class LetterClass {
                 "1234131");
         Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
         System.out.println("Name: "+donation.getDonor().getPatient_firstName()+donation.getDonor().getPatient_lastName()+ donation.getDonor().getPatient_email()+donation.getDonor().getPatient_address()+donation.getDonor().getPatient_phone());
-        Report report = new Report();
-        report.Donor_Report(donation);
+        //Report report = new Report();
+        //report.Donor_Report(donation);
     }
 
 
