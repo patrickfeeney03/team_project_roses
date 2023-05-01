@@ -29,33 +29,22 @@ public class PatientManager {
         String patient_EmergencyPhone = scanner.next();
         System.out.println("Enter patient's blood group: ");
         String patient_bloodGroup = scanner.next();
-        System.out.println("Enter patient's rh factor");
+        System.out.print("Enter patient's rh factor: ");
         char patient_rhFactor = scanner.next().charAt(0);
-
-
-
-        /*
-        We can change this later. SQL expects the date to be in the yyyy-mm-dd format,
-        but the yyyy/mm/dd format also works, and the code right under this prints to
-        the terminal errors even when it does work.
-
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date date = simpleDate.parse(patient_DOB);
-        } catch (ParseException e) {
-            System.out.println("Date Error");
-            e.printStackTrace();
-        }
-
-        */
+        System.out.print("Enter any diseases: ");
+        String patient_disease = scanner.next();
 
         Patient newPatient = new Patient(patient_firstName, patient_lastName, patient_age, patient_DOB,
                 patient_email, patient_address, patient_phone,patient_EmergencyPhone);
         BloodType bloodType = new BloodType(patient_bloodGroup, patient_rhFactor);
-        // addPatient adds just to patient_info
+
+        // addPatient adds just to patient_info, so we use another method to also update the pmd table.
         boolean wasRegistrationSuccessful = addPatient(newPatient);
-        // So we also need to add the patient to patient_medical_data
+        // So we also need to add the patient to patient_medical_data (pmd)
         int retrievedPatientID = PatientManager.getPatientIDWithPatientObject(newPatient);
+        PatientManager.createRowWithPatientID(retrievedPatientID);
+        PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
+        //
 
         if (wasRegistrationSuccessful) {
             System.out.println("Patient's registration successful.");
@@ -618,19 +607,38 @@ public class PatientManager {
             "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-    PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
-        preparedStatement.setString(1, disease);
-        preparedStatement.setInt(2, patientID);
+            PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+            preparedStatement.setString(1, disease);
+            preparedStatement.setInt(2, patientID);
 
-        int rowsAffected = preparedStatement.executeUpdate();
+            int rowsAffected = preparedStatement.executeUpdate();
 
-        if (rowsAffected > 0) {
-            return true;
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
         return false;
   }
 
+    public static boolean createRowWithPatientID(int patientID) {
+        String insertSQL = "INSERT INTO patient_medical_data (patientID) " +
+        "VALUES (?)";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+
+            preparedStatement.setInt(1, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
