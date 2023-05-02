@@ -104,6 +104,14 @@ public class UserManager {
                     }
 
                     // Get the bloodType of the recipient from the recipient table
+                    BloodType bloodType = null;
+                    ;
+                    if (BloodManager.get_BloodType_ID_From_PMD(patientID) != 0) {
+                        bloodType = BloodManager.getBloodTypeByID(BloodManager.get_BloodType_ID_From_PMD(patientID));
+                        // (PatientManager.getDonorIDFromPatientID())
+                            // PatientManager.getDonorIDFromPatientID(patientID)
+
+                    }
 
 
 
@@ -118,7 +126,7 @@ public class UserManager {
                     int inputAmount = scanner.nextInt();
 
                     // Create BloodType object using the recipient's Blood Details
-                    BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
+                    //BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
 
                     // What blood types are compatible with the recipient's blood type?
