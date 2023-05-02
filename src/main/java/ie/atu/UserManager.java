@@ -78,6 +78,13 @@ public class UserManager {
 
             switch (userChoice) {
                 case 1 -> {
+                    // REQUEST BLOOD
+                    // Patient comes to the hospital/blood bank to receive blood.
+                    // Nurse checks his blood type and how much amount he needs, also getting what are his compatible blood types
+                    // Nurse check if he's a new patient or if he's already registered.
+                    // If the patient is not in the database, register them as a new patient.
+                    //
+
                     // Ask for recipient's Blood Details
                     System.out.print("Recipient's Blood Group: ");
                     String inputBloodGroup = scanner.next();
@@ -96,8 +103,6 @@ public class UserManager {
                     //List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
                     //System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
-                    // Get recipient details from DB
-
 
                     // Get patient by ID. If he doesn't exist, create new patient and add it to DB
                     System.out.print("Enter the Patient ID: ");
@@ -107,11 +112,31 @@ public class UserManager {
                     if (singlePatientInfo == null) {
                         System.out.println("Patient ID doesn't exist\nAdd Patient to the database");
                         patientManager.register(myScanner);
-                    } else {
-                        System.out.println("Patient exists");
                     }
 
-                    // This recipient object is just for testing.
+
+                    Patient patient = patientManager.getSinglePatientInfo(patientID);
+
+                    // need to print medical data, connect tables
+
+                    if (patient != null) {
+                        System.out.println("\nPatient Information:");
+                        System.out.println("Patient ID: " + patient.getPatient_Id());
+                        System.out.println("First Name: " + patient.getPatient_firstName());
+                        System.out.println("Last Name: " + patient.getPatient_lastName());
+                        System.out.println("Age: " + patient.getPatient_age());
+                        System.out.println("DOB: " + patient.getPatient_DOB());
+                        System.out.println("Email: " + patient.getPatient_email());
+                        System.out.println("Address: " + patient.getPatient_address());
+                        System.out.println("Phone: " + patient.getPatient_phone());
+                        System.out.println("Emergency Phone: " + patient.getPatient_emergencyPhone());
+                        System.out.println("Disease: " + patient.getPatientDisease());
+                    }
+
+
+
+
+                    // Recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
                             "123345123", "9785684834", bloodType);
@@ -137,7 +162,9 @@ public class UserManager {
                     }
 
                     else {
-                        // Retrieve blood from the stock with the highest amount of blood
+                        // Retrieve blood from the stock (if possible with the highest amount of blood)
+                        boolean updateBlood_stock = BloodStockManager.updateTable_blood_stock();
+
 
 
                         // We have to add an expiry date to the blood too. So the blood
@@ -156,7 +183,7 @@ public class UserManager {
                     // Patient comes to the hospital/blood bank to donate blood.
                     // Nurse check if he's a new patient or if he's already registered.
                     // If the patient doesn't know their ID, well, they are not registered, for now.
-                        // To register them, the nurse would need to go back? And chooose option 3: Patients, and then
+                        // To register them, the nurse would need to go back? And choose option 3: Patients, and then
                         // Option 2.
 
                     // Nurse asks the patient for their ID. Patient responds
