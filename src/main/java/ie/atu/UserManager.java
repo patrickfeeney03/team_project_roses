@@ -99,9 +99,15 @@ public class UserManager {
 
 
                     // Get patient by id. If he doesn't exist, create new patient and add it to DB
-                    System.out.println("Enter the Patient ID: ");
+                    System.out.print("Enter the Patient ID: ");
                     int patientID = scanner.nextInt();
                     Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
+
+                    if (singlePatientInfo == null) {
+                        System.out.println("Patient ID doesn't exist");
+                    } else {
+                        System.out.println("Patient exists");
+                    }
 
 
 
@@ -114,8 +120,6 @@ public class UserManager {
                     Receive receive = new Receive(recipient, bloodBank, inputAmount);
 
 
-
-
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
                     char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
@@ -125,7 +129,7 @@ public class UserManager {
                         List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBankByID();
 
                         // Select the right blood bank by ID
-                        System.out.println("Select the right Blood Bank by entering the ID: ");
+                        System.out.print("Select the right Blood Bank by entering the ID: ");
                         int bankID = scanner.nextInt();
 
                         // Selected blood bank details
