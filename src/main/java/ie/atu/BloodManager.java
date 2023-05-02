@@ -167,7 +167,6 @@ public class BloodManager {
         }
 
         if (rowsAffected > 0) {
-            System.out.println("Rows Affected: " + rowsAffected);
             return true;
         }
         return false;

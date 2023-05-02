@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -64,8 +65,18 @@ public class UserManager {
 
     public void userMenu(Scanner scanner) {
         Scanner myScanner = new Scanner(System.in);
-        BloodBank bloodBank = new BloodBank(4, "bloodBank0 Email", "Galway",
-                "1234131");
+
+        // Make user choose the Blood Bank to be used for the current session
+        System.out.println("\nPlease choose the blood bank where you are right now. Blood banks: ");
+        List<BloodBank> bloodBankList = new ArrayList<>();
+        bloodBankList = BloodBankManager.getAllBloodBanks();
+        for (BloodBank oneBank : bloodBankList) {
+            System.out.printf("ID: %-5s Email: %-30s Address: %-35s Phone: %s%n",
+                    oneBank.getBankID(), oneBank.getBankEmail(), oneBank.getBankAddress(), oneBank.getBankPhone());
+        }
+        System.out.print("Input: ");
+        int userInputBloodBankID = scanner.nextInt();
+        BloodBank bloodBank = BloodBankManager.getBloodBankByID(userInputBloodBankID);
 
         boolean exitUserMenu = false;
         boolean patientMenu = false;
@@ -149,7 +160,7 @@ public class UserManager {
 
                     if(bloodBankDetails == 'N') {
                         // All blood bank details
-                        List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBankByID();
+                        List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBanks();
 
                         // Select the right blood bank by ID
                         System.out.print("Select the right Blood Bank by entering the ID: ");
@@ -205,8 +216,8 @@ public class UserManager {
                                 // if patient already donor table, don't do this.
                         if (PatientManager.getDonorIDFromPatientID(patientID) == 0) {
                             // Donor doesn't exist in donor table, so we add it
-                            patientManager.addPatientToDonorTable(patientID);
-                            System.out.println("Added patient to donor table: " + patientID);
+                            System.out.println("Donor table updated successfully: " +
+                                    patientManager.addPatientToDonorTable(patientID));
                         }
                     } else {
                         // If the code gets in here, it means that the patient exists but hasn't donated yet.
@@ -218,7 +229,7 @@ public class UserManager {
                         bloodType = new BloodType(bloodGroup, rhFactor);
 
                         // Method that adds the patient to the donor table.
-                        System.out.println("Added patient to donor table: " +
+                        System.out.println("Donor table updated successfully: " +
                                 patientManager.addPatientToDonorTable(patientID));
                     }
                     //System.out.println("Patients blood type: " + bloodType.toString());
@@ -234,30 +245,27 @@ public class UserManager {
                     Patient patient = patientManager.getSinglePatientInfo(patientID);
                     Donor donor = new Donor(patient, bloodType);
 
-                    // Check if the presetted bloodBank values are correct.
-                    System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
-                    System.out.println("Assuming they are, for now, we proceed...");
-
                     //bloodBank.setBankID(2);
                     Donation donation = new Donation(donor, bloodBank, bloodUnit, unitsDonated);
-                    System.out.println("BloodBank id: " +bloodBank.getBankID());
+                    //System.out.println("BloodBank id: " +bloodBank.getBankID());
                     boolean donated_bloodTableSuccessful = BloodManager.addBloodToDonated_blood(donation);
                     boolean stockUpdated = BloodStockManager.updateTable_blood_stock();
-                    System.out.println(stockUpdated);
+
                     // Updating pmd here
                     //System.out.println("getFirstDonation: " + PatientManager.getFirstDonation(patientID));
                     if (Objects.equals(PatientManager.getFirstDonation(donation.getDonor().getPatient_Id()), null)) {
-                        PatientManager.setFirstDonation(donation.getDonor().getPatient_Id(),
-                                donation.getBloodUnit().getDate());
-                        PatientManager.setLastDonation(donation.getDonor().getPatient_Id(),
-                                donation.getBloodUnit().getDate());
+                        System.out.println("First donation column updated successfully: " +
+                                PatientManager.setFirstDonation(donation.getDonor().getPatient_Id(),
+                                donation.getBloodUnit().getDate()));
+                        System.out.println("Last donation column updated successfully: " +
+                                PatientManager.setLastDonation(donation.getDonor().getPatient_Id(),
+                                donation.getBloodUnit().getDate()));
                     } else {
                         PatientManager.setLastDonation(donation.getDonor().getPatient_Id(),
                                 donation.getBloodUnit().getDate());
                     }
-
-                    System.out.println("donated_bloodTable successful: " + donated_bloodTableSuccessful);
-                    System.out.println("stock table updated: " + stockUpdated);
+                    System.out.println("Donated Blood table updated successfully: " + donated_bloodTableSuccessful);
+                    System.out.println("Stock table updated successfully: " + stockUpdated);
                 }
                 case 3 -> {
                     // View Stock
