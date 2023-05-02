@@ -108,38 +108,38 @@ public class UserManager {
                     ;
                     if (BloodManager.get_BloodType_ID_From_PMD(patientID) != 0) {
                         bloodType = BloodManager.getBloodTypeByID(BloodManager.get_BloodType_ID_From_PMD(patientID));
-                        // (PatientManager.getDonorIDFromPatientID())
-                            // PatientManager.getDonorIDFromPatientID(patientID)
+                        if (PatientManager.getRecipientIDFromPatientID(patientID) == 0) {
+                            System.out.println("Recipient table updated successfully: " +
+                                    patientManager.addPatientToRecipientTable(patientID));
+                        }
+                    } else {
+                        System.out.println("Patient hasn't donated blood yet. Blood details needed. ");
+                        System.out.print("Blood Group: ");
+                        String bloodGroup = scanner.next();
+                        System.out.print("Rh factor: ");
+                        char rhFactor = scanner.next().charAt(0);
+                        bloodType = new BloodType(bloodGroup, rhFactor);
 
+                        // Method that adds the patient to the donor table.
+                        if (PatientManager.getRecipientIDFromPatientID(patientID) == 0) {
+                            System.out.println("Donor table updated successfully: " +
+                                    patientManager.addPatientToRecipientTable(patientID));
+                        }
                     }
-
-
-
-                    // Ask for recipient's Blood Details
-                    System.out.print("Recipient's Blood Group: ");
-                    String inputBloodGroup = scanner.next();
-                    System.out.print("Recipient's Rh Factor: ");
-                    char inputRhFactor = scanner.next().charAt(0);
 
                     // How many units does the recipient need
                     System.out.print("Amount of units required: ");
-                    int inputAmount = scanner.nextInt();
+                    int unitsRequired = scanner.nextInt();
 
-                    // Create BloodType object using the recipient's Blood Details
-                    //BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
-
-
-                    // What blood types are compatible with the recipient's blood type?
-                    //List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
-                    //System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
-
-
-                    // Get patient by ID. If he doesn't exist, create new patient and add it to DB
-
-                    Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
-
+                    // Save the date to add it to the
+                    BloodUnit bloodUnit = new BloodUnit(bloodType);
 
                     Patient patient = patientManager.getSinglePatientInfo(patientID);
+                    Recipient recipient = new Recipient(patient, bloodType);
+
+                    Receive receive = new Receive(recipient, bloodBank, unitsRequired, bloodUnit);
+                    boolean received_bloodTableSuccessful = BloodManager.addBloodToReceived_blood(receive);
+                    System.out.println("Received blood table updated successfully: " + received_bloodTableSuccessful);
 
                     // need to print medical data, connect tables
 
@@ -161,7 +161,7 @@ public class UserManager {
                         patientManager.register(myScanner);
                     }
 
-
+                    /*
                     // Recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",
@@ -169,6 +169,8 @@ public class UserManager {
 
                     // Create the receive object.
                     Receive receive = new Receive(recipient, bloodBank, inputAmount);
+
+                     */
 
 
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
@@ -246,8 +248,10 @@ public class UserManager {
                         bloodType = new BloodType(bloodGroup, rhFactor);
 
                         // Method that adds the patient to the donor table.
-                        System.out.println("Donor table updated successfully: " +
-                                patientManager.addPatientToDonorTable(patientID));
+                        if (PatientManager.getDonorIDFromPatientID(patientID) == 0) {
+                            System.out.println("Donor table updated successfully: " +
+                                    patientManager.addPatientToDonorTable(patientID));
+                        }
                     }
                     //System.out.println("Patients blood type: " + bloodType.toString());
 

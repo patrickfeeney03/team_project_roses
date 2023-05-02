@@ -172,6 +172,37 @@ public class BloodManager {
         return false;
     }
 
+    public static boolean addBloodToReceived_blood(Receive receive) {
+        // Loop?
+        int unitsDonated = receive.getUnitsReceived();
+        int rowsAffected = 0;
+        for (int i = 0; i < unitsDonated; i++) {
+            String insertTo_donated_blood = "INSERT INTO received_blood (blood_typesID, reception_date, recipientID_relation," +
+                    "blood_bankID_relation) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
+                preparedStatement.setInt(1, get_blood_typeID(receive.getRecipient().getBloodType().toString()));
+                preparedStatement.setString(2, receive.getBloodUnit().getDate());
+                preparedStatement.setInt(3, PatientManager.getRecipientIDFromPatientID(
+                        receive.getRecipient().getPatient_Id()));
+                preparedStatement.setInt(4, receive.getBloodBank().getBankID());
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    rowsAffected++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (rowsAffected > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public static int get_blood_typeID(String bloodType) {
         String selectBloodTypeID = "SELECT id " +
                 "FROM blood_types " +

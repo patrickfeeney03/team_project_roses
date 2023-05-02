@@ -136,6 +136,25 @@ public class PatientManager {
         }
         return false;
     }
+
+    public boolean addPatientToRecipientTable(int patientID) {
+        String addToDonor = "INSERT INTO recipient (corresponding_patient_id) " +
+                "VALUES(?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(addToDonor)) {
+            preparedStatement.setInt(1, patientID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
     
     public boolean updatePatient(Patient patient) {
         String updateSQL = "UPDATE patient_info SET patientFirstName = ?, patientLastName = ?, patientAge = ?, patientDOB = ?, " +
