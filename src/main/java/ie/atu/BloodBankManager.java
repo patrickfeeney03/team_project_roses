@@ -1,6 +1,8 @@
 package ie.atu;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BloodBankManager {
 
@@ -25,6 +27,11 @@ public class BloodBankManager {
                 bloodBank.setBankEmail(resultSet.getString("bankEmail"));
                 bloodBank.setBankAddress(resultSet.getString("bankAddress"));
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
+
+                System.out.println("bankID: " + bloodBank.getBankID());
+                System.out.println("bankEmail: " + bloodBank.getBankEmail());
+                System.out.println("bankAddress: " + bloodBank.getBankAddress());
+                System.out.println("bankPhone: " + bloodBank.getBankPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,8 +39,8 @@ public class BloodBankManager {
         return bloodBank;
     }
 
-   public static BloodBank getAllBloodBankByID() {
-        BloodBank bloodBank = null;
+   public static List<BloodBank> getAllBloodBankByID() {
+        List<BloodBank> bloodBanks = new ArrayList<>();
         String selectAllBankInfoSQ = "SELECT * FROM blood_bank ";
 
         try (Connection connection = DBConnectionUtils.getConnection();
@@ -41,12 +48,13 @@ public class BloodBankManager {
 
              ResultSet resultSet = statement.executeQuery(selectAllBankInfoSQ)) {
 
-            if(resultSet.next()) {
-                bloodBank = new BloodBank();
+            while(resultSet.next()) {
+                BloodBank bloodBank = new BloodBank();
                 bloodBank.setBankID(resultSet.getInt("bankID"));
                 bloodBank.setBankEmail(resultSet.getString("bankEmail"));
                 bloodBank.setBankAddress(resultSet.getString("bankAddress"));
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
+                bloodBanks.add(bloodBank);
 
                 System.out.println("bankID: " + bloodBank.getBankID());
                 System.out.println("bankEmail: " + bloodBank.getBankEmail());
@@ -57,6 +65,6 @@ public class BloodBankManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return bloodBank;
+        return bloodBanks;
     }
 }
