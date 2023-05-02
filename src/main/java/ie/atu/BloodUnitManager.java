@@ -4,17 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BloodUnitManager {
 
     // Method to select the blood to be donated with the closest expiration date
-    public static List<Integer> getBestBloodByDate(List<String> compatibleTypesForRecipient) {
-        BloodUnit bloodUnit = null;
-        BloodType bloodType = null;
-        List<Integer> IDsToReturn = null;
+    public static int getBestBloodByDate(String compatibleTypeForRecipient) {
 
         // MySQL code to select blood from the blood bank with the closest expiration date
         String selectBloodDate = "SELECT * FROM donated_blood " +
@@ -23,25 +18,21 @@ public class BloodUnitManager {
         "LIMIT 1";
         // Add where
 
-        IDsToReturn = new ArrayList<>();
-        for (int i = 0; i < compatibleTypesForRecipient.size(); i++) {
-            try (Connection connection = DBConnectionUtils.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
-                preparedStatement.setInt(1,
-                        BloodManager.get_blood_typeID(compatibleTypesForRecipient.get(i)));
-                System.out.println(BloodManager.get_blood_typeID(compatibleTypesForRecipient.get(i)));
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
+            preparedStatement.setInt(1,
+                    BloodManager.get_blood_typeID(compatibleTypeForRecipient));
+            System.out.println(BloodManager.get_blood_typeID(compatibleTypeForRecipient));
 
-                ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-                while (resultSet.next()) {
-                    int donatedBloodID = resultSet.getInt("donated_blood_ID");
-                    IDsToReturn.add(donatedBloodID);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            while (resultSet.next()) {
+                return resultSet.getInt("donated_blood_ID");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return IDsToReturn;
+        return 0;
     }
 
     // Method to select the blood to be donated with the most amount of blood
