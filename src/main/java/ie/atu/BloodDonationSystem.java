@@ -27,9 +27,12 @@ public class BloodDonationSystem {
                     if (loginAttempt) {
                         userManager.userMenu(myScanner);
                     }
+                    break;
                 case 3:
                     exit = true;
                     break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
             }
         }
     }

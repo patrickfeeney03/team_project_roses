@@ -71,7 +71,6 @@ public class BloodUnitManager {
         bloodUnit1 = (
           listBloodUnits.get(randomIndex)
         );
-
         return bloodUnit1;
     }
 }

@@ -23,6 +23,4 @@ public class DBConnectionUtils {
     public static Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
-
-    // add some function to close the connection?
 }

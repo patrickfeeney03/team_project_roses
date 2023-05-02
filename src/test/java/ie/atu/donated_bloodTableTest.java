@@ -22,7 +22,6 @@ public class donated_bloodTableTest {
         BloodType bloodType = new BloodType("A", '+');
         // Get method to get the bloodType from the patient.
         Donor donor = new Donor(patientManager.getSinglePatientInfo(1), bloodType);
-
  */
         System.out.println(getDonorBloodTypeString(3));
     }
@@ -48,7 +47,6 @@ public class donated_bloodTableTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Nothing found";
     }
 }

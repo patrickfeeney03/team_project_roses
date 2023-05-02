@@ -2,19 +2,12 @@ package ie.atu;
 
 public class LetterClass {
     public static void Donor_Report(Donation donation){
-
         PatientManager patientManager = new PatientManager();
         System.out.println(donation.getDonor().getBloodType().getBloodGroup());
-
-
     }
     public static void Recipient_Report(Receive receive){
-
         PatientManager patientManager = new PatientManager();
-
         System.out.println(receive.getRecipient().getBloodType().getBloodGroup());
-
-
     }
 
     public static void main(String[] args) {
@@ -32,9 +25,4 @@ public class LetterClass {
         //Report report = new Report();
         //report.Donor_Report(donation);
     }
-
-
-
-
-
 }

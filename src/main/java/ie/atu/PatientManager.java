@@ -50,7 +50,7 @@ public class PatientManager {
         int bloodTypeID = BloodManager.get_blood_typeID(bloodType.toString());
         BloodManager.set_BloodType_ID_inPMD(retrievedPatientID,BloodManager.get_blood_typeID(bloodType.toString()));
 
-        // Code and process for getting the compatible bloodtype for the recipient
+        // Code and process for getting the compatible blood type for the recipient
         // sorting the blood types by the soonest to expire and
         // choosing a random option from the returned types.
         List<String> compatibleTypesWithRecipientList =
@@ -457,7 +457,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Patient not found";
     }
 
@@ -540,7 +539,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Patient not found";
     }
 
@@ -655,17 +653,16 @@ public class PatientManager {
         } catch (SQLException e){
             e.printStackTrace();
         }
-             return  "Patient not found";
-
+        return  "Patient not found";
     }
 
-    public static boolean setDisease_From_PMD(int patientID,String disease){
-    String setDiseaseSQL = "UPDATE patient_medical_data " +
-            "SET patientDisease = ? " +
-            "WHERE patientID = ?";
+    public static boolean setDisease_From_PMD(int patientID,String disease) {
+        String setDiseaseSQL = "UPDATE patient_medical_data " +
+                "SET patientDisease = ? " +
+                "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
             preparedStatement.setString(1, disease);
             preparedStatement.setInt(2, patientID);
 
@@ -678,7 +675,7 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
-  }
+    }
 
     public static boolean createRowWithPatientID(int patientID) {
         String insertSQL = "INSERT INTO patient_medical_data (patientID) " +
