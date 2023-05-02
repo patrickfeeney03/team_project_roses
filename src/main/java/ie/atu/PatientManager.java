@@ -50,7 +50,7 @@ public class PatientManager {
         int bloodTypeID = BloodManager.get_blood_typeID(bloodType.toString());
         BloodManager.set_BloodType_ID_inPMD(retrievedPatientID,BloodManager.get_blood_typeID(bloodType.toString()));
 
-        // Code and process for getting the compatible bloodtype for the recipient
+        // Code and process for getting the compatible blood type for the recipient
         // sorting the blood types by the soonest to expire and
         // choosing a random option from the returned types.
         List<String> compatibleTypesWithRecipientList =
