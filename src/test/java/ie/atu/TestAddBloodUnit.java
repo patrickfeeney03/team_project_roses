@@ -63,7 +63,7 @@ public class TestAddBloodUnit {
                 "GROUP BY blood_typesID " +
                 ") bud ON bs.blood_type_id = bud.blood_typesID " +
                 "SET bs.amount = COALESCE(bud.count_units, 0) " +
-                "WHERE bs.blood_type_id BETWEEN 1 AND 8;";
+                "WHERE bs.blood_type_id BETWEEN 1 AND 8";
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(updateBlood_stock)) {
