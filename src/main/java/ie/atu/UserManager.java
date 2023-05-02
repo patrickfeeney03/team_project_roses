@@ -94,6 +94,19 @@ public class UserManager {
                     // If the patient is not in the database, register them as a new patient.
                     //
 
+                    System.out.println("Enter the patient id: ");
+                    int patientID = scanner.nextInt();
+                    if (!patientManager.patientExistsInDB(patientID)) {
+                        System.out.println("The patient with id of " + patientID + " doesn't exist in the database." +
+                                "\nPlease go back and register.");
+                        // This break makes the code jump back to the top of the while loop.
+                        break;
+                    }
+
+                    // Get the bloodType of the recipient from the recipient table
+
+
+
                     // Ask for recipient's Blood Details
                     System.out.print("Recipient's Blood Group: ");
                     String inputBloodGroup = scanner.next();
@@ -114,8 +127,7 @@ public class UserManager {
 
 
                     // Get patient by ID. If he doesn't exist, create new patient and add it to DB
-                    System.out.print("Enter the Patient ID: ");
-                    int patientID = scanner.nextInt();
+
                     Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
 
 
