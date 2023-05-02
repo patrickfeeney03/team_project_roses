@@ -198,13 +198,14 @@ public class BloodManager {
         return 0;
     }
 
-   /* public static int set_blood_type_ID(int patientID,String bloodType){
-        String setBloodTypeSQL = "UPDATE patient_medical_data" +
-                "SET patientBloodType = ?" +
+   public static boolean set_BloodType_ID (int patientID,String bloodType){
+        String setBloodTypeSQL = "UPDATE patient_medical_data " +
+                "SET bloodTypeID = ?" +
                 "WHERE patientID = ?";
+
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
-            preparedStatement.setString(1, Disease);
+             PreparedStatement preparedStatement = connection.prepareStatement(setBloodTypeSQL)) {
+            preparedStatement.setString(1, bloodType );
             preparedStatement.setInt(2, patientID);
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -215,7 +216,30 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;}*/
+        return false;
+    }
+
+    public static int get_BloodType_ID_From_PMD(int patientID){
+        String getBloodTypeSQL = "SELECT bloodTypeID " +
+                "FROM patient_medical_data " +
+                "WHERE patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeSQL)){
+            preparedStatement.setInt(1,patientID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return  resultSet.getInt("BloodTypeID");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return  0;
+
+    }
+
+    }
+
 
     public static BloodType getBloodTypeByID(int id) {
         String selectType = "SELECT blood_group, rh_factor FROM blood_types " +
