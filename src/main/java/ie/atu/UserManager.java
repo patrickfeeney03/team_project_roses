@@ -98,13 +98,14 @@ public class UserManager {
                     // Get recipient details from DB
 
 
-                    // Get patient by id. If he doesn't exist, create new patient and add it to DB
+                    // Get patient by ID. If he doesn't exist, create new patient and add it to DB
                     System.out.print("Enter the Patient ID: ");
                     int patientID = scanner.nextInt();
                     Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
 
                     if (singlePatientInfo == null) {
-                        System.out.println("Patient ID doesn't exist");
+                        System.out.println("Patient ID doesn't exist\nAdd Patient to the database");
+                        patientManager.register(myScanner);
                     } else {
                         System.out.println("Patient exists");
                     }
