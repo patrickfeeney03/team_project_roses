@@ -96,6 +96,7 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details from DB
+                    String selectRecipientInfo = "SELECT * FROM recipient";
 
                     // Get patient by id. If he doesn't exist, create new patient and add it to DB
 
@@ -113,20 +114,18 @@ public class UserManager {
                     char bloodBankDetails = scanner.next().toUpperCase().charAt(0);
 
                     if(bloodBankDetails == 'N') {
-                        //Print blood bank details
+                        // All blood bank details
                         List<BloodBank> bloodBanks = BloodBankManager.getAllBloodBankByID();
 
-
                         // Select the right blood bank by ID
-                        System.out.println("Select the right Blood Bank by entering the ID");
+                        System.out.println("Select the right Blood Bank by entering the ID: ");
                         int bankID = scanner.nextInt();
 
-                        //bloodBankInfo = BloodBankManager.getBloodBankByID(bankID);
-
+                        // Selected blood bank details
+                        BloodBank bloodBankInfo = BloodBankManager.getBloodBankByID(bankID);
                     }
 
                     else {
-
                         // Retrieve blood from the stock with the highest amount of blood
 
 
