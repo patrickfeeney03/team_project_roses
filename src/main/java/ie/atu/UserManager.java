@@ -137,7 +137,7 @@ public class UserManager {
 
                     else {
                         // Retrieve blood from the stock (if possible with the highest amount of blood)
-                        boolean updated = BloodStockManager.updateTable_blood_stock();
+                        boolean updateBlood_stock = BloodStockManager.updateTable_blood_stock();
 
 
                         // We have to add an expiry date to the blood too. So the blood

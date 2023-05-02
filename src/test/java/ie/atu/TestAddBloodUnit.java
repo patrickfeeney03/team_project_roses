@@ -56,26 +56,7 @@ public class TestAddBloodUnit {
         }
 
         // Update the blood_stock table
-        String updateBlood_stock = "UPDATE blood_stock bs " +
-                "LEFT JOIN ( " +
-                "SELECT blood_typesID, COUNT(*) AS count_units " +
-                "FROM blood_units_date " +
-                "GROUP BY blood_typesID " +
-                ") bud ON bs.blood_type_id = bud.blood_typesID " +
-                "SET bs.amount = COALESCE(bud.count_units, 0) " +
-                "WHERE bs.blood_type_id BETWEEN 1 AND 8";
-
-        try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(updateBlood_stock)) {
-
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Rows affected: " + rowsAffected);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        boolean updateBlood_stock = BloodStockManager.updateTable_blood_stock();
 
         // Add the patient that just donated blood to the donor table.
         String addPatientToDonorTableSQL = "INSERT INTO DONOR (corresponding_patient_id) " +
