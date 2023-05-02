@@ -238,9 +238,6 @@ public class BloodManager {
 
     }
 
-    }
-
-
     public static BloodType getBloodTypeByID(int id) {
         String selectType = "SELECT blood_group, rh_factor FROM blood_types " +
                 "WHERE id = ?";
@@ -260,7 +257,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }
