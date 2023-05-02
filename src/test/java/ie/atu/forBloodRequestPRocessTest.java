@@ -34,5 +34,21 @@ public class forBloodRequestPRocessTest {
             System.out.println("BloodUnit unique id: " + bloodUnit.getBloodIDSQL() +
             ", BloodUnit type; " + bloodUnit.getBloodType().toString());
         }
+
+
+        BloodUnit randomComptibleUnit = BloodUnitManager.getRandomValidUnit(bloodUnitsList);
+        System.out.println("Unique ID: " + randomComptibleUnit.getBloodIDSQL() +
+                " BloodType: " + randomComptibleUnit.getBloodType().toString());
+        BloodUnit randomComptibleUnit2 = BloodUnitManager.getRandomValidUnit(bloodUnitsList);
+        System.out.println("Unique ID: " + randomComptibleUnit2.getBloodIDSQL() +
+                " BloodType: " + randomComptibleUnit2.getBloodType().toString());
+        BloodUnit randomComptibleUnit3 = BloodUnitManager.getRandomValidUnit(bloodUnitsList);
+        System.out.println("Unique ID: " + randomComptibleUnit3.getBloodIDSQL() +
+                " BloodType: " + randomComptibleUnit3.getBloodType().toString());
+        BloodUnit randomComptibleUnit4 = BloodUnitManager.getRandomValidUnit(bloodUnitsList);
+        System.out.println("Unique ID: " + randomComptibleUnit4.getBloodIDSQL() +
+                " BloodType: " + randomComptibleUnit4.getBloodType().toString());
+
+
     }
 }

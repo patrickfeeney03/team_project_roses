@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Random;
 
 
 public class BloodUnitManager {
@@ -58,5 +60,18 @@ public class BloodUnitManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static BloodUnit getRandomValidUnit(List<BloodUnit> listBloodUnits) {
+        BloodUnit bloodUnit1 = null;
+        Random rand = new Random();
+
+        int lengthOfList = listBloodUnits.size();
+        int randomIndex = rand.nextInt(lengthOfList);
+        bloodUnit1 = (
+          listBloodUnits.get(randomIndex)
+        );
+
+        return bloodUnit1;
     }
 }
