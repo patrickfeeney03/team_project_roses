@@ -326,7 +326,7 @@ public class PatientManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getInt("donor_unique_id");
+                return resultSet.getInt("recipient_unique_id");
             }
 
         } catch (SQLException e) {
