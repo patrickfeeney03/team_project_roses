@@ -18,8 +18,7 @@ public class BloodManager {
         if (amount <= availableAmount) {
             updateBloodStock(requestedBloodType, -amount);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -38,11 +37,11 @@ public class BloodManager {
 
         String selectSQL =
                 "SELECT bs.amount, bt.blood_group, bt.rh_factor " +
-                "FROM blood_stock bs " +
-                "JOIN blood_types bt ON bs.blood_type_id = bt.id";
+                        "FROM blood_stock bs " +
+                        "JOIN blood_types bt ON bs.blood_type_id = bt.id";
 
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -63,8 +62,8 @@ public class BloodManager {
         int availableAmount = 0;
         String selectSQL =
                 "SELECT bs.amount FROM blood_stock bs " +
-                "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
-                "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
+                        "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
+                        "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setString(1, bloodTypeAvailability.getBloodGroup());
@@ -72,7 +71,7 @@ public class BloodManager {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if ( resultSet.next()) {
+            if (resultSet.next()) {
                 availableAmount = resultSet.getInt("amount");
             }
         } catch (SQLException e) {
@@ -85,11 +84,11 @@ public class BloodManager {
         boolean updateSuccessful = false;
         String updateSQL =
                 "UPDATE blood_stock bs " +
-                "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
-                "SET bs.amount = bs.amount + ? " +
-                "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
+                        "JOIN blood_types bt ON bs.blood_type_id = bt.id " +
+                        "SET bs.amount = bs.amount + ? " +
+                        "WHERE bt.blood_group = ? AND bt.rh_factor = ?";
         try (Connection connection = getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
             preparedStatement.setInt(1, amount);
             preparedStatement.setString(2, bloodTypeToUpdate.getBloodGroup());
             preparedStatement.setString(3, Character.toString(bloodTypeToUpdate.getRhFactor()));
@@ -109,8 +108,8 @@ public class BloodManager {
         List<String> compatibleBloodTypesForRecipient = new ArrayList<>();
 
         for (String bloodTypeString : bloodTypes) {
-            BloodType testAgainstBloodType = new BloodType( ( bloodTypeString.substring(0, bloodTypeString.length() - 1) ),
-                    ( bloodTypeString.charAt(bloodTypeString.length() - 1) ) );
+            BloodType testAgainstBloodType = new BloodType((bloodTypeString.substring(0, bloodTypeString.length() - 1)),
+                    (bloodTypeString.charAt(bloodTypeString.length() - 1)));
             if (BloodType.isCompatible(testAgainstBloodType, recipientBloodType)) {
                 compatibleBloodTypesForRecipient.add(testAgainstBloodType.toString());
             }
@@ -183,7 +182,7 @@ public class BloodManager {
         char rh_factor = bloodType.charAt(bloodType.length() - 1);
 
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(selectBloodTypeID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodTypeID)) {
             preparedStatement.setString(1, group);
             preparedStatement.setString(2, Character.toString(rh_factor));
 
@@ -198,14 +197,14 @@ public class BloodManager {
         return 0;
     }
 
-   public static boolean set_BloodType_ID (int patientID,String bloodType){
+    public static boolean set_BloodType_ID_inPMD(int patientID, int bloodType) {
         String setBloodTypeSQL = "UPDATE patient_medical_data " +
-                "SET bloodTypeID = ?" +
+                "SET bloodTypeID = ? " +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(setBloodTypeSQL)) {
-            preparedStatement.setString(1, bloodType );
+            preparedStatement.setInt(1, bloodType);
             preparedStatement.setInt(2, patientID);
 
             int rowsAffected = preparedStatement.executeUpdate();
@@ -219,34 +218,30 @@ public class BloodManager {
         return false;
     }
 
-    public static int get_BloodType_ID_From_PMD(int patientID){
+    public static int get_BloodType_ID_From_PMD(int patientID) {
         String getBloodTypeSQL = "SELECT bloodTypeID " +
                 "FROM patient_medical_data " +
                 "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeSQL)){
-            preparedStatement.setInt(1,patientID);
+             PreparedStatement preparedStatement = connection.prepareStatement(getBloodTypeSQL)) {
+            preparedStatement.setInt(1, patientID);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return  resultSet.getInt("BloodTypeID");
+            if (resultSet.next()) {
+                return resultSet.getInt("BloodTypeID");
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return  0;
-
+        return 0;
     }
-
-    }
-
 
     public static BloodType getBloodTypeByID(int id) {
         String selectType = "SELECT blood_group, rh_factor FROM blood_types " +
                 "WHERE id = ?";
 
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(selectType)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(selectType)) {
 
             preparedStatement.setInt(1, id);
 
@@ -260,7 +255,6 @@ public class BloodManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

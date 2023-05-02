@@ -48,6 +48,7 @@ public class PatientManager {
         // Set the bloodTypeID of the patient being registered to the patient pmd table
             // We have the bloodType object. We need to get the ID for this BloodType.
         int bloodTypeID = BloodManager.get_blood_typeID(bloodType.toString());
+        BloodManager.set_BloodType_ID_inPMD(retrievedPatientID,BloodManager.get_blood_typeID(bloodType.toString()));
 
         // Code and process for getting the compatible bloodtype for the recipient
         // sorting the blood types by the soonest to expire and
