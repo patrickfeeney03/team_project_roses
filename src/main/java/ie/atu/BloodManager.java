@@ -217,5 +217,26 @@ public class BloodManager {
         }
         return false;}*/
 
+    public static BloodType getBloodTypeByID(int id) {
+        String selectType = "SELECT blood_group, rh_factor FROM blood_types " +
+                "WHERE id = ?";
 
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectType)) {
+
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                BloodType bloodType = new BloodType(resultSet.getString("blood_group"),
+                        resultSet.getString("rh_factor").charAt(0));
+                return bloodType;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

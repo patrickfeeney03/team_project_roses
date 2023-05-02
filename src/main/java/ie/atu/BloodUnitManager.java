@@ -4,44 +4,44 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BloodUnitManager {
 
     // Method to select the blood to be donated with the closest expiration date
-    public static BloodUnit getBestBloodByDate() {
+    public static List<Integer> getBestBloodByDate(List<String> compatibleTypesForRecipient) {
         BloodUnit bloodUnit = null;
-
-        /*Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the blood type ID : ");
-        int bloodGroup = scanner.nextInt();
-        System.out.println("Enter the amount of blood units : ");
-        int amount = scanner.nextInt();*/
-
+        BloodType bloodType = null;
+        List<Integer> IDsToReturn = null;
 
         // MySQL code to select blood from the blood bank with the closest expiration date
-        String selectBloodDate = "SELECT * FROM blood_units_date " +
-        "WHERE DATE_ADD(blood_date, INTERVAL 2 MONTH) >= CURDATE() " +
-        "ORDER BY DATEDIFF(DATE_ADD(blood_date, INTERVAL 2 MONTH), CURDATE()) ASC " +
-        "LIMIT 5";
+        String selectBloodDate = "SELECT * FROM donated_blood " +
+        "WHERE DATE_ADD(donation_date, INTERVAL 2 MONTH) >= CURDATE() AND blood_typesID = ? " +
+        "ORDER BY DATEDIFF(DATE_ADD(donation_date, INTERVAL 2 MONTH), CURDATE()) ASC " +
+        "LIMIT 1";
+        // Add where
 
-        try (Connection connection = DBConnectionUtils.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
-             ResultSet resultSet = preparedStatement.executeQuery();
+        IDsToReturn = new ArrayList<>();
+        for (int i = 0; i < compatibleTypesForRecipient.size(); i++) {
+            try (Connection connection = DBConnectionUtils.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
+                preparedStatement.setInt(1,
+                        BloodManager.get_blood_typeID(compatibleTypesForRecipient.get(i)));
+                System.out.println(BloodManager.get_blood_typeID(compatibleTypesForRecipient.get(i)));
 
-            while (resultSet.next()) {
-                int bloodUnitsDateID = resultSet.getInt("blood_units_dateID");
-                String bloodType = resultSet.getString("blood_typesID");
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-                // print the blood units by their primary key
-                System.out.println("Blood Units Date ID: " + bloodUnitsDateID + ", Blood Type: " + bloodType);
+                while (resultSet.next()) {
+                    int donatedBloodID = resultSet.getInt("donated_blood_ID");
+                    IDsToReturn.add(donatedBloodID);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return null;
+        return IDsToReturn;
     }
 
     // Method to select the blood to be donated with the most amount of blood
