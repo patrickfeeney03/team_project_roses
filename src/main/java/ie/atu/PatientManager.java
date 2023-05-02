@@ -45,6 +45,9 @@ public class PatientManager {
         PatientManager.createRowWithPatientID(retrievedPatientID);
         // Setting the patientDisease in the pmd table on the newly created row using the patientID.
         PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
+        // Set the bloodTypeID of the patient being registered to the patient pmd table
+            // We have the bloodType object. We need to get the ID for this BloodType.
+        int bloodTypeID = BloodManager.get_blood_typeID(bloodType.toString());
 
         // Code and process for getting the compatible bloodtype for the recipient
         // sorting the blood types by the soonest to expire and
