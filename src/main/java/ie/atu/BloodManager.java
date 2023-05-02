@@ -156,7 +156,7 @@ public class BloodManager {
                 preparedStatement.setString(2, donation.getBloodUnit().getDate());
                 preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
                         donation.getDonor().getPatient_Id()));
-                preparedStatement.setInt(4, 3);
+                preparedStatement.setInt(4, donation.getBloodBank().getBankID());
 
                 if (preparedStatement.executeUpdate() > 0) {
                     rowsAffected++;
