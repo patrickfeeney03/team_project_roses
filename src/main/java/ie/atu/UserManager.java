@@ -96,9 +96,13 @@ public class UserManager {
                     System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details from DB
-                    String selectRecipientInfo = "SELECT * FROM recipient";
+
 
                     // Get patient by id. If he doesn't exist, create new patient and add it to DB
+                    System.out.println("Enter the Patient ID: ");
+                    int patientID = scanner.nextInt();
+                    Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
+
 
 
                     // This recipient object is just for testing.
@@ -108,6 +112,9 @@ public class UserManager {
 
                     // Create the receive object.
                     Receive receive = new Receive(recipient, bloodBank, inputAmount);
+
+
+
 
                     // Check if BloodBank details are correct. The object is already created at the top of this method.
                     System.out.println("Are these location presets correct? [Y/N] " + bloodBank.toString());
