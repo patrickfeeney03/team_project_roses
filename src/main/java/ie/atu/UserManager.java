@@ -121,9 +121,6 @@ public class UserManager {
 
                     Patient patient = patientManager.getSinglePatientInfo(patientID);
 
-
-                    //
-
                     // need to print medical data, connect tables
 
                     if (patient != null) {
