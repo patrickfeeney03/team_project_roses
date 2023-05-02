@@ -43,7 +43,8 @@ public class PatientManager {
         // So we also need to add the patient to patient_medical_data (pmd)
         int retrievedPatientID = PatientManager.getPatientIDWithPatientObject(newPatient);
         PatientManager.createRowWithPatientID(retrievedPatientID);
-        //PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
+        // Setting the patientDisease in the pmd table on the newly created row using the patientID.
+        PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
 
         // Code and process for getting the compatible bloodtype for the recipient
         // sorting the blood types by the soonest to expire and
@@ -633,8 +634,8 @@ public class PatientManager {
     }
 
     public static boolean setDisease_From_PMD(int patientID,String disease){
-    String setDiseaseSQL = "INSERT INTO patient_medical_date (patientDisease) " +
-            "VALUES (?) " +
+    String setDiseaseSQL = "UPDATE patient_medical_data " +
+            "SET patientDisease = ? " +
             "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
