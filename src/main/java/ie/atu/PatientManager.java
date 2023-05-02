@@ -457,7 +457,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Patient not found";
     }
 
@@ -540,7 +539,6 @@ public class PatientManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return "Patient not found";
     }
 
@@ -655,17 +653,16 @@ public class PatientManager {
         } catch (SQLException e){
             e.printStackTrace();
         }
-             return  "Patient not found";
-
+        return  "Patient not found";
     }
 
-    public static boolean setDisease_From_PMD(int patientID,String disease){
-    String setDiseaseSQL = "UPDATE patient_medical_data " +
-            "SET patientDisease = ? " +
-            "WHERE patientID = ?";
+    public static boolean setDisease_From_PMD(int patientID,String disease) {
+        String setDiseaseSQL = "UPDATE patient_medical_data " +
+                "SET patientDisease = ? " +
+                "WHERE patientID = ?";
 
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(setDiseaseSQL)) {
             preparedStatement.setString(1, disease);
             preparedStatement.setInt(2, patientID);
 
@@ -678,7 +675,7 @@ public class PatientManager {
             e.printStackTrace();
         }
         return false;
-  }
+    }
 
     public static boolean createRowWithPatientID(int patientID) {
         String insertSQL = "INSERT INTO patient_medical_data (patientID) " +
