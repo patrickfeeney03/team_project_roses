@@ -121,6 +121,9 @@ public class UserManager {
 
                     Patient patient = patientManager.getSinglePatientInfo(patientID);
 
+
+                    //
+
                     // need to print medical data, connect tables
 
                     if (patient != null) {
@@ -140,8 +143,6 @@ public class UserManager {
                         System.out.println("Patient ID doesn't exist\nAdd Patient to the database");
                         patientManager.register(myScanner);
                     }
-
-
 
 
                     // Recipient object is just for testing.
