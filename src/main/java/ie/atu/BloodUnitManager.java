@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,21 +16,18 @@ public class BloodUnitManager {
 
         // MySQL code to select blood from the blood bank with the closest expiration date
         String selectBloodDate = "SELECT * FROM donated_blood " +
-        "WHERE DATE_ADD(donation_date, INTERVAL 2 MONTH) >= CURDATE() AND blood_typesID = ? " +
-        "ORDER BY DATEDIFF(DATE_ADD(donation_date, INTERVAL 2 MONTH), CURDATE()) ASC " +
-        "LIMIT 1";
+        "WHERE donation_date >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND blood_typesID = ? AND given_away_status = 0";
         // Add where
 
         try (Connection connection = DBConnectionUtils.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
             preparedStatement.setInt(1,
                     BloodManager.get_blood_typeID(compatibleTypeForRecipient));
-            System.out.println(BloodManager.get_blood_typeID(compatibleTypeForRecipient));
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                return resultSet.getInt("donated_blood_ID");
+                return resultSet.getInt("unit_blood_ID");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,6 +35,33 @@ public class BloodUnitManager {
         return 0;
     }
 
+    public static List<Integer> getBestBloodByDateList(String compatibleTypeForRecipient, int limit) {
+        List<Integer> idList = new ArrayList<>();
+        // MySQL code to select blood from the blood bank with the closest expiration date
+        String selectBloodDate = "SELECT * FROM donated_blood " +
+                "WHERE donation_date >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND blood_typesID = ? AND given_away_status = 0 " +
+                "LIMIT ?";
+        // Add where
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
+            preparedStatement.setInt(1,
+                    BloodManager.get_blood_typeID(compatibleTypeForRecipient));
+            preparedStatement.setInt(2, limit);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                idList.add(resultSet.getInt("unit_blood_ID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (idList.size() < limit) {
+            return null;
+        }
+        return idList;
+    }
     // Method to select the blood to be donated with the most amount of blood
     public static BloodStock getBestBloodByAmount() {
         BloodStock bloodStock = null;

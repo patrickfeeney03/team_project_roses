@@ -14,6 +14,7 @@ public class BloodStockManager {
                 "LEFT JOIN ( " +
                 "SELECT blood_typesID, COUNT(*) AS count_units " +
                 "FROM donated_blood " +
+                "WHERE given_away_status <> 1 " +
                 "GROUP BY blood_typesID " +
                 ") bud ON bs.blood_type_id = bud.blood_typesID " +
                 "SET bs.amount = COALESCE(bud.count_units, 0) " +

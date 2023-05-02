@@ -356,20 +356,29 @@ public class PatientManager {
 
     public Patient getPatientInfoAll(int patientId) {
         Patient patient = null;
-        String checkPatient = "SELECT 'donor' AS table_name, patient_info.* " +
+        String checkPatient = "SELECT 'donor' AS table_name, patient_info.*, patient_medical_data.* " +
                 "FROM donor " +
-                "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
-                "WHERE patient_info.patientID = ? " +
-                "UNION " +
-                "SELECT 'recipient' AS table_name, patient_info.* " +
-                "FROM recipient " +
-                "JOIN patient_info ON recipient.relation_id_patient = patient_info.patientID " +
-                "WHERE patient_info.patientID = ?";
+        "JOIN patient_info ON donor.corresponding_patient_id = patient_info.patientID " +
+        "JOIN patient_medical_data ON patient_info.patientID = patient_medical_data.patientID " +
+        "WHERE patient_info.patientID = ? "+
+        "UNION " +
+        "SELECT 'recipient' AS table_name, patient_info.*, patient_medical_data.* " +
+        "FROM recipient " +
+        " JOIN patient_info ON recipient.corresponding_patient_id = patient_info.patientID " +
+        " JOIN patient_medical_data ON patient_info.patientID = patient_medical_data.patientID " +
+        " WHERE patient_info.patientID = ? " +
+        "UNION " +
+        " SELECT 'patient' AS table_name, patient_info.*, patient_medical_data.* " +
+        "FROM patient_info " +
+        "JOIN patient_medical_data ON patient_info.patientID = patient_medical_data.patientID " +
+        "WHERE patient_info.patientID = ?";
+
 
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(checkPatient)) {
             preparedStatement.setInt(1, patientId);
             preparedStatement.setInt(2, patientId);
+            preparedStatement.setInt(3, patientId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -385,11 +394,11 @@ public class PatientManager {
                 patient.setPatient_phone(resultSet.getString("patientPhone"));
                 patient.setPatient_emergencyPhone(resultSet.getString("patientEmergencyPhone"));
                 patient.setPatientDisease(resultSet.getString("patientDisease"));
-                patient.setRegister_date(resultSet.getString("patientRegisterDate"));
-                patient.setLastReceive(resultSet.getString("patientLastReceive"));
-                patient.setFirstReceive(resultSet.getString("patientFirstReceive"));
-                patient.setLastDonation(resultSet.getString("patientLastDonation"));
-                patient.setFirstDonation(resultSet.getString("patientFirstDonation"));
+                //patient.setRegister_date(resultSet.getString("patientRegisterDate"));
+                patient.setLastReceive(resultSet.getString("lastReceive"));
+                patient.setFirstReceive(resultSet.getString("firstReceive"));
+                patient.setLastDonation(resultSet.getString("lastDonation"));
+                patient.setFirstDonation(resultSet.getString("firstDonation"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
