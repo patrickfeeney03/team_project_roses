@@ -118,11 +118,6 @@ public class UserManager {
                     int patientID = scanner.nextInt();
                     Patient singlePatientInfo = patientManager.getSinglePatientInfo(patientID);
 
-                    if (singlePatientInfo == null) {
-                        System.out.println("Patient ID doesn't exist\nAdd Patient to the database");
-                        patientManager.register(myScanner);
-                    }
-
 
                     Patient patient = patientManager.getSinglePatientInfo(patientID);
 
@@ -140,6 +135,10 @@ public class UserManager {
                         System.out.println("Phone: " + patient.getPatient_phone());
                         System.out.println("Emergency Phone: " + patient.getPatient_emergencyPhone());
                         System.out.println("Disease: " + patient.getPatientDisease());
+                    }
+                    else {
+                        System.out.println("Patient ID doesn't exist\nAdd Patient to the database");
+                        patientManager.register(myScanner);
                     }
 
 
