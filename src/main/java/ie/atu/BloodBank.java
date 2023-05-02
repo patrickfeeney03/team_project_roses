@@ -50,8 +50,7 @@ public class BloodBank{
 
     @Override
     public String toString() {
-        return "BloodBank values:\n" +
-                "bankID: " + bankID +
+        return "bankID: " + bankID +
                 ", bankEmail: " + bankEmail +
                 ", bankAddress: " + bankAddress +
                 ", bankPhone=: " + bankPhone;

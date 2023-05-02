@@ -27,11 +27,6 @@ public class BloodBankManager {
                 bloodBank.setBankEmail(resultSet.getString("bankEmail"));
                 bloodBank.setBankAddress(resultSet.getString("bankAddress"));
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
-
-                System.out.println("bankID: " + bloodBank.getBankID());
-                System.out.println("bankEmail: " + bloodBank.getBankEmail());
-                System.out.println("bankAddress: " + bloodBank.getBankAddress());
-                System.out.println("bankPhone: " + bloodBank.getBankPhone());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +34,7 @@ public class BloodBankManager {
         return bloodBank;
     }
 
-   public static List<BloodBank> getAllBloodBankByID() {
+   public static List<BloodBank> getAllBloodBanks() {
         List<BloodBank> bloodBanks = new ArrayList<>();
         String selectAllBankInfoSQ = "SELECT * FROM blood_bank ";
 
@@ -55,13 +50,7 @@ public class BloodBankManager {
                 bloodBank.setBankAddress(resultSet.getString("bankAddress"));
                 bloodBank.setBankPhone(resultSet.getString("bankPhone"));
                 bloodBanks.add(bloodBank);
-
-                System.out.println("bankID: " + bloodBank.getBankID());
-                System.out.println("bankEmail: " + bloodBank.getBankEmail());
-                System.out.println("bankAddress: " + bloodBank.getBankAddress());
-                System.out.println("bankPhone: " + bloodBank.getBankPhone());
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

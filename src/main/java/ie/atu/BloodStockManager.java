@@ -13,7 +13,7 @@ public class BloodStockManager {
         String updateBlood_stock = "UPDATE blood_stock bs " +
                 "LEFT JOIN ( " +
                 "SELECT blood_typesID, COUNT(*) AS count_units " +
-                "FROM blood_units_date " +
+                "FROM donated_blood " +
                 "GROUP BY blood_typesID " +
                 ") bud ON bs.blood_type_id = bud.blood_typesID " +
                 "SET bs.amount = COALESCE(bud.count_units, 0) " +
