@@ -16,7 +16,11 @@ public class BloodManager {
         int availableAmount = getAvailableBloodstock(requestedBloodType);
 
         if (amount <= availableAmount) {
-            updateBloodStock(requestedBloodType, -amount);
+            // Update both donated_blood and received_blood tables.
+
+
+            //  updateTable_blood_stoc fixed already
+            BloodStockManager.updateTable_blood_stock();
             return true;
         } else {
             return false;
@@ -142,13 +146,12 @@ public class BloodManager {
     }
 
     public static boolean addBloodToDonated_blood(Donation donation) {
-        // Loop?
         int unitsDonated = donation.getUnitsDonated();
         int rowsAffected = 0;
         for (int i = 0; i < unitsDonated; i++) {
             String insertTo_donated_blood = "INSERT INTO donated_blood (blood_typesID, donation_date, donorID_relation," +
-                    "blood_bankID_relation) " +
-                    "VALUES (?, ?, ?, ?)";
+                    "blood_bankID_relation, given_away_status) " +
+                    "VALUES (?, ?, ?, ?, ?)";
 
             try (Connection connection = getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
@@ -157,6 +160,7 @@ public class BloodManager {
                 preparedStatement.setInt(3, PatientManager.getDonorIDFromPatientID(
                         donation.getDonor().getPatient_Id()));
                 preparedStatement.setInt(4, donation.getBloodBank().getBankID());
+                preparedStatement.setInt(5, 0);
 
                 if (preparedStatement.executeUpdate() > 0) {
                     rowsAffected++;
@@ -171,6 +175,45 @@ public class BloodManager {
         }
         return false;
     }
+
+    public static boolean addBloodToReceived_blood(Receive receive) {
+        /*
+        Update the blood_typesID, it should be the received type, not the recipients type.
+
+        getRandomValidUnit will give  me the unique ID from the donated_table, so then I use any of those and,
+        set it to the received table along with the other details taht I could get by using the unique ID.
+         */
+        //receive.getBloodUnit().getBloodIDSQL();
+        int unitsReceived = receive.getUnitsReceived();
+        int rowsAffected = 0;
+        for (int i = 0; i < 1; i++) {
+            String insertTo_donated_blood = "INSERT INTO received_blood (unit_blood_ID, blood_typesID, reception_date, recipientID_relation," +
+                    "blood_bankID_relation) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+
+            try (Connection connection = getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertTo_donated_blood)) {
+                preparedStatement.setInt(1, receive.getBloodUnit().getBloodIDSQL());
+                preparedStatement.setInt(2, get_blood_typeID(receive.getRecipient().getBloodType().toString()));
+                preparedStatement.setString(3, receive.getBloodUnit().getDate());
+                preparedStatement.setInt(4, PatientManager.getRecipientIDFromPatientID(
+                        receive.getRecipient().getPatient_Id()));
+                preparedStatement.setInt(5, receive.getBloodBank().getBankID());
+
+                if (preparedStatement.executeUpdate() > 0) {
+                    rowsAffected++;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (rowsAffected > 0) {
+            return true;
+        }
+        return false;
+    }
+    //public static boolean setFlagToKnowThatBloodHasBeenReceived
 
     public static int get_blood_typeID(String bloodType) {
         String selectBloodTypeID = "SELECT id " +
@@ -256,4 +299,24 @@ public class BloodManager {
         }
         return null;
     }
+
+    public static boolean setFlagDonatedBlood(int unitID) {
+        String sqlString= "UPDATE donated_blood SET given_away_status = 1 " +
+                "WHERE unit_blood_id = ?";
+
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlString)) {
+            preparedStatement.setInt(1, unitID);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
