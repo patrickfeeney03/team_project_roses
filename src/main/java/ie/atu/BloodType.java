@@ -9,6 +9,9 @@ public class BloodType {
         this.rhFactor = rhFactor;
     }
 
+    public BloodType() {
+    }
+
     public String getBloodGroup() {
         return bloodGroup;
     }
