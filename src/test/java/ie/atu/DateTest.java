@@ -12,6 +12,7 @@ public class DateTest {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             String formattedDate = currentDate.format(formatter);
             System.out.println("Current date: " + formattedDate);
+
         }
 
 
