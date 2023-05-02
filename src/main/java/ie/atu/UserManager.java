@@ -160,10 +160,13 @@ public class UserManager {
                                     bloodUnitLoop.setBloodIDSQL(sizeOfThing.get(x));
                                     bloodUnitsList.add(bloodUnitLoop);
                                     BloodManager.setFlagDonatedBlood(bloodUnitLoop.getBloodIDSQL());
+                                    if (bloodUnitsList.size() >= unitsRequired) break;
                                 }
                             }
-                        } else {
-
+                        }
+                        if (bloodUnitsList.size() >= unitsRequired) {
+                            Collections.shuffle(bloodUnitsList);
+                            break;
                         }
                     }
                     System.out.println("Blood unit list: " + bloodUnitsList);
