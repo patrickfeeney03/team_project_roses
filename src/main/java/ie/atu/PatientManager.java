@@ -27,7 +27,7 @@ public class PatientManager {
         String patient_phone = scanner.next();
         System.out.print("Enter patient's emergency phone: ");
         String patient_EmergencyPhone = scanner.next();
-        System.out.println("Enter patient's blood group: ");
+        System.out.print("Enter patient's blood group: ");
         String patient_bloodGroup = scanner.next();
         System.out.print("Enter patient's rh factor: ");
         char patient_rhFactor = scanner.next().charAt(0);
@@ -43,7 +43,38 @@ public class PatientManager {
         // So we also need to add the patient to patient_medical_data (pmd)
         int retrievedPatientID = PatientManager.getPatientIDWithPatientObject(newPatient);
         PatientManager.createRowWithPatientID(retrievedPatientID);
-        PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
+        //PatientManager.setDisease_From_PMD(retrievedPatientID, patient_disease);
+
+        // Code and process for getting the compatible bloodtype for the recipient
+        // sorting the blood types by the soonest to expire and
+        // choosing a random option from the returned types.
+        List<String> compatibleTypesWithRecipientList =
+                BloodManager.getCompatibleBloodTypes(bloodType);
+        List<BloodUnit> bloodUnitsList = new ArrayList<>();
+
+        for (int i = 0; i < compatibleTypesWithRecipientList.size(); i++) {
+            BloodUnit bloodUnit = new BloodUnit();
+            BloodType bloodType2 = new BloodType();
+            bloodType2.setBloodGroup(
+                    compatibleTypesWithRecipientList.get(i).substring
+                            (0, compatibleTypesWithRecipientList.get(i).length() - 1)
+            );
+            bloodType2.setRhFactor(
+                    compatibleTypesWithRecipientList.get(i).charAt
+                            (compatibleTypesWithRecipientList.get(i).length() - 1)
+            );
+            bloodUnit.setBloodType(bloodType2);
+            bloodUnit.setBloodIDSQL(
+                    BloodUnitManager.getBestBloodByDate(
+                            compatibleTypesWithRecipientList.get(i)
+                    )
+            );
+            bloodUnitsList.add(bloodUnit);
+        }
+        BloodUnit unitToGiveRecipient =  BloodUnitManager.getRandomValidUnit(bloodUnitsList);
+        System.out.println("The unit for recipient: " + unitToGiveRecipient.getBloodIDSQL() +
+            " " + unitToGiveRecipient.getBloodType().toString());
+
         //
 
         if (wasRegistrationSuccessful) {
@@ -602,8 +633,8 @@ public class PatientManager {
     }
 
     public static boolean setDisease_From_PMD(int patientID,String disease){
-    String setDiseaseSQL = "UPDATE patient_medical_data " +
-            "SET patientDisease = ? " +
+    String setDiseaseSQL = "INSERT INTO patient_medical_date (patientDisease) " +
+            "VALUES (?) " +
             "WHERE patientID = ?";
 
         try (Connection connection = getConnection();

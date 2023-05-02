@@ -89,9 +89,10 @@ public class UserManager {
                     // Create BloodType object using the recipient's Blood Details
                     BloodType bloodType = new BloodType(inputBloodGroup, inputRhFactor);
 
+
                     // What blood types are compatible with the recipient's blood type?
-                    List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
-                    System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
+                    //List<String> compatibleBloodTypes = BloodManager.getCompatibleBloodTypes(bloodType);
+                    //System.out.println("Compatible blood types with this recipient: " + compatibleBloodTypes);
 
                     // Get recipient details. From DB or from terminal input.
                         // Get patient by id. If he doesn't exist, create new patient and add it to DB

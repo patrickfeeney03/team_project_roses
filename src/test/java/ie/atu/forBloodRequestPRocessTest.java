@@ -5,7 +5,7 @@ import java.util.List;
 
 public class forBloodRequestPRocessTest {
     public static void main(String[] args) {
-        BloodType bloodType = new BloodType("AB", '+');
+        BloodType bloodType = new BloodType("O", '-');
         System.out.println(BloodManager.getCompatibleBloodTypes(bloodType));
         System.out.println(BloodManager.getCompatibleBloodTypes(bloodType).size());
         List<String> myList = BloodManager.getCompatibleBloodTypes(bloodType);
