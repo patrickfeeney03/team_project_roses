@@ -142,8 +142,6 @@ public class UserManager {
                     }
 
 
-
-
                     // Recipient object is just for testing.
                     Recipient recipient = new Recipient(0, "Mikaela", "Diaz",
                             20, "08/08/2003", "mikaelEmail", "addressMikaela",

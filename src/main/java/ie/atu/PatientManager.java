@@ -313,6 +313,28 @@ public class PatientManager {
         return 0;
     }
 
+    public static int getRecipientIDFromPatientID(int patientID) {
+        String getRecipientSQL = "SELECT d.recipient_unique_id " +
+                "FROM recipient d " +
+                "JOIN patient_info pi ON d.corresponding_patient_id = pi.patientID " +
+                "WHERE pi.patientID = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(getRecipientSQL)) {
+            preparedStatement.setInt(1, patientID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("recipient_unique_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public Patient getPatientInfoAll(int patientId) {
         Patient patient = null;
         String checkPatient = "SELECT 'donor' AS table_name, patient_info.* " +
