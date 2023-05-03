@@ -76,11 +76,27 @@ public class UserManager {
         return bloodBank;
     }
 
+    // Code from Case 1
+    public static int getRegisteredPatientIDWithPrompt(Scanner scanner) {
+        PatientManager patientManager = new PatientManager();
+        System.out.println("Enter the patient id: ");
+        int patientID = scanner.nextInt();
+        if (!patientManager.patientExistsInDB(patientID)) {
+            System.out.println("The patient with id of " + patientID + " doesn't exist in the database." +
+                    "\nPlease go back and register.");
+            return 0;
+        }
+        return patientID;
+    }
+
+    public static int getBloodIDWithPatientIDSout(int patientID) {
+        return 0;
+    }
+
     public void userMenu(Scanner scanner) {
         Scanner myScanner = new Scanner(System.in);
 
         BloodBank bloodBank = chooseBloodBank(scanner);
-
 
         boolean exitUserMenu = false;
         boolean patientMenu = false;
@@ -97,14 +113,8 @@ public class UserManager {
                     // Nurse check if he's a new patient or if he's already registered.
                     // If the patient is not in the database, register them as a new patient.
 
-                    System.out.println("Enter the patient id: ");
-                    int patientID = scanner.nextInt();
-                    if (!patientManager.patientExistsInDB(patientID)) {
-                        System.out.println("The patient with id of " + patientID + " doesn't exist in the database." +
-                                "\nPlease go back and register.");
-                        // This break makes the code jump back to the top of the while loop.
-                        break;
-                    }
+                    int patientID = getRegisteredPatientIDWithPrompt(scanner);
+                    if (patientID == 0) break;
 
                     // Get the bloodType of the recipient from the recipient table
                     BloodType bloodType = null;
