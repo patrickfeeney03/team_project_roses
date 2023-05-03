@@ -96,10 +96,6 @@ public class UserManager {
 
         if (BloodManager.get_BloodType_ID_From_PMD(patientID) != 0) {
             bloodType = BloodManager.getBloodTypeByID(BloodManager.get_BloodType_ID_From_PMD(patientID));
-            if (PatientManager.getRecipientIDFromPatientID(patientID) == 0) {
-                System.out.println("Recipient table updated successfully: " +
-                        patientManager.addPatientToRecipientTable(patientID));
-            }
         } else {
             System.out.println("Patient hasn't donated blood yet. Blood details needed. ");
             System.out.print("Blood Group: ");
@@ -135,6 +131,16 @@ public class UserManager {
 
         return receive;
     }
+    public static boolean patientIsNotRecipientYet(int patientID) {
+        PatientManager patientManager = new PatientManager();
+        if (PatientManager.getRecipientIDFromPatientID(patientID) == 0) {
+            System.out.println("Recipient table updated successfully: " +
+                    patientManager.addPatientToRecipientTable(patientID));
+            return true;
+        }
+        return false;
+    }
+
 
 
     public void userMenu(Scanner scanner) {
@@ -195,6 +201,8 @@ public class UserManager {
                     if (bloodUnitsList.size() < unitsRequired) {
                         System.out.println("Not enough blood.");
                     } else {
+                        System.out.println("Recipient table updated successfully: " +
+                                UserManager.patientIsNotRecipientYet(patientID));
                         for (int i = 0; i < bloodUnitsList.size(); i++) {
                             if (i >= unitsRequired) break;
                             BloodUnit unit = bloodUnitsList.get(i);
