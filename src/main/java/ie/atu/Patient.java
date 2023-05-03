@@ -1,6 +1,6 @@
 package ie.atu;
 
-public class Patient {
+public class Patient implements Person{
     private int patient_Id;
     private String patient_firstName;
     private String patient_lastName;
@@ -214,5 +214,10 @@ public class Patient {
                 ", last_visit='" + last_visit + '\'' +
                 ", register_date='" + register_date + '\'' +
                 '}';
+    }
+
+    @Override
+    public void printNamePlusPhoneNumber() {
+        System.out.println("Name: " + patient_firstName + " " + patient_lastName + "Phone Number: " + patient_phone);
     }
 }

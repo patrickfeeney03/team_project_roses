@@ -1,7 +1,7 @@
 package ie.atu;
 
 // This class is used by the hospital staff. This doesn't represent the actual patients.
-public class User {
+public class User implements Person {
 
     private int user_Id;
     private String user_email;
@@ -105,6 +105,12 @@ public class User {
                 ", user_phone='" + user_phone + '\'' +
                 ", user_age=" + user_age +
                 '}';
+    }
+
+
+    @Override
+    public void printNamePlusPhoneNumber() {
+        System.out.println("Name: " + user_name + " Phone Number: " + user_phone);
     }
 }
 

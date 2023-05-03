@@ -1,6 +1,6 @@
 package ie.atu;
 
-public class Donor extends Patient {
+public class Donor extends Patient implements Person{
     private BloodType bloodType;
 
     public Donor(int patient_Id, String patient_firstName, String patient_lastName, int patient_age, String patient_DOB,
@@ -16,6 +16,9 @@ public class Donor extends Patient {
                 patient.getPatient_age(), patient.getPatient_DOB(), patient.getPatient_email(),
                 patient.getPatient_address(), patient.getPatient_phone(), patient.getPatient_emergencyPhone());
         this.bloodType = bloodType;
+    }
+
+    public Donor() {
     }
 
     public BloodType getBloodType() {
