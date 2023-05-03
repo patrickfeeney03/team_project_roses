@@ -366,7 +366,12 @@ public class UserManager {
                                 // this patient object needs an id to be able to select which patient will be removed
                                 System.out.println("Enter a patient ID to be removed: \n");
                                 int userInput = myScanner.nextInt();
-                                patientManager.removePatient(patientManager.getSinglePatientInfo(userInput));
+                                Patient patientToRemove = patientManager.getSinglePatientInfo(userInput);
+                                //System.out.println(patientToRemove);
+                                patientManager.removePatientRecipient(patientToRemove);
+                                patientManager.removePatientDonor(patientToRemove);
+                                patientManager.removePatientPMD(patientToRemove);
+                                patientManager.removePatient(patientToRemove);
                             }
 
                             case 4 -> {
