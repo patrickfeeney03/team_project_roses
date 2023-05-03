@@ -14,6 +14,11 @@ public class BloodUnit {
         this.date = formattedDate;
     }
 
+    public BloodUnit(BloodType bloodType, int bloodIDSQL) {
+        this.bloodType = bloodType;
+        this.bloodIDSQL = bloodIDSQL;
+    }
+
     public BloodUnit() {
 
     }

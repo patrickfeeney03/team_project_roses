@@ -10,6 +10,9 @@ import java.util.Random;
 
 
 public class BloodUnitManager {
+    public static Connection getConnection() throws SQLException {
+        return DBConnectionUtils.getConnection();
+    }
 
     // Method to select the blood to be donated with the closest expiration date
     public static int getBestBloodByDate(String compatibleTypeForRecipient) {
@@ -62,6 +65,30 @@ public class BloodUnitManager {
         }
         return idList;
     }
+
+    public static List<Integer> getBestBloodByDateList20(String compatibleTypeForRecipient) {
+        List<Integer> idList = new ArrayList<>();
+        // MySQL code to select blood from the blood bank with the closest expiration date
+        String selectBloodDate = "SELECT * FROM donated_blood " +
+                "WHERE donation_date >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND blood_typesID = ? AND given_away_status = 0 " +
+                "LIMIT 20";
+        // Add where
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
+            preparedStatement.setInt(1,
+                    BloodManager.get_blood_typeID(compatibleTypeForRecipient));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                idList.add(resultSet.getInt("unit_blood_ID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idList;
+    }
     // Method to select the blood to be donated with the most amount of blood
     public static BloodStock getBestBloodByAmount() {
         BloodStock bloodStock = null;
@@ -97,5 +124,29 @@ public class BloodUnitManager {
           listBloodUnits.get(randomIndex)
         );
         return bloodUnit1;
+    }
+
+    public static BloodType getBloodTypeWithUnitID(int id) {
+        BloodType bloodType = null;
+
+        String selectSQl = "SELECT bt.blood_group, bt.rh_factor " +
+                "FROM donated_blood db " +
+                "JOIN blood_types bt ON db.blood_typesID = bt.ID " +
+                "WHERE db.unit_blood_ID = ?";
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQl)) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next() && resultSet != null) {
+                bloodType = new BloodType();
+                bloodType.setBloodGroup(resultSet.getString("blood_group"));
+                bloodType.setRhFactor(resultSet.getString("rh_factor").charAt(0));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bloodType;
     }
 }
