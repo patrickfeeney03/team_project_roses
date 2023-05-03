@@ -10,6 +10,9 @@ import java.util.Random;
 
 
 public class BloodUnitManager {
+    public static Connection getConnection() throws SQLException {
+        return DBConnectionUtils.getConnection();
+    }
 
     // Method to select the blood to be donated with the closest expiration date
     public static int getBestBloodByDate(String compatibleTypeForRecipient) {
@@ -121,5 +124,29 @@ public class BloodUnitManager {
           listBloodUnits.get(randomIndex)
         );
         return bloodUnit1;
+    }
+
+    public static BloodType getBloodTypeWithUnitID(int id) {
+        BloodType bloodType = null;
+
+        String selectSQl = "SELECT bt.blood_group, bt.rh_factor " +
+                "FROM donated_blood db " +
+                "JOIN blood_types bt ON db.blood_typesID = bt.ID " +
+                "WHERE db.unit_blood_ID = ?";
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(selectSQl)) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next() && resultSet != null) {
+                bloodType = new BloodType();
+                bloodType.setBloodGroup(resultSet.getString("blood_group"));
+                bloodType.setRhFactor(resultSet.getString("rh_factor").charAt(0));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bloodType;
     }
 }

@@ -176,49 +176,39 @@ public class UserManager {
                         bloodType2.setBloodGroup(compatibleTypes.get(i).substring(0, compatibleTypes.get(i).length() - 1));
                         bloodType2.setRhFactor(compatibleTypes.get(i).charAt(compatibleTypes.get(i).length() - 1));
 
-                        // ie with O-.
-                        // For singleType = O-
                         List<Integer> listOfUnitsIDs = new ArrayList<>();
                         listOfUnitsIDs = BloodUnitManager.getBestBloodByDateList20(bloodType2.toString());
                         for (Integer currentID : listOfUnitsIDs) {
-                            // [2994, 2995, 3008]
+
                             allIDs.add(currentID);
                         }
+                    }
 
-                        /*
-                        System.out.println("comp" + compatibleTypes.get(i));
-                        if (listOfUnitsIDs.size() != 0) {
-                            for (int x = 0; x < sizeOfThing.size(); x++) {
-                                BloodUnit bloodUnitLoop = new BloodUnit(); // create a new BloodUnit instance
-                                bloodUnitLoop.setBloodType(bloodType2);
-                                bloodUnitLoop.setBloodIDSQL(sizeOfThing.get(x));
-                                bloodUnitsList.add(bloodUnitLoop);
-                                BloodManager.setFlagDonatedBlood(bloodUnitLoop.getBloodIDSQL());
-                                if (bloodUnitsList.size() >= unitsRequired) break;
-                            }
-                        }
-                        if (bloodUnitsList.size() >= unitsRequired) {
-                            Collections.shuffle(bloodUnitsList);
-                            break;
-                        }*/
-
-
+                    for (Integer numericUnitID : allIDs) {
+                        BloodType bloodTypeLoop = BloodUnitManager.getBloodTypeWithUnitID(numericUnitID);
+                        BloodUnit bloodUnitLoop = new BloodUnit(bloodTypeLoop, numericUnitID);
+                        bloodUnitsList.add(bloodUnitLoop);
                     }
                     System.out.println("Possible Units: " + allIDs);
                     System.out.println("Blood unit list: " + bloodUnitsList);
+                    Collections.shuffle(bloodUnitsList);
+                    System.out.println("After shuffle  : " + bloodUnitsList);
+                    // Actually choosing the blood units here from the retrieved ones
 
-                    /*
-                    int validUnitID = 0;
-                    List<Integer> validIDS = new ArrayList<>(0);
-                    for (BloodUnit bloodUnitLoop : bloodUnitsList) {
-                        System.out.println("BloodUnit unique id: " + bloodUnitLoop.getBloodIDSQL() +
-                                ", BloodUnit type; " + bloodUnitLoop.getBloodType().toString());
-                        if (bloodUnitLoop.getBloodIDSQL() != 0) {
-                            validIDS.add(bloodUnitLoop.getBloodIDSQL());
-                            BloodManager.setFlagDonatedBlood(bloodUnitLoop.getBloodIDSQL());
+                    if (bloodUnitsList.size() < unitsRequired) {
+                        System.out.println("Not enough blood.");
+                    } else {
+                        for (int i = 0; i < bloodUnitsList.size(); i++) {
+                            if (i >= unitsRequired) break;
+                            BloodUnit unit = bloodUnitsList.get(i);
+                            BloodManager.setFlagDonatedBlood(unit.getBloodIDSQL());
+                            receive.getBloodUnit().setBloodIDSQL(unit.getBloodIDSQL());
+                            BloodManager.addBloodToReceived_blood(receive);
+                            BloodStockManager.updateTable_blood_stock();
                         }
                     }
 
+                    /*
                     if (validIDS.isEmpty()) {
                         System.out.println("Not enough blood.");
                     } else {
@@ -240,19 +230,19 @@ public class UserManager {
                     */
 
                         // Update date columns in pmd
-                    if (Objects.equals(PatientManager.getFirstReceive(receive.getRecipient().getPatient_Id()), null)) {
-                        System.out.println("First receive column updated successfully: " +
-                                PatientManager.setFirstDonation(receive.getRecipient().getPatient_Id(),
-                                        receive.getBloodUnit().getDate()));
-                        System.out.println("Last donation column updated successfully: " +
-                                PatientManager.setLastDonation(receive.getRecipient().getPatient_Id(),
-                                        receive.getBloodUnit().getDate()));
-                    } else {
-                        PatientManager.setLastDonation(receive.getRecipient().getPatient_Id(),
-                                receive.getBloodUnit().getDate());
+                    if (bloodUnitsList.size() > 0) {
+                        if (Objects.equals(PatientManager.getFirstReceive(receive.getRecipient().getPatient_Id()), null)) {
+                            System.out.println("First receive column updated successfully: " +
+                                    PatientManager.setFirstDonation(receive.getRecipient().getPatient_Id(),
+                                            receive.getBloodUnit().getDate()));
+                            System.out.println("Last donation column updated successfully: " +
+                                    PatientManager.setLastDonation(receive.getRecipient().getPatient_Id(),
+                                            receive.getBloodUnit().getDate()));
+                        } else {
+                            PatientManager.setLastDonation(receive.getRecipient().getPatient_Id(),
+                                    receive.getBloodUnit().getDate());
+                        }
                     }
-
-
                 }
                 case 2 -> {
                     // DONATION
