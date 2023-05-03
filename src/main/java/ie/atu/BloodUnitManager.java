@@ -62,6 +62,30 @@ public class BloodUnitManager {
         }
         return idList;
     }
+
+    public static List<Integer> getBestBloodByDateList20(String compatibleTypeForRecipient) {
+        List<Integer> idList = new ArrayList<>();
+        // MySQL code to select blood from the blood bank with the closest expiration date
+        String selectBloodDate = "SELECT * FROM donated_blood " +
+                "WHERE donation_date >= DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND blood_typesID = ? AND given_away_status = 0 " +
+                "LIMIT 20";
+        // Add where
+
+        try (Connection connection = DBConnectionUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectBloodDate)) {
+            preparedStatement.setInt(1,
+                    BloodManager.get_blood_typeID(compatibleTypeForRecipient));
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                idList.add(resultSet.getInt("unit_blood_ID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idList;
+    }
     // Method to select the blood to be donated with the most amount of blood
     public static BloodStock getBestBloodByAmount() {
         BloodStock bloodStock = null;

@@ -167,33 +167,47 @@ public class UserManager {
                     System.out.println("compatible types: " + compatibleTypes);
 
                     List<BloodUnit> bloodUnitsList = new ArrayList<>();
+                    List<Integer> allIDs = new ArrayList<>();
 
                     int unitsRequired = receive.getUnitsReceived();
                     for (int i = 0; i < compatibleTypes.size(); i++) {
-                            System.out.println("cmp1 " + compatibleTypes.size());
-                            BloodType bloodType2 = new BloodType();
-                            bloodType2.setBloodGroup(compatibleTypes.get(i).substring(0, compatibleTypes.get(i).length() - 1));
-                            bloodType2.setRhFactor(compatibleTypes.get(i).charAt(compatibleTypes.get(i).length() - 1));
+                        System.out.println("cmp1 " + compatibleTypes.size());
+                        BloodType bloodType2 = new BloodType();
+                        bloodType2.setBloodGroup(compatibleTypes.get(i).substring(0, compatibleTypes.get(i).length() - 1));
+                        bloodType2.setRhFactor(compatibleTypes.get(i).charAt(compatibleTypes.get(i).length() - 1));
 
-                            List<Integer> sizeOfThing = BloodUnitManager.getBestBloodByDateList(compatibleTypes.get(i), unitsRequired);
-                            System.out.println("comp" + compatibleTypes.get(i));
-                            if (sizeOfThing != null) {
-                                for (int x = 0; x < sizeOfThing.size(); x++) {
-                                    BloodUnit bloodUnitLoop = new BloodUnit(); // create a new BloodUnit instance
-                                    bloodUnitLoop.setBloodType(bloodType2);
-                                    bloodUnitLoop.setBloodIDSQL(sizeOfThing.get(x));
-                                    bloodUnitsList.add(bloodUnitLoop);
-                                    BloodManager.setFlagDonatedBlood(bloodUnitLoop.getBloodIDSQL());
-                                    if (bloodUnitsList.size() >= unitsRequired) break;
-                                }
+                        // ie with O-.
+                        // For singleType = O-
+                        List<Integer> listOfUnitsIDs = new ArrayList<>();
+                        listOfUnitsIDs = BloodUnitManager.getBestBloodByDateList20(bloodType2.toString());
+                        for (Integer currentID : listOfUnitsIDs) {
+                            // [2994, 2995, 3008]
+                            allIDs.add(currentID);
+                        }
+
+                        /*
+                        System.out.println("comp" + compatibleTypes.get(i));
+                        if (listOfUnitsIDs.size() != 0) {
+                            for (int x = 0; x < sizeOfThing.size(); x++) {
+                                BloodUnit bloodUnitLoop = new BloodUnit(); // create a new BloodUnit instance
+                                bloodUnitLoop.setBloodType(bloodType2);
+                                bloodUnitLoop.setBloodIDSQL(sizeOfThing.get(x));
+                                bloodUnitsList.add(bloodUnitLoop);
+                                BloodManager.setFlagDonatedBlood(bloodUnitLoop.getBloodIDSQL());
+                                if (bloodUnitsList.size() >= unitsRequired) break;
                             }
+                        }
                         if (bloodUnitsList.size() >= unitsRequired) {
                             Collections.shuffle(bloodUnitsList);
                             break;
-                        }
+                        }*/
+
+
                     }
+                    System.out.println("Possible Units: " + allIDs);
                     System.out.println("Blood unit list: " + bloodUnitsList);
 
+                    /*
                     int validUnitID = 0;
                     List<Integer> validIDS = new ArrayList<>(0);
                     for (BloodUnit bloodUnitLoop : bloodUnitsList) {
@@ -223,6 +237,7 @@ public class UserManager {
                                     "there is not enough blood.");
                         }
                     }
+                    */
 
                         // Update date columns in pmd
                     if (Objects.equals(PatientManager.getFirstReceive(receive.getRecipient().getPatient_Id()), null)) {
