@@ -364,14 +364,18 @@ public class UserManager {
                             case 3 -> {
                                 //Remove patient
                                 // this patient object needs an id to be able to select which patient will be removed
-                                System.out.println("Enter a patient ID to be removed: \n");
+                                System.out.print("Enter a patient ID to be removed: ");
                                 int userInput = myScanner.nextInt();
                                 Patient patientToRemove = patientManager.getSinglePatientInfo(userInput);
                                 //System.out.println(patientToRemove);
-                                patientManager.removePatientRecipient(patientToRemove);
-                                patientManager.removePatientDonor(patientToRemove);
-                                patientManager.removePatientPMD(patientToRemove);
-                                patientManager.removePatient(patientToRemove);
+                                if (patientToRemove != null) {
+                                    patientManager.removePatientRecipient(patientToRemove);
+                                    patientManager.removePatientDonor(patientToRemove);
+                                    patientManager.removePatientPMD(patientToRemove);
+                                    patientManager.removePatient(patientToRemove);
+                                } else {
+                                    System.out.println("Patient not found");
+                                }
                             }
 
                             case 4 -> {
