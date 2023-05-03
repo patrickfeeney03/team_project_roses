@@ -60,9 +60,7 @@ public class UserManager {
         }
     }
 
-    public void userMenu(Scanner scanner) {
-        Scanner myScanner = new Scanner(System.in);
-
+    public static BloodBank chooseBloodBank(Scanner scanner) {
         // Make user choose the Blood Bank to be used for the current session
         System.out.println("\nPlease choose the blood bank where you are right now. Blood banks: ");
         List<BloodBank> bloodBankList = new ArrayList<>();
@@ -74,6 +72,15 @@ public class UserManager {
         System.out.print("Input: ");
         int userInputBloodBankID = scanner.nextInt();
         BloodBank bloodBank = BloodBankManager.getBloodBankByID(userInputBloodBankID);
+
+        return bloodBank;
+    }
+
+    public void userMenu(Scanner scanner) {
+        Scanner myScanner = new Scanner(System.in);
+
+        BloodBank bloodBank = chooseBloodBank(scanner);
+
 
         boolean exitUserMenu = false;
         boolean patientMenu = false;
