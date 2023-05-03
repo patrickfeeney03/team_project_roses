@@ -162,7 +162,6 @@ public class UserManager {
                     BloodType bloodType = createBloodTypeObject(patientID, scanner);
                     Receive receive = createReceiveObject(bloodBank, patientID, bloodType, scanner);
 
-                    // Add proofing to this. What is there is no compatible units at all
                     List<String> compatibleTypes = BloodManager.getCompatibleBloodTypes(bloodType);
                     System.out.println("compatible types: " + compatibleTypes);
 
@@ -171,7 +170,6 @@ public class UserManager {
 
                     int unitsRequired = receive.getUnitsReceived();
                     for (int i = 0; i < compatibleTypes.size(); i++) {
-                        System.out.println("cmp1 " + compatibleTypes.size());
                         BloodType bloodType2 = new BloodType();
                         bloodType2.setBloodGroup(compatibleTypes.get(i).substring(0, compatibleTypes.get(i).length() - 1));
                         bloodType2.setRhFactor(compatibleTypes.get(i).charAt(compatibleTypes.get(i).length() - 1));
@@ -179,7 +177,6 @@ public class UserManager {
                         List<Integer> listOfUnitsIDs = new ArrayList<>();
                         listOfUnitsIDs = BloodUnitManager.getBestBloodByDateList20(bloodType2.toString());
                         for (Integer currentID : listOfUnitsIDs) {
-
                             allIDs.add(currentID);
                         }
                     }
@@ -204,33 +201,12 @@ public class UserManager {
                             BloodManager.setFlagDonatedBlood(unit.getBloodIDSQL());
                             receive.getBloodUnit().setBloodIDSQL(unit.getBloodIDSQL());
                             BloodManager.addBloodToReceived_blood(receive);
-                            BloodStockManager.updateTable_blood_stock();
                         }
                     }
+                    BloodStockManager.updateTable_blood_stock();
 
-                    /*
-                    if (validIDS.isEmpty()) {
-                        System.out.println("Not enough blood.");
-                    } else {
-                        Collections.shuffle(validIDS);
-                        int unitsAdded = 0;
-                        Iterator<Integer> iterator = validIDS.iterator();
-                        while (unitsAdded < unitsRequired && iterator.hasNext()) {
-                            Receive receiveLoop = receive;
-                            receiveLoop.getBloodUnit().setBloodIDSQL(iterator.next());
-                            BloodManager.addBloodToReceived_blood(receiveLoop);
-                            BloodStockManager.updateTable_blood_stock();
-                            unitsAdded++;
-                        }
-                        if (unitsAdded < unitsRequired) {
-                            System.out.println("Can't retrieve the amount of blood at the same time or " +
-                                    "there is not enough blood.");
-                        }
-                    }
-                    */
-
-                        // Update date columns in pmd
-                    if (bloodUnitsList.size() > 0) {
+                    // Update date columns in pmd
+                    if (bloodUnitsList.size() < unitsRequired) {
                         if (Objects.equals(PatientManager.getFirstReceive(receive.getRecipient().getPatient_Id()), null)) {
                             System.out.println("First receive column updated successfully: " +
                                     PatientManager.setFirstDonation(receive.getRecipient().getPatient_Id(),
